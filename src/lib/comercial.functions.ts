@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { createClient } from "@supabase/supabase-js";
-import { crypto } from "crypto";
+// Import removed to avoid conflict with globalThis.crypto
 
 const KeyGeneratorSchema = z.object({
   produtoSigla: z.string().min(2).max(5),
