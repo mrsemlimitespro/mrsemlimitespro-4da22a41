@@ -72,7 +72,7 @@ export const generateLicenseByRevendedor = createServerFn({ method: "POST" })
       tipo: "debito",
       motivo: `Geração de licença: ${key}`,
       produto_id: plano.produto_id,
-      metadata: ({ key, plano_id: data.planoId } as unknown) as Json
+      metadata: { key, plano_id: data.planoId } as any
     });
 
     // Criar Licença
@@ -86,7 +86,7 @@ export const generateLicenseByRevendedor = createServerFn({ method: "POST" })
         cliente_id: data.clienteId,
         status: "ativa",
         tipo: "premium",
-        metadata: ({ transaction_origem: 'revendedor' } as unknown) as Json
+        metadata: { transaction_origem: 'revendedor' } as any
       })
       .select()
       .single();
