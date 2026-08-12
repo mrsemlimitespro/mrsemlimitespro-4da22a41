@@ -109,40 +109,33 @@ type SpecialLink = {
 // Ordem canônica dos grupos no sidebar — Fase 2B: 5 grupos enterprise
 const GROUP_ORDER = [
   "Dashboard",
+  "MR CENTRAL",
   "Usuários",
   "Comercial",
-  "Conteúdo",
   "Sistema",
 ] as const;
 
 const specialLinks: SpecialLink[] = [
   // 🏠 Dashboard
-  { key: "dashboard", to: "/admin", label: "Central de Controle", icon: LayoutDashboard, exact: true, group: "Dashboard" },
-  { key: "home", to: "/admin/home", label: "Home (vitrine)", icon: HomeIcon, group: "Dashboard" },
+  { key: "dashboard", to: "/admin", label: "Dashboard Central", icon: LayoutDashboard, exact: true, group: "Dashboard" },
+  { key: "home", to: "/admin/home", label: "Vitrine Home", icon: HomeIcon, group: "Dashboard" },
+
+  // 📦 MR CENTRAL
+  { key: "produtos", to: "/admin/loja-produtos", label: "Produtos", icon: Blocks, group: "MR CENTRAL" },
+  { key: "licencas", to: "/admin/licencas", label: "Gestão de Licenças", icon: KeySquare, group: "MR CENTRAL" },
+  { key: "clientes", to: "/admin/clientes", label: "Base de Clientes", icon: Users, group: "MR CENTRAL" },
+  { key: "api-dashboard", to: "/admin/api-dashboard", label: "API & Conectividade", icon: Server, group: "MR CENTRAL" },
 
   // 👥 Usuários
-  { key: "visualizacao", to: "/admin/visualizacao", label: "Visualização de painéis", icon: ShieldCheck, group: "Usuários" },
-  { key: "usuarios", to: "/admin/usuarios", label: "Administradores", icon: UserCircle, group: "Usuários" },
+  { key: "usuarios", to: "/admin/usuarios", label: "Equipe Admin", icon: UserCircle, group: "Usuários" },
 
-  // 💳 Comercial
-  { key: "licencas-manager", to: "/admin/licencas", label: "Licenças", icon: KeySquare, group: "Comercial" },
-  { key: "pack-autorizacoes", to: "/admin/pack-autorizacoes", label: "Autorizações de Packs", icon: KeySquare, group: "Comercial" },
-  { key: "loja", to: "/admin/loja", label: "Loja (vitrine)", icon: Store, group: "Comercial" },
-  { key: "pagamentos", to: "/admin/pagamentos", label: "Pagamentos", icon: CreditCard, group: "Comercial" },
-  { key: "ajustar-creditos", to: "/admin/ajustar-creditos", label: "Ajustar Créditos", icon: Coins, group: "Comercial" },
+  // 💳 Comercial (Legado/Apoio)
+  { key: "pagamentos", to: "/admin/pagamentos", label: "Faturamento", icon: CreditCard, group: "Comercial" },
+  { key: "revendedores-gestao", to: "/admin/revendedores-gestao", label: "Revendedores", icon: Store, group: "Comercial" },
 
   // ⚙ Sistema
-  { key: "api-dashboard", to: "/admin/api-dashboard", label: "API de Controle", icon: Server, group: "Sistema" },
-  { key: "modulos", to: "/admin/modulos", label: "Módulos", icon: Blocks, group: "Sistema" },
-  { key: "configuracoes", to: "/admin/configuracoes", label: "Configurações Gerais", icon: Settings2, group: "Sistema" },
-  { key: "personalizacao", to: "/admin/personalizacao", label: "Aparência", icon: Palette, group: "Sistema" },
-  { key: "animacoes", to: "/admin/animacoes", label: "Animações", icon: Sparkles, group: "Sistema" },
-  { key: "sons", to: "/admin/sons", label: "Sons", icon: Volume2, group: "Sistema" },
-  { key: "seguranca", to: "/admin/seguranca", label: "Segurança", icon: ShieldAlert, group: "Sistema" },
-  { key: "backup", to: "/admin/backup", label: "Backup", icon: DatabaseBackup, group: "Sistema" },
-
-  // Rota antiga — mantida acessível via /admin/licencas-dashboard mas fora do menu
-  { key: "licencas-dashboard", to: "/admin/licencas-dashboard", label: "Licenças — Dashboard (legado)", icon: ShieldCheck, group: "__hidden" },
+  { key: "configuracoes", to: "/admin/configuracoes", label: "Configurações", icon: Settings2, group: "Sistema" },
+  { key: "seguranca", to: "/admin/seguranca", label: "Segurança & RLS", icon: ShieldAlert, group: "Sistema" },
 ];
 
 function AdminShell() {
