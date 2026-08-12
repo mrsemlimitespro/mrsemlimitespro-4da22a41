@@ -143,33 +143,36 @@ function HeroSection({
   })();
 
   return (
-    <section className="relative flex flex-col items-center justify-center gap-5 py-6 text-center md:py-12">
+    <section className="relative flex flex-col items-center justify-center gap-5 py-6 text-center md:py-16">
       <div
-        className="relative grid place-items-center rounded-[26%] overflow-hidden"
+        className="relative group transition-transform duration-500 hover:scale-105"
         style={{
-          width: "min(160px, 40vw)",
-          height: "min(160px, 40vw)",
-          boxShadow:
-            "0 0 0 1px color-mix(in oklab, var(--brand-magenta) 55%, transparent), 0 0 80px -4px color-mix(in oklab, var(--brand-magenta) 60%, transparent), 0 0 90px -10px color-mix(in oklab, var(--brand-blue) 55%, transparent)",
+          width: "min(320px, 75vw)",
+          filter: "drop-shadow(0 0 30px color-mix(in oklab, var(--brand-red-neon) 30%, transparent))"
         }}
       >
         <img
           src={BRAND_LOGO_URL}
           alt={`${BRAND_NAME} logo`}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-contain"
           draggable={false}
         />
+        <div className="absolute -inset-4 bg-brand-red-neon/5 blur-[80px] -z-10 rounded-full animate-pulse" />
       </div>
 
-      <div className="flex flex-col items-center gap-3">
-        <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-widest text-muted-foreground">
-          <span aria-hidden>{panelBadge.icon}</span> {panelBadge.label}
+      <div className="flex flex-col items-center gap-4 mt-4">
+        <span className="inline-flex items-center gap-2 rounded-full border border-brand-red-neon/30 bg-brand-red-neon/5 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.25em] text-brand-red-neon backdrop-blur-md">
+          <span aria-hidden className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-red-neon opacity-75"></span>
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-red-neon"></span>
+          </span>
+          {panelBadge.label}
         </span>
-        <h1 className="gradient-text-warm text-3xl font-black tracking-tight md:text-5xl uppercase tracking-[0.2em]">
+        <h1 className="text-4xl font-black tracking-tight md:text-6xl uppercase tracking-[0.4em] drop-shadow-[0_0_15px_rgba(255,0,0,0.4)]">
           MR CENTRAL
         </h1>
-        <p className="max-w-2xl px-2 text-sm text-muted-foreground md:text-base">
-          A plataforma definitiva para gestão de produtos, licenciamento criptográfico e revenda digital escalável.
+        <p className="max-w-2xl px-4 text-xs font-medium text-muted-foreground md:text-sm uppercase tracking-[0.2em] opacity-80">
+          ECOSSISTEMA DIGITAL DE ALTA PERFORMANCE — GESTÃO, LICENCIAMENTO E INTELIGÊNCIA
         </p>
       </div>
 
