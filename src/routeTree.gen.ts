@@ -60,7 +60,6 @@ import { Route as AdminVisualizacaoRouteImport } from './routes/admin.visualizac
 import { Route as AppPacksSlugRouteImport } from './routes/_app.packs.$slug'
 import { Route as AdminClientesIdRouteImport } from './routes/admin.clientes.$id'
 import { Route as ApiPublicDownloadExtensaoRouteImport } from './routes/api/public/download-extensao'
-import { Route as ApiPublicFixAuthRouteImport } from './routes/api/public/fix-auth'
 import { Route as ApiPublicHomologCheckoutRouteImport } from './routes/api/public/homolog-checkout'
 import { Route as ApiPublicSetupCheckoutRouteImport } from './routes/api/public/setup-checkout'
 import { Route as ApiPublicValidarLicencaRouteImport } from './routes/api/public/validar-licenca'
@@ -341,11 +340,6 @@ const ApiPublicDownloadExtensaoRoute =
     path: '/api/public/download-extensao',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiPublicFixAuthRoute = ApiPublicFixAuthRouteImport.update({
-  id: '/api/public/fix-auth',
-  path: '/api/public/fix-auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicHomologCheckoutRoute =
   ApiPublicHomologCheckoutRouteImport.update({
     id: '/api/public/homolog-checkout',
@@ -534,7 +528,6 @@ export interface FileRoutesByFullPath {
   '/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
-  '/api/public/fix-auth': typeof ApiPublicFixAuthRoute
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
@@ -610,7 +603,6 @@ export interface FileRoutesByTo {
   '/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
-  '/api/public/fix-auth': typeof ApiPublicFixAuthRoute
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
@@ -689,7 +681,6 @@ export interface FileRoutesById {
   '/_app/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
-  '/api/public/fix-auth': typeof ApiPublicFixAuthRoute
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
@@ -768,7 +759,6 @@ export interface FileRouteTypes {
     | '/packs/$slug'
     | '/admin/clientes/$id'
     | '/api/public/download-extensao'
-    | '/api/public/fix-auth'
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
@@ -844,7 +834,6 @@ export interface FileRouteTypes {
     | '/packs/$slug'
     | '/admin/clientes/$id'
     | '/api/public/download-extensao'
-    | '/api/public/fix-auth'
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
@@ -922,7 +911,6 @@ export interface FileRouteTypes {
     | '/_app/packs/$slug'
     | '/admin/clientes/$id'
     | '/api/public/download-extensao'
-    | '/api/public/fix-auth'
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
@@ -959,7 +947,6 @@ export interface RootRouteChildren {
   RegistroRoute: typeof RegistroRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ApiPublicDownloadExtensaoRoute: typeof ApiPublicDownloadExtensaoRoute
-  ApiPublicFixAuthRoute: typeof ApiPublicFixAuthRoute
   ApiPublicHomologCheckoutRoute: typeof ApiPublicHomologCheckoutRoute
   ApiPublicSetupCheckoutRoute: typeof ApiPublicSetupCheckoutRoute
   ApiPublicValidarLicencaRoute: typeof ApiPublicValidarLicencaRoute
@@ -1345,13 +1332,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicDownloadExtensaoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/fix-auth': {
-      id: '/api/public/fix-auth'
-      path: '/api/public/fix-auth'
-      fullPath: '/api/public/fix-auth'
-      preLoaderRoute: typeof ApiPublicFixAuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/homolog-checkout': {
       id: '/api/public/homolog-checkout'
       path: '/api/public/homolog-checkout'
@@ -1653,7 +1633,6 @@ const rootRouteChildren: RootRouteChildren = {
   RegistroRoute: RegistroRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ApiPublicDownloadExtensaoRoute: ApiPublicDownloadExtensaoRoute,
-  ApiPublicFixAuthRoute: ApiPublicFixAuthRoute,
   ApiPublicHomologCheckoutRoute: ApiPublicHomologCheckoutRoute,
   ApiPublicSetupCheckoutRoute: ApiPublicSetupCheckoutRoute,
   ApiPublicValidarLicencaRoute: ApiPublicValidarLicencaRoute,
