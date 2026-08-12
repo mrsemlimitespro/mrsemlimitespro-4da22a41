@@ -71,7 +71,8 @@ const adminItems: NavItem[] = [
   { title: "Financeiro", url: "/admin/pagamentos", icon: Coins },
   { title: "Segurança & API", url: "/admin/api-dashboard", icon: Server },
 ];
-];
+
+
 
 type FooterItem = NavItem | { title: string; action: "logout"; icon: IconType };
 
