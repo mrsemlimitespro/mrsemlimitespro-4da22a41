@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate, useRouter } from "@tanstack/react-r
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { BrandLockup } from "@/components/brand";
+import { BRAND_NAME, BRAND_TAGLINE, BrandLockup, BrandMark } from "@/components/brand";
 import { PasswordInput, SocialSignIn } from "@/components/auth-extras";
 import { NativeService } from "@/native/NativeService";
 import {
