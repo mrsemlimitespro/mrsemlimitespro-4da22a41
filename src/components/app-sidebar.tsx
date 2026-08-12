@@ -108,10 +108,10 @@ export function AppSidebar() {
   // Cliente final não enxerga funções de revendedor (Painel/Licenças/Clientes/Créditos).
   const primaryItems: NavItem[] = (() => {
     if (authed !== true) return publicItems;
-    if (role === "admin") return [...publicItems, ...revendedorItems, ...adminItems];
-    if (isPrivilegedRole(role)) return [...publicItems, ...revendedorItems];
-    // cliente ou role ainda carregando: só conteúdo público + Aulas
-    return [...publicItems, ...clienteItems];
+    if (role === "admin") return [...publicItems, ...adminItems, ...aiItems];
+    if (isPrivilegedRole(role)) return [...publicItems, ...revendedorItems, ...aiItems];
+    // cliente ou role ainda carregando
+    return [...publicItems, ...clienteItems, ...aiItems];
   })();
   const footerItems: FooterItem[] = authed === true ? authedFooterItems : anonFooterItems;
 
