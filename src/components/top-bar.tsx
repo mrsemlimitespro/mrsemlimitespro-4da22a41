@@ -34,7 +34,7 @@ function timeAgo(iso: string) {
   return `há ${d}d`;
 }
 
-import { isAdminEmail } from "@/hooks/useIsAdmin";
+
 
 export function TopBar() {
   const [adminOpen, setAdminOpen] = useState(false);
