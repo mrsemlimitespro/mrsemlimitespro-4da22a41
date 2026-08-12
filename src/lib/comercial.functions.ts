@@ -81,7 +81,7 @@ export const generateLicenseByRevendedor = createServerFn({ method: "POST" })
       .insert({
         chave: key,
         produto_id: plano.produto_id,
-        plano_id: plano.id,
+        plano_id: plano.id as any, // Cast to any to bypass strict never if it exists
         revendedor_id: rev.id,
         cliente_id: data.clienteId,
         status: "ativa",

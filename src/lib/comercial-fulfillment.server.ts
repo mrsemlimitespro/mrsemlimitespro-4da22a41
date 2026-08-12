@@ -59,12 +59,12 @@ export async function executeFulfillment(params: {
         .insert({
           chave: key,
           produto_id: produto.id,
-          plano_id: plano.id,
+          plano_id: plano.id as any, // Cast to any to bypass strict never if it exists
           cliente_id: txn.cliente_id,
           revendedor_id: txn.revendedor_id,
           status: "ativa",
           tipo: "premium",
-          metadata: ({ transaction_id: txn.id } as unknown) as Json
+          metadata: { transaction_id: txn.id } as any
         })
         .select()
         .single();
