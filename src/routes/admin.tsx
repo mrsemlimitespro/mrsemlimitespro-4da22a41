@@ -201,7 +201,7 @@ function AdminShell() {
       <div className="flex min-h-screen">
         <aside className="hidden w-64 shrink-0 border-r border-white/5 bg-black/30 p-4 md:flex md:flex-col">
           <div className="mb-6 flex items-center gap-2 px-2">
-            <BrandMark size={36} />
+            <BrandMark size={40} />
             <div>
               <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Admin</div>
               <div className="text-sm font-semibold">{BRAND_NAME}</div>
