@@ -14,7 +14,7 @@ const cors = {
  * Retorna { whatsapp_url } lido de admin_settings.config_extensao.
  */
 export const Route = createFileRoute("/api/public/ext/functions/v1/get-support-info")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
       GET: async () => {

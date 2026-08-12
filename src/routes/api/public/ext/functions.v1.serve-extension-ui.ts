@@ -16,7 +16,7 @@ const headers = {
 };
 
 export const Route = createFileRoute("/api/public/ext/functions/v1/serve-extension-ui")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers }),
       GET: async () => new Response(HTML_SHELL, { status: 200, headers }),

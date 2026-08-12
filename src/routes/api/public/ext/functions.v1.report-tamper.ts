@@ -38,10 +38,10 @@ const KNOWN_SIGNALS = new Set([
 const SUPORTE_NUM = "5511962579428";
 
 export const Route = createFileRoute("/api/public/ext/functions/v1/report-tamper")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
-      POST: async ({ request }) => {
+      POST: async ({ request }: { request: Request }) => {
         let body: any = {};
         try {
           body = await request.json();

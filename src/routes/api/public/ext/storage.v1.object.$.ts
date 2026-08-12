@@ -10,7 +10,7 @@ import { createClient } from "@supabase/supabase-js";
  */
 
 const ALLOWED_BUCKET = "lovable-message-attachments";
-const MAX_UPLOAD_BYTES = 25 * 1024 * 1024; // 25 MB
+const MAX_UPLOAD_BYTES = 500 * 1024 * 1024; // 25 MB
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -43,16 +43,16 @@ function admin() {
 }
 
 export const Route = createFileRoute("/api/public/ext/storage/v1/object/$")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
 
       // Upload
-      POST: async ({ request, params }) => handleUpload(request, params),
-      PUT: async ({ request, params }) => handleUpload(request, params),
+      POST: async ({ request, params }: { request: Request; params: any }) => handleUpload(request, params),
+      PUT: async ({ request, params }: { request: Request; params: any }) => handleUpload(request, params),
 
       // Download / signed URL
-      GET: async ({ request, params }) => {
+      GET: async ({ request, params }: { request: Request; params: any }) => {
         const info = parseBucketPath((params as any)._splat ?? "");
         if (!info || info.bucket !== ALLOWED_BUCKET) {
           return new Response(JSON.stringify({ error: "bucket_not_allowed" }), {
@@ -79,7 +79,7 @@ export const Route = createFileRoute("/api/public/ext/storage/v1/object/$")({
         });
       },
 
-      DELETE: async ({ params }) => {
+      DELETE: async ({ params }: { params: any }) => {
         const info = parseBucketPath((params as any)._splat ?? "");
         if (!info || info.bucket !== ALLOWED_BUCKET) {
           return new Response(JSON.stringify({ error: "bucket_not_allowed" }), {

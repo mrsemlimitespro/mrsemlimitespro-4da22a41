@@ -15,7 +15,7 @@ const cors = {
  * Retorna a lista de templates armazenada em admin_settings.config_extensao.templates.
  */
 export const Route = createFileRoute("/api/public/ext/functions/v1/get-templates")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
       GET: async () => await respond(),

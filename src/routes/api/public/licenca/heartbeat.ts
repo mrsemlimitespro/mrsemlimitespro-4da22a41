@@ -9,10 +9,10 @@ const cors = {
 };
 
 export const Route = createFileRoute("/api/public/licenca/heartbeat")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
-      POST: async ({ request }) => {
+      POST: async ({ request }: { request: Request }) => {
         let body: any = {};
         try {
           body = await request.json();

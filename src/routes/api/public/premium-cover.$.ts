@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/api/public/premium-cover/$")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
-      GET: async ({ params }) => {
+      GET: async ({ params }: { params: any }) => {
         const path = (params as any)._splat as string;
         if (!path || path.includes("..")) return new Response("Not found", { status: 404 });
 
