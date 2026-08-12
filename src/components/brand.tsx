@@ -1,9 +1,10 @@
-import logoAsset from "@/assets/mr-sem-limites-logo.png.asset.json";
 import { cn } from "@/lib/utils";
 
 export const BRAND_NAME = "MR sem limites";
 export const BRAND_TAGLINE = "PREMIUM";
-export const BRAND_LOGO_URL = logoAsset.url;
+// Logo oficial no novo Supabase Storage (admin-media bucket)
+export const BRAND_LOGO_URL = "https://nbehebyxnkpihbiathmx.supabase.co/storage/v1/object/public/config/mr-sem-limites-logo.png";
+
 
 export function BrandMark({
   size = 40,
