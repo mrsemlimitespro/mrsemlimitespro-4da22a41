@@ -122,7 +122,9 @@ const specialLinks: SpecialLink[] = [
   { key: "home", to: "/admin/home", label: "Vitrine Home", icon: HomeIcon, group: "Ultra Admin" },
 
   // 📦 MR CENTRAL
-  { key: "produtos", to: "/admin/loja-produtos", label: "Produtos", icon: Blocks, group: "MR CENTRAL" },
+  { key: "extensoes", to: "/admin/$resource", params: { resource: "extensoes" }, label: "Extensões", icon: Blocks, group: "MR CENTRAL" },
+  { key: "product_versions", to: "/admin/$resource", params: { resource: "product_versions" }, label: "Releases & Versões", icon: Download, group: "MR CENTRAL" },
+  { key: "produtos", to: "/admin/loja-produtos", label: "Produtos Venda", icon: Store, group: "MR CENTRAL" },
   { key: "licencas", to: "/admin/licencas", label: "Gestão de Licenças", icon: KeySquare, group: "MR CENTRAL" },
   { key: "clientes", to: "/admin/clientes", label: "Base de Clientes", icon: Users, group: "MR CENTRAL" },
   { key: "api-dashboard", to: "/admin/api-dashboard", label: "API & Conectividade", icon: Server, group: "MR CENTRAL" },

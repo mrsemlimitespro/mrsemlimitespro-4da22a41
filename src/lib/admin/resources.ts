@@ -1296,3 +1296,76 @@ export const resources: Resource[] = [
 
 export { Store };
 export const resourceByKey = new Map(resources.map((r) => [r.key, r]));
+
+  {
+    key: "extensoes",
+    label: "Extensões",
+    singular: "Extensão",
+    table: "extensoes",
+    icon: Blocks,
+    group: "MR CENTRAL",
+    orderBy: { column: "created_at", ascending: false },
+    searchColumns: ["nome", "slug", "sigla"],
+    fields: [
+      { key: "produto_id", label: "Produto Vinculado", type: "select_from_table", fromTable: { table: "produtos", labelKey: "nome" }, required: true },
+      { key: "nome", label: "Nome", type: "text", required: true },
+      { key: "slug", label: "Slug (URL)", type: "text", required: true, placeholder: "ex: mr-central-lovable" },
+      { key: "sigla", label: "Sigla (Licença)", type: "text", required: true, placeholder: "ex: LOV" },
+      { key: "icone_url", label: "Ícone (URL)", type: "image" },
+      { key: "capa_url", label: "Capa (URL)", type: "image" },
+      { key: "descricao", label: "Descrição Curta", type: "textarea" },
+      { key: "descricao_completa", label: "Descrição Completa", type: "textarea" },
+      {
+        key: "categoria",
+        label: "Categoria",
+        type: "select",
+        options: [
+          { value: "utilitario", label: "Utilitário" },
+          { value: "automacao", label: "Automação" },
+          { value: "ia", label: "Inteligência Artificial" },
+          { value: "marketing", label: "Marketing" },
+        ],
+      },
+      {
+        key: "status",
+        label: "Status",
+        type: "select",
+        options: [
+          { value: "ativo", label: "Ativo" },
+          { value: "manutencao", label: "Em Manutenção" },
+          { value: "descontinuado", label: "Descontinuado" },
+        ],
+      },
+      { key: "versao_atual", label: "Versão Atual", type: "text", placeholder: "ex: 1.0.0" },
+      { key: "metadata", label: "Metadados (JSON)", type: "textarea" },
+    ],
+    listColumns: [
+      { key: "nome", label: "Nome" },
+      { key: "sigla", label: "Sigla" },
+      { key: "versao_atual", label: "Versão" },
+      { key: "status", label: "Status" },
+    ],
+  },
+  {
+    key: "product_versions",
+    label: "Versões & Releases",
+    singular: "Versão",
+    table: "product_versions",
+    icon: Download,
+    group: "MR CENTRAL",
+    orderBy: { column: "created_at", ascending: false },
+    fields: [
+      { key: "extensao_id", label: "Extensão", type: "select_from_table", fromTable: { table: "extensoes", labelKey: "nome" }, required: true },
+      { key: "versao", label: "Versão", type: "text", required: true, placeholder: "ex: 1.0.1" },
+      { key: "changelog", label: "Notas da Versão", type: "textarea" },
+      { key: "download_url", label: "URL de Download", type: "text" },
+      { key: "checksum", label: "Checksum (SHA-256)", type: "text" },
+      { key: "obrigatoria", label: "Atualização Obrigatória", type: "boolean" },
+      { key: "versao_minima", label: "Versão Mínima Compatível", type: "text" },
+    ],
+    listColumns: [
+      { key: "versao", label: "Versão" },
+      { key: "obrigatoria", label: "Obrigatória", format: "boolean" },
+      { key: "created_at", label: "Lançada em", format: "date" },
+    ],
+  },
