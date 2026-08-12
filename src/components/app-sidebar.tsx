@@ -35,32 +35,40 @@ type NavItem = {
   icon: IconType;
 };
 
-// Público: acessível sem login (Home + Agents + Prompts)
+// Público: acessível sem login
 const publicItems: NavItem[] = [
   { title: "Início", url: "/", icon: LayoutDashboard },
-  { title: "Agentes", url: "/agents", icon: Bot },
-  { title: "Prompts", url: "/prompts", icon: Wand2 },
 ];
 
-// Cliente final autenticado: acesso ao conteúdo, sem funções de revenda
+// Área de IA (Novo Centralizado)
+const aiItems: NavItem[] = [
+  { title: "Prompts IA", url: "/prompts", icon: Wand2 },
+  { title: "Agentes IA", url: "/agents", icon: Bot },
+];
+
+// Cliente final: acessa seus produtos e downloads
 const clienteItems: NavItem[] = [
+  { title: "Meus Produtos", url: "/dashboard", icon: Store },
+  { title: "Downloads", url: "/baixar-extensao", icon: Download },
   { title: "Aulas", url: "/aulas", icon: GraduationCap },
 ];
 
-// Revendedor / Admin: painel comercial completo
+// Revendedor: operação comercial
 const revendedorItems: NavItem[] = [
-  { title: "Painel", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Licenças", url: "/licencas", icon: KeyRound },
-  { title: "Clientes", url: "/clientes", icon: Users },
-  { title: "Revendas", url: "/revendedor", icon: Store },
-  { title: "Créditos", url: "/creditos", icon: Coins },
-  { title: "Aulas", url: "/aulas", icon: GraduationCap },
+  { title: "Painel Revenda", url: "/dashboard", icon: LayoutDashboard },
+  { title: "Gerar Licenças", url: "/licencas", icon: KeyRound },
+  { title: "Meus Clientes", url: "/clientes", icon: Users },
+  { title: "Saldo/Créditos", url: "/creditos", icon: Coins },
 ];
 
-// Só admin: gestão global dos revendedores cadastrados
+// Ultra Admin: controle total
 const adminItems: NavItem[] = [
-  { title: "Revendedores", url: "/admin/revendedores-gestao", icon: Store },
-  { title: "API Control", url: "/admin/api-dashboard", icon: Server },
+  { title: "MR CENTRAL", url: "/dashboard", icon: LayoutDashboard },
+  { title: "Produtos & Extensões", url: "/admin/loja-produtos", icon: Store },
+  { title: "Gestão Licenças", url: "/admin/licencas", icon: KeyRound },
+  { title: "Revendedores", url: "/admin/revendedores-gestao", icon: Users },
+  { title: "Financeiro", url: "/admin/pagamentos", icon: Coins },
+  { title: "Segurança & API", url: "/admin/api-dashboard", icon: Server },
 ];
 
 type FooterItem = NavItem | { title: string; action: "logout"; icon: IconType };
