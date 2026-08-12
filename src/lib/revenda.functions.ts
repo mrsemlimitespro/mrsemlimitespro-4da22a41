@@ -38,7 +38,6 @@ export const atomicDebitAndGenerateLicense = createServerFn({ method: "POST" })
     
     if (!plano) throw new Error("Plano não encontrado");
     
-    // Aqui assumimos que creditos_incluidos no plano para revendedor representa o custo em créditos
     const custo = plano.creditos_incluidos || 1; 
 
     if (saldo < custo) {
@@ -46,16 +45,19 @@ export const atomicDebitAndGenerateLicense = createServerFn({ method: "POST" })
     }
 
     // 2. Transação Atômica (Simulada via lógica de segurança no Postgres ou sequência garantida)
-    // Gerar Chave Pattern: <SIGLA>-MR-XXXX-XXXX-XXXX-XXXX
-    const randomHex = () => crypto.randomBytes(2).toString('hex').toUpperCase();
-    const key = \`\${data.sigla.toUpperCase()}-MR-\${randomHex()}-\${randomHex()}-\${randomHex()}-\${randomHex()}\`;
+    const randomHex = () => {
+      const buf = new Uint8Array(2);
+      crypto.getRandomValues(buf);
+      return Array.from(buf).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+    };
+    const key = `${data.sigla.toUpperCase()}-MR-${randomHex()}-${randomHex()}-${randomHex()}-${randomHex()}`;
 
     // Inserir Débito
     const { error: debitError } = await supabaseAdmin.from("creditos_ledger").insert({
       revendedor_id: data.revendedorId,
       quantidade: -custo,
       tipo: "saida",
-      descricao: \`Geração de licença \${key}\`,
+      descricao: `Geração de licença ${key}`,
       metadata: { sigla: data.sigla, produto_id: data.produtoId } as any
     });
 
@@ -65,7 +67,7 @@ export const atomicDebitAndGenerateLicense = createServerFn({ method: "POST" })
     const { data: licenca, error: licError } = await supabaseAdmin.from("licencas").insert({
       chave: key,
       produto_id: data.produtoId,
-      cliente_id: null, // Será vinculado ou cadastrado
+      cliente_id: null,
       email: data.clienteData.email,
       tipo: "premium",
       status: "ativa",
@@ -77,12 +79,11 @@ export const atomicDebitAndGenerateLicense = createServerFn({ method: "POST" })
     }).select().single();
 
     if (licError) {
-      // Rollback manual do crédito (ou usar rpc para transação real)
       await supabaseAdmin.from("creditos_ledger").insert({
         revendedor_id: data.revendedorId,
         quantidade: custo,
         tipo: "entrada",
-        descricao: \`Rollback erro geração \${key}\`
+        descricao: `Rollback erro geração ${key}`
       });
       throw licError;
     }
