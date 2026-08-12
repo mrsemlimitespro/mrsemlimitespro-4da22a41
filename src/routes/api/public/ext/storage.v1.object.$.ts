@@ -48,8 +48,8 @@ export const Route = createFileRoute("/api/public/ext/storage/v1/object/$")({
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
 
       // Upload
-      POST: async ({ request, params }) => handleUpload(request, params),
-      PUT: async ({ request, params }) => handleUpload(request, params),
+      POST: async ({ request, params }: { request: Request; params: any }) => handleUpload(request, params),
+      PUT: async ({ request, params }: { request: Request; params: any }) => handleUpload(request, params),
 
       // Download / signed URL
       GET: async ({ request, params }) => {
