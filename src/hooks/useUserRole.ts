@@ -11,13 +11,13 @@
  */
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { isAdminEmail } from "@/hooks/useIsAdmin";
+
 
 export type UserRole = "loading" | "visitor" | "admin" | "revendedor" | "cliente";
 
 async function detectRole(user: { id: string; email?: string | null } | null): Promise<UserRole> {
   if (!user) return "visitor";
-  if (isAdminEmail(user.email)) return "admin";
+  
 
   // Checagem paralela: role admin em user_roles + registro em revendedores
   const [adminRes, revRes] = await Promise.all([
