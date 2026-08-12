@@ -59,9 +59,7 @@ import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as AdminVisualizacaoRouteImport } from './routes/admin.visualizacao'
 import { Route as AppPacksSlugRouteImport } from './routes/_app.packs.$slug'
 import { Route as AdminClientesIdRouteImport } from './routes/admin.clientes.$id'
-import { Route as ApiPublicDebugEnvRouteImport } from './routes/api/public/debug-env'
 import { Route as ApiPublicDownloadExtensaoRouteImport } from './routes/api/public/download-extensao'
-import { Route as ApiPublicHomologLegacyRouteImport } from './routes/api/public/homolog-legacy'
 import { Route as ApiPublicValidarLicencaRouteImport } from './routes/api/public/validar-licenca'
 import { Route as ApiPublicExtSendCommandRouteImport } from './routes/api/public/ext/send-command'
 import { Route as ApiPublicExtValidateLicenseRouteImport } from './routes/api/public/ext/validate-license'
@@ -334,22 +332,12 @@ const AdminClientesIdRoute = AdminClientesIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => AdminClientesRoute,
 } as any)
-const ApiPublicDebugEnvRoute = ApiPublicDebugEnvRouteImport.update({
-  id: '/api/public/debug-env',
-  path: '/api/public/debug-env',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicDownloadExtensaoRoute =
   ApiPublicDownloadExtensaoRouteImport.update({
     id: '/api/public/download-extensao',
     path: '/api/public/download-extensao',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiPublicHomologLegacyRoute = ApiPublicHomologLegacyRouteImport.update({
-  id: '/api/public/homolog-legacy',
-  path: '/api/public/homolog-legacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicValidarLicencaRoute = ApiPublicValidarLicencaRouteImport.update({
   id: '/api/public/validar-licenca',
   path: '/api/public/validar-licenca',
@@ -526,9 +514,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
-  '/api/public/debug-env': typeof ApiPublicDebugEnvRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
-  '/api/public/homolog-legacy': typeof ApiPublicHomologLegacyRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/validate-license': typeof ApiPublicExtValidateLicenseRoute
@@ -601,9 +587,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
-  '/api/public/debug-env': typeof ApiPublicDebugEnvRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
-  '/api/public/homolog-legacy': typeof ApiPublicHomologLegacyRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/validate-license': typeof ApiPublicExtValidateLicenseRoute
@@ -679,9 +663,7 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/_app/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
-  '/api/public/debug-env': typeof ApiPublicDebugEnvRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
-  '/api/public/homolog-legacy': typeof ApiPublicHomologLegacyRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/validate-license': typeof ApiPublicExtValidateLicenseRoute
@@ -757,9 +739,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/packs/$slug'
     | '/admin/clientes/$id'
-    | '/api/public/debug-env'
     | '/api/public/download-extensao'
-    | '/api/public/homolog-legacy'
     | '/api/public/validar-licenca'
     | '/api/public/ext/send-command'
     | '/api/public/ext/validate-license'
@@ -832,9 +812,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/packs/$slug'
     | '/admin/clientes/$id'
-    | '/api/public/debug-env'
     | '/api/public/download-extensao'
-    | '/api/public/homolog-legacy'
     | '/api/public/validar-licenca'
     | '/api/public/ext/send-command'
     | '/api/public/ext/validate-license'
@@ -909,9 +887,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/_app/packs/$slug'
     | '/admin/clientes/$id'
-    | '/api/public/debug-env'
     | '/api/public/download-extensao'
-    | '/api/public/homolog-legacy'
     | '/api/public/validar-licenca'
     | '/api/public/ext/send-command'
     | '/api/public/ext/validate-license'
@@ -945,9 +921,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegistroRoute: typeof RegistroRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
-  ApiPublicDebugEnvRoute: typeof ApiPublicDebugEnvRoute
   ApiPublicDownloadExtensaoRoute: typeof ApiPublicDownloadExtensaoRoute
-  ApiPublicHomologLegacyRoute: typeof ApiPublicHomologLegacyRoute
   ApiPublicValidarLicencaRoute: typeof ApiPublicValidarLicencaRoute
   ApiPublicExtSendCommandRoute: typeof ApiPublicExtSendCommandRoute
   ApiPublicExtValidateLicenseRoute: typeof ApiPublicExtValidateLicenseRoute
@@ -1324,25 +1298,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminClientesIdRouteImport
       parentRoute: typeof AdminClientesRoute
     }
-    '/api/public/debug-env': {
-      id: '/api/public/debug-env'
-      path: '/api/public/debug-env'
-      fullPath: '/api/public/debug-env'
-      preLoaderRoute: typeof ApiPublicDebugEnvRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/download-extensao': {
       id: '/api/public/download-extensao'
       path: '/api/public/download-extensao'
       fullPath: '/api/public/download-extensao'
       preLoaderRoute: typeof ApiPublicDownloadExtensaoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/homolog-legacy': {
-      id: '/api/public/homolog-legacy'
-      path: '/api/public/homolog-legacy'
-      fullPath: '/api/public/homolog-legacy'
-      preLoaderRoute: typeof ApiPublicHomologLegacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/validar-licenca': {
@@ -1631,9 +1591,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegistroRoute: RegistroRoute,
   ResetPasswordRoute: ResetPasswordRoute,
-  ApiPublicDebugEnvRoute: ApiPublicDebugEnvRoute,
   ApiPublicDownloadExtensaoRoute: ApiPublicDownloadExtensaoRoute,
-  ApiPublicHomologLegacyRoute: ApiPublicHomologLegacyRoute,
   ApiPublicValidarLicencaRoute: ApiPublicValidarLicencaRoute,
   ApiPublicExtSendCommandRoute: ApiPublicExtSendCommandRoute,
   ApiPublicExtValidateLicenseRoute: ApiPublicExtValidateLicenseRoute,
