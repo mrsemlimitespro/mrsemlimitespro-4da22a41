@@ -22,7 +22,7 @@ const executeMigration = createServerFn({ method: 'POST' })
       const { data: existing } = await supabaseAdmin
         .from('ai_prompts')
         .select('id')
-        .or(`legacy_id.eq.${p.id},titulo.eq.${p.titulo}`)
+        .or(`legacy_id.eq."${p.id}",titulo.eq."${p.titulo}"`)
         .maybeSingle();
 
       if (existing) {
@@ -50,7 +50,7 @@ const executeMigration = createServerFn({ method: 'POST' })
             status: p.status,
             ...p.metadata
         }
-      });
+      } as any);
 
       if (!error) results.prompts.migrated++;
     }
@@ -60,7 +60,7 @@ const executeMigration = createServerFn({ method: 'POST' })
       const { data: existing } = await supabaseAdmin
         .from('ai_agents')
         .select('id')
-        .or(`legacy_id.eq.${a.id},titulo.eq.${a.titulo}`)
+        .or(`legacy_id.eq."${a.id}",titulo.eq."${a.titulo}"`)
         .maybeSingle();
 
       if (existing) {
@@ -93,13 +93,30 @@ const executeMigration = createServerFn({ method: 'POST' })
         provedor: a.provedor,
         nivel: a.nivel,
         numero: a.numero
-      });
+      } as any);
 
       if (!error) results.agents.migrated++;
     }
 
     return results;
   });
+
+export const Route = createFileRoute('/api/public/setup-migration-v6a')({
+  server: {
+    handlers: {
+      POST: async ({ request }) => {
+        try {
+          const body = await request.json();
+          const results = await executeMigration({ data: body });
+          return new Response(JSON.stringify(results), { status: 200 });
+        } catch (e: any) {
+          return new Response(e.message, { status: 500 });
+        }
+      }
+    }
+  }
+});
+
 
 export const Route = createFileRoute('/api/public/setup-migration-v6a')({
   server: {
