@@ -60,16 +60,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MR Sem Limites — Plataforma completa de revenda digital" },
+      { title: "MR CENTRAL — Ecossistema Digital de Alta Performance" },
       {
         name: "description",
         content:
-          "Agentes IA, Prompts, Packs, Extensões, Automações, Templates e Comunidade. Compra segura, entrega após confirmação do pagamento e suporte no WhatsApp.",
+          "A plataforma definitiva para licenciamento, revenda e distribuição de softwares, extensões e inteligência artificial.",
       },
-      { property: "og:title", content: "MR Sem Limites — Revenda Digital Premium" },
+      { property: "og:title", content: "MR CENTRAL — Ecossistema Digital" },
       {
         property: "og:description",
-        content: "Agentes IA, Prompts, Packs, Extensões, Automações e mais.",
+        content: "Gestão profissional de produtos digitais, licenças e revendedores.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -169,8 +169,7 @@ function HeroSection({
           MR CENTRAL
         </h1>
         <p className="max-w-2xl px-2 text-sm text-muted-foreground md:text-base">
-          Agentes IA, Prompts, Packs, Extensões, Automações, Templates e Comunidade —
-          entrega após a confirmação do pagamento, com suporte humano no WhatsApp.
+          A plataforma definitiva para gestão de produtos, licenciamento criptográfico e revenda digital escalável.
         </p>
       </div>
 
