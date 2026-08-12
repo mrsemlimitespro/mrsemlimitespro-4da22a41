@@ -1,6 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 import { Database } from "@/integrations/supabase/types";
 
+type Json = Database['public']['Tables']['payment_transactions']['Row']['metadata'];
+
 /**
  * Motor de Fulfillment Idempotente do MR CENTRAL V2.
  */
@@ -63,7 +65,7 @@ export async function executeFulfillment(params: {
           status: "ativa",
           tipo: "premium",
           validade: new Date(Date.now() + (plano.duracao_dias || 30) * 24 * 60 * 60 * 1000).toISOString(),
-          metadata: { transaction_id: txn.id }
+          metadata: { transaction_id: txn.id } as Json
         })
         .select()
         .single();
@@ -99,7 +101,7 @@ export async function executeFulfillment(params: {
         quantidade: Number(pack.quantidade),
         tipo: "credito",
         motivo: `Compra de Pack: ${pack.nome}`,
-        metadata: { transaction_id: txn.id, pack_id: pack.id }
+        metadata: { transaction_id: txn.id, pack_id: pack.id } as Json
       });
 
       result = { type: "credits", amount: pack.quantidade, novoSaldo };
@@ -111,16 +113,17 @@ export async function executeFulfillment(params: {
         ...(txn.metadata as any || {}),
         fulfilled_at: new Date().toISOString(),
         fulfillment_result: result
-      } as never
+      } as Json
     }).eq("id", txn.id);
 
-    // 3. Notificar (Simulado via email_queue)
+    // 3. Notificar
     if (txn.cliente?.email) {
       await sb.from("email_queue").insert({
         destinatario: txn.cliente.email,
         assunto: "MR CENTRAL — Sua compra foi processada!",
         template_chave: "fulfillment.sucesso",
-        metadata: { result, transaction_id: txn.id } as never
+        html: `<h1>Olá! Sua compra foi processada com sucesso.</h1><p>Resultado: ${JSON.stringify(result)}</p>`,
+        metadata: { result, transaction_id: txn.id } as Json
       });
     }
 
@@ -131,7 +134,7 @@ export async function executeFulfillment(params: {
     await sb.from("payment_webhook_logs").insert({
       gateway_slug: txn.gateway_slug as any,
       event_type: "fulfillment_failure",
-      payload: { transaction_id: txn.id, error: e.message } as never,
+      payload: { transaction_id: txn.id, error: e.message } as Json,
       status: "error",
       error: e.message
     });
