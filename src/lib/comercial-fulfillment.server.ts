@@ -108,7 +108,7 @@ export async function executeFulfillment(params: {
 
     // 2. Marcar como FULFILLED
     await sb.from("payment_transactions").update({
-      metadata: ({
+      metadata: {
         ...(txn.metadata as any || {}),
         fulfilled_at: new Date().toISOString(),
         fulfillment_result: result
