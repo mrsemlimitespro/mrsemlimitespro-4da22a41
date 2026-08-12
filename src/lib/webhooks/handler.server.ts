@@ -168,6 +168,17 @@ async function processEvent(
     return { status: "error", error: error.message };
   }
 
+  // Se aprovado agora (ou se já era aprovado e chegou evento novo relevante), dispara fulfillment
+  if (nextStatus === "aprovado") {
+    try {
+      const { executeFulfillment } = await import("@/lib/comercial-fulfillment.server");
+      await executeFulfillment({ transactionId: txn.id });
+    } catch (e: any) {
+      console.error("[Webhook Fulfillment Error]", e);
+      return { status: "error", error: `fulfillment-failed: ${e.message}` };
+    }
+  }
+
   return { status: "ok", error: null };
 }
 
