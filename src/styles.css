@@ -107,11 +107,11 @@
 
   /* Brand palette — magenta/violet/pink/orange do print */
   --brand-violet: oklch(0.62 0.24 295);
-  --brand-blue: oklch(0.66 0.2 260);
+  --brand-blue: #3b82f6;
   --brand-cyan: oklch(0.78 0.14 210);
-  --brand-magenta: oklch(0.68 0.28 340);
+  --brand-magenta: #d946ef;
   --brand-pink: oklch(0.72 0.26 5);
-  --brand-orange: oklch(0.74 0.2 45);
+  --brand-orange: #f97316;
   --brand-emerald: oklch(0.72 0.16 165);
   --brand-amber: oklch(0.78 0.16 80);
 

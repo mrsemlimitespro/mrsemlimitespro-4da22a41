@@ -10,7 +10,7 @@ import { createClient } from "@supabase/supabase-js";
  */
 
 const ALLOWED_BUCKET = "lovable-message-attachments";
-const MAX_UPLOAD_BYTES = 500 * 1024 * 1024; // 25 MB
+const MAX_UPLOAD_BYTES = 500 * 1024 * 1024; // 500 MB
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
