@@ -1640,6 +1640,45 @@ export type Database = {
           },
         ]
       }
+      license_features: {
+        Row: {
+          created_at: string | null
+          feature_name: string
+          feature_value: Json | null
+          id: string
+          license_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          feature_name: string
+          feature_value?: Json | null
+          id?: string
+          license_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          feature_name?: string
+          feature_value?: Json | null
+          id?: string
+          license_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "license_features_license_id_fkey"
+            columns: ["license_id"]
+            isOneToOne: false
+            referencedRelation: "licencas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "license_features_license_id_fkey"
+            columns: ["license_id"]
+            isOneToOne: false
+            referencedRelation: "v_licenca_estado"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       logos: {
         Row: {
           ativo: boolean
@@ -2522,6 +2561,44 @@ export type Database = {
           visibility_status?: string
         }
         Relationships: []
+      }
+      product_versions: {
+        Row: {
+          changelog: string | null
+          created_at: string | null
+          download_url: string | null
+          id: string
+          is_critical: boolean | null
+          product_id: string | null
+          version: string
+        }
+        Insert: {
+          changelog?: string | null
+          created_at?: string | null
+          download_url?: string | null
+          id?: string
+          is_critical?: boolean | null
+          product_id?: string | null
+          version: string
+        }
+        Update: {
+          changelog?: string | null
+          created_at?: string | null
+          download_url?: string | null
+          id?: string
+          is_critical?: boolean | null
+          product_id?: string | null
+          version?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_versions_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       produtos: {
         Row: {
