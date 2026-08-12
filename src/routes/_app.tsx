@@ -38,7 +38,7 @@ function AppLayout() {
       <ImpersonationBanner />
       <MustChangePasswordGuard />
       <div
-        className="relative z-10 flex min-h-screen flex-col pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[calc(0.5rem+env(safe-area-inset-top))] md:pl-[calc(5rem+env(safe-area-inset-left))] md:pt-[calc(1rem+env(safe-area-inset-top))]"
+        className="relative z-10 flex min-h-screen flex-col pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[calc(0.5rem+env(safe-area-inset-top))] md:pl-[calc(6.5rem+env(safe-area-inset-left))] md:pt-[calc(1rem+env(safe-area-inset-top))]"
       >
 
         <TopBar />

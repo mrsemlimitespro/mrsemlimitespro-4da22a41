@@ -22,7 +22,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { cn } from "@/lib/utils";
 import { playSfx } from "@/lib/sfx";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { BRAND_NAME, BrandMark } from "@/components/brand";
+import { BRAND_NAME, BrandMark, BrandLogo } from "@/components/brand";
 import { LogoutIncentiveDialog } from "@/components/logout-incentive-dialog";
 import { useIsAuthed } from "@/hooks/useIsAuthed";
 import { useUserRole, isPrivilegedRole } from "@/hooks/useUserRole";
@@ -125,21 +125,24 @@ export function AppSidebar() {
           aria-label="Navegação principal"
           className={cn(
             "fixed left-3 top-1/2 z-40 hidden -translate-y-1/2 md:flex",
-            "flex-col items-center gap-1 rounded-full px-2 py-3",
-            "border border-border/70 bg-surface/50 backdrop-blur-xl",
+            "flex-col items-center gap-1 rounded-[2.5rem] px-2 py-4",
+            "border border-border/70 bg-surface/40 backdrop-blur-2xl transition-all duration-300",
+            "w-[76px] hover:w-[84px] group/sidebar"
           )}
           style={{
             boxShadow:
-              "0 0 0 1px oklch(1 0 0 / 4%), 0 20px 60px -20px oklch(0 0 0 / 70%), 0 0 40px -6px color-mix(in oklab, var(--brand-magenta) 45%, transparent)",
+              "0 0 0 1px oklch(1 0 0 / 4%), 0 20px 60px -20px oklch(0 0 0 / 70%), 0 0 40px -6px color-mix(in oklab, var(--brand-red-neon) 25%, transparent)",
           }}
         >
-          <Link
-            to="/"
-            aria-label={`${BRAND_NAME} — ir para o dashboard`}
-            className="mb-2 transition-transform duration-200 hover:scale-105"
-          >
-            <BrandMark size={42} />
-          </Link>
+          <div className="mb-4 flex w-full flex-col items-center px-1">
+            <Link
+              to="/"
+              aria-label={`${BRAND_NAME} — ir para o dashboard`}
+              className="relative transition-transform duration-300 hover:scale-105 active:scale-95"
+            >
+              <BrandLogo className="h-16 w-full" />
+            </Link>
+          </div>
 
           <PanelBadge authed={authed} role={role} />
 
