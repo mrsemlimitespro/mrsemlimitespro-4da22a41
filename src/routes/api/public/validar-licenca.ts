@@ -28,7 +28,7 @@ export const Route = createFileRoute("/api/public/validar-licenca")({
             "Access-Control-Allow-Headers": "content-type",
           },
         }),
-      POST: async ({ request }) => {
+      POST: async ({ request }: { request: Request }) => {
         const cors = {
           "Access-Control-Allow-Origin": "*",
           "content-type": "application/json",

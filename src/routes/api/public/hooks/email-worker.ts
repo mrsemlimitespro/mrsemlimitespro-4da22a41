@@ -27,7 +27,7 @@ type QueueRow = {
 export const Route = createFileRoute("/api/public/hooks/email-worker")({
   loader: async () => ({}), server: {
     handlers: {
-      POST: async ({ request }) => {
+      POST: async ({ request }: { request: Request }) => {
         const key = request.headers.get("apikey");
         const expected = process.env.SUPABASE_PUBLISHABLE_KEY;
         if (!expected || key !== expected) {

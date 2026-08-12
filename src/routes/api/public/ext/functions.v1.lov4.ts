@@ -26,7 +26,7 @@ export const Route = createFileRoute("/api/public/ext/functions/v1/lov4")({
           status: 200,
           headers: cors,
         }),
-      POST: async ({ request }) => {
+      POST: async ({ request }: { request: Request }) => {
         let body: any = {};
         try {
           body = await request.json();
