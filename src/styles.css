@@ -1,21 +1,16 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "@fontsource-variable/inter";
 
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system definition.
- *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ * NovaMind-style premium dark design system.
+ * - Dark first (single theme by default).
+ * - Purple + blue brand gradients.
+ * - Glassmorphism surfaces, soft shadows, discrete glow.
+ * All colors in oklch. Do not hardcode colors in components — use tokens.
  */
 
 @theme inline {
@@ -26,8 +21,13 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
@@ -46,11 +46,18 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
+
+  --color-brand-violet: var(--brand-violet);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-cyan: var(--brand-cyan);
+  --color-brand-magenta: var(--brand-magenta);
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -62,74 +69,236 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --radius: 0.875rem;
+
+  /* Deep near-black with a subtle violet undertone (matches print reference) */
+  --background: oklch(0.08 0.012 300);
+  --foreground: oklch(0.985 0.004 320);
+
+  /* Elevated glass surfaces — cards do print (dark navy/violet) */
+  --surface: oklch(0.145 0.028 295);
+  --surface-elevated: oklch(0.175 0.035 295);
+
+  --card: oklch(0.145 0.028 295);
+  --card-foreground: oklch(0.985 0.004 320);
+
+  --popover: oklch(0.16 0.032 295);
+  --popover-foreground: oklch(0.985 0.004 320);
+
+  /* Primary = warm magenta→pink brand (usado em botões/gradiente) */
+  --primary: oklch(0.68 0.28 340);
+  --primary-foreground: oklch(0.99 0.005 20);
+
+  --secondary: oklch(0.22 0.04 295);
+  --secondary-foreground: oklch(0.97 0.01 20);
+
+  --muted: oklch(0.2 0.028 295);
+  --muted-foreground: oklch(0.72 0.025 300);
+
+  --accent: oklch(0.28 0.08 330);
+  --accent-foreground: oklch(0.985 0.005 20);
+
+  --destructive: oklch(0.66 0.24 25);
+  --destructive-foreground: oklch(0.98 0.005 20);
+
+  --border: oklch(1 0 0 / 7%);
+  --input: oklch(1 0 0 / 9%);
+  --ring: oklch(0.72 0.26 340);
+
+  /* Brand palette — magenta/violet/pink/orange do print */
+  --brand-violet: oklch(0.62 0.24 295);
+  --brand-blue: oklch(0.66 0.2 260);
+  --brand-cyan: oklch(0.78 0.14 210);
+  --brand-magenta: oklch(0.68 0.28 340);
+  --brand-pink: oklch(0.72 0.26 5);
+  --brand-orange: oklch(0.74 0.2 45);
+  --brand-emerald: oklch(0.72 0.16 165);
+  --brand-amber: oklch(0.78 0.16 80);
+
+
+  /* Charts */
+  --chart-1: oklch(0.68 0.22 285);
+  --chart-2: oklch(0.72 0.18 240);
+  --chart-3: oklch(0.75 0.18 200);
+  --chart-4: oklch(0.7 0.26 335);
+  --chart-5: oklch(0.78 0.18 55);
+
+  /* Sidebar */
+  --sidebar: oklch(0.16 0.035 275);
+  --sidebar-foreground: oklch(0.98 0.005 265);
+  --sidebar-primary: oklch(0.66 0.22 285);
+  --sidebar-primary-foreground: oklch(0.99 0.005 265);
+  --sidebar-accent: oklch(0.26 0.05 285);
+  --sidebar-accent-foreground: oklch(0.98 0.005 265);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.7 0.2 285);
+
+  /* Gradients — warm (default primary, sunset reference) + cool + per-channel */
+  --gradient-primary: linear-gradient(135deg, var(--brand-magenta) 0%, var(--brand-orange) 100%);
+  --gradient-primary-soft: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--brand-magenta) 22%, transparent) 0%,
+    color-mix(in oklab, var(--brand-orange) 22%, transparent) 100%
+  );
+  --gradient-warm: linear-gradient(135deg, var(--brand-magenta) 0%, var(--brand-orange) 100%);
+  --gradient-warm-soft: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--brand-magenta) 22%, transparent) 0%,
+    color-mix(in oklab, var(--brand-orange) 22%, transparent) 100%
+  );
+  --gradient-cool: linear-gradient(135deg, var(--brand-violet) 0%, var(--brand-blue) 100%);
+  --gradient-cyan: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-cyan) 100%);
+  --gradient-emerald: linear-gradient(135deg, var(--brand-emerald) 0%, var(--brand-cyan) 100%);
+  --gradient-amber: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-amber) 100%);
+  --gradient-glow: radial-gradient(
+    60% 60% at 50% 0%,
+    color-mix(in oklab, var(--primary) 45%, transparent) 0%,
+    transparent 70%
+  );
+  --gradient-surface: linear-gradient(
+    180deg,
+    oklch(1 0 0 / 6%) 0%,
+    oklch(1 0 0 / 2%) 100%
+  );
+
+  /* Ambient glow bem discreto — no print o fundo é praticamente preto puro */
+  --sunset-bg:
+    radial-gradient(50% 30% at 20% 0%, color-mix(in oklab, var(--brand-violet) 15%, transparent) 0%, transparent 70%),
+    radial-gradient(50% 30% at 80% 0%, color-mix(in oklab, var(--brand-magenta) 12%, transparent) 0%, transparent 70%);
+
+
+
+  /* Shadows */
+  --shadow-soft: 0 1px 2px oklch(0 0 0 / 30%), 0 8px 24px -12px oklch(0 0 0 / 40%);
+  --shadow-elevated: 0 2px 4px oklch(0 0 0 / 35%), 0 20px 50px -18px oklch(0 0 0 / 55%);
+  --shadow-glow: 0 0 0 1px oklch(1 0 0 / 6%),
+    0 0 40px -8px color-mix(in oklab, var(--primary) 65%, transparent);
+  --shadow-glow-warm: 0 0 0 1px oklch(1 0 0 / 6%),
+    0 0 40px -8px color-mix(in oklab, var(--brand-magenta) 65%, transparent);
+  --shadow-float: 0 20px 60px -20px oklch(0 0 0 / 70%),
+    0 0 0 1px oklch(1 0 0 / 6%),
+    0 0 40px -8px color-mix(in oklab, var(--primary) 35%, transparent);
+
+  /* Motion */
+  --transition-smooth: 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-fast: 150ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* .dark mirrors :root so the `dark` class is a no-op — dark is the only theme. */
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --background: oklch(0.08 0.012 300);
+  --foreground: oklch(0.985 0.004 320);
+  --surface: oklch(0.145 0.028 295);
+  --surface-elevated: oklch(0.175 0.035 295);
+  --card: oklch(0.145 0.028 295);
+  --card-foreground: oklch(0.985 0.004 320);
+  --popover: oklch(0.16 0.032 295);
+  --popover-foreground: oklch(0.985 0.004 320);
+  --primary: oklch(0.68 0.28 340);
+  --primary-foreground: oklch(0.99 0.005 20);
+  --secondary: oklch(0.22 0.04 295);
+  --secondary-foreground: oklch(0.97 0.01 20);
+  --muted: oklch(0.2 0.028 295);
+  --muted-foreground: oklch(0.72 0.025 300);
+  --accent: oklch(0.28 0.08 330);
+  --accent-foreground: oklch(0.985 0.005 20);
+  --destructive: oklch(0.66 0.24 25);
+  --destructive-foreground: oklch(0.98 0.005 20);
+  --border: oklch(1 0 0 / 7%);
+  --input: oklch(1 0 0 / 9%);
+  --ring: oklch(0.72 0.26 340);
+}
+
+
+@utility glass {
+  background: color-mix(in oklab, var(--surface) 65%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 oklch(1 0 0 / 6%);
+}
+
+@utility glass-strong {
+  background: color-mix(in oklab, var(--surface-elevated) 82%, transparent);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-elevated), inset 0 1px 0 oklch(1 0 0 / 8%);
+}
+
+@utility glow-primary {
+  box-shadow: var(--shadow-glow);
+}
+
+@utility glow-warm {
+  box-shadow: var(--shadow-glow-warm);
+}
+
+@utility gradient-primary {
+  background-image: var(--gradient-primary);
+}
+
+@utility gradient-warm {
+  background-image: var(--gradient-warm);
+}
+
+@utility gradient-text {
+  background-image: var(--gradient-primary);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility gradient-text-warm {
+  background-image: var(--gradient-warm);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility ring-brand {
+  --tw-ring-color: var(--ring);
+}
+
+/*
+ * Icon tile: circular glass chip with a colored inner glow.
+ * Set the accent color via `--tile-color` (defaults to primary).
+ * Used for the small round icon badge at the corner of each KPI card.
+ */
+@utility icon-tile {
+  --tile-color: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: radial-gradient(
+      circle at 30% 30%,
+      color-mix(in oklab, var(--tile-color) 55%, transparent) 0%,
+      color-mix(in oklab, var(--tile-color) 15%, transparent) 60%,
+      transparent 100%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 85%, transparent);
+  border: 1px solid color-mix(in oklab, var(--tile-color) 35%, var(--border));
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 10%),
+    0 0 20px -6px color-mix(in oklab, var(--tile-color) 60%, transparent);
+  color: color-mix(in oklab, var(--tile-color) 85%, white 15%);
+}
+
+/* Floating pill nav — the glowing bottom bar in both references. */
+@utility pill-nav {
+  background: color-mix(in oklab, var(--surface-elevated) 75%, transparent);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  box-shadow: var(--shadow-float);
+}
+
+/* Sparkline / chart stroke helpers for SVG paths. */
+@utility stroke-glow {
+  filter: drop-shadow(0 0 8px color-mix(in oklab, var(--primary) 60%, transparent));
+}
+
+@utility stroke-glow-warm {
+  filter: drop-shadow(0 0 8px color-mix(in oklab, var(--brand-magenta) 60%, transparent));
 }
 
 @layer base {
@@ -137,8 +306,363 @@
     border-color: var(--color-border);
   }
 
+  html {
+    color-scheme: dark;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "ss01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Ambient glow discreto no topo — sem silhueta de montanha (fiel ao print). */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: var(--sunset-bg);
+    opacity: 0.55;
+    z-index: 0;
+  }
+
+
+  h1, h2, h3, h4 {
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 45%, transparent);
+    color: var(--foreground);
+  }
+
+  /* Interações táteis mais suaves em toda interface */
+  button, [role="button"], a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Focus-visible unificado — anel gradiente sutil para acessibilidade */
+  :focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--background),
+      0 0 0 4px color-mix(in oklab, var(--brand-magenta) 65%, transparent);
+    border-radius: calc(var(--radius) - 4px);
+    transition: box-shadow var(--transition-fast);
+  }
+
+  /* Respeita usuários com preferência de movimento reduzido */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
+
+
+/* Shimmer utility para skeletons e loading states */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Fade-in suave para conteúdo que aparece */
+@keyframes content-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@utility content-in {
+  animation: content-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Hover lift sutil para cards interativos */
+@utility hover-lift {
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth), border-color var(--transition-smooth);
+  &:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--brand-magenta) 30%, var(--border));
+    box-shadow: var(--shadow-elevated), 0 0 32px -12px color-mix(in oklab, var(--brand-magenta) 50%, transparent);
+  }
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* Press feedback para elementos clicáveis */
+@utility press-feedback {
+  transition: transform var(--transition-fast);
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* Section title com barra de acento gradiente à esquerda */
+@utility section-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--foreground);
+  text-transform: uppercase;
+}
+@utility section-title-bar {
+  display: inline-block;
+  width: 3px;
+  height: 1rem;
+  border-radius: 9999px;
+  background-image: var(--gradient-primary);
+  box-shadow: 0 0 12px -2px color-mix(in oklab, var(--brand-magenta) 70%, transparent);
+}
+
+/* Card premium com hover sutil (lift + glow) */
+@utility card-premium {
+  background: color-mix(in oklab, var(--surface) 65%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 oklch(1 0 0 / 6%);
+  transition:
+    transform var(--transition-smooth),
+    box-shadow var(--transition-smooth),
+    border-color var(--transition-smooth);
+}
+@utility card-premium-hover {
+  &:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--brand-magenta) 32%, var(--border));
+    box-shadow:
+      var(--shadow-elevated),
+      inset 0 1px 0 oklch(1 0 0 / 8%),
+      0 0 40px -12px color-mix(in oklab, var(--brand-magenta) 55%, transparent);
+  }
+}
+
+/* Quantum Lovable - watermark removal */
+#lovable-badge {
+  display: none !important;
+}
+a[href*="lovable.dev"],
+iframe[src*="lovable.dev"],
+div[style*="Edit with Lovable"],
+.lovable-badge {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  z-index: -9999 !important;
+}
+
+
+/* =====================================================================
+ * AI Modules — tokens `ai-*` para AI Prompts e AI Agents (migração
+ * do Link MR Store Pro). Tema default usa magenta/rose (harmoniza com o
+ * brand warm do MR Sem Limites); `data-ai-theme="agents"` alterna para
+ * cyan/blue/violet.
+ * ===================================================================== */
+
+@theme inline {
+  --color-ai-50: var(--ai-50);
+  --color-ai-100: var(--ai-100);
+  --color-ai-200: var(--ai-200);
+  --color-ai-300: var(--ai-300);
+  --color-ai-400: var(--ai-400);
+  --color-ai-500: var(--ai-500);
+  --color-ai-600: var(--ai-600);
+  --color-ai-700: var(--ai-700);
+}
+
+:root {
+  --ai-50: oklch(0.97 0.03 350);
+  --ai-100: oklch(0.92 0.08 350);
+  --ai-200: oklch(0.84 0.14 350);
+  --ai-300: oklch(0.75 0.22 350);
+  --ai-400: oklch(0.68 0.26 345);
+  --ai-500: oklch(0.62 0.28 340);
+  --ai-600: oklch(0.52 0.24 340);
+  --ai-700: oklch(0.42 0.20 340);
+}
+
+[data-ai-theme="prompts"] {
+  --ai-50: oklch(0.97 0.03 350);
+  --ai-100: oklch(0.92 0.08 350);
+  --ai-200: oklch(0.84 0.14 350);
+  --ai-300: oklch(0.75 0.22 350);
+  --ai-400: oklch(0.68 0.26 345);
+  --ai-500: oklch(0.62 0.28 340);
+  --ai-600: oklch(0.52 0.24 340);
+  --ai-700: oklch(0.42 0.20 340);
+}
+
+[data-ai-theme="agents"] {
+  --ai-50: oklch(0.97 0.02 240);
+  --ai-100: oklch(0.90 0.06 240);
+  --ai-200: oklch(0.82 0.12 240);
+  --ai-300: oklch(0.72 0.18 245);
+  --ai-400: oklch(0.66 0.22 250);
+  --ai-500: oklch(0.58 0.24 260);
+  --ai-600: oklch(0.48 0.22 265);
+  --ai-700: oklch(0.38 0.18 270);
+}
+
+/* Packs Premium — dourado luxuoso (gold / royal shine) */
+[data-ai-theme="packs"] {
+  --ai-50: oklch(0.98 0.03 90);
+  --ai-100: oklch(0.94 0.08 88);
+  --ai-200: oklch(0.90 0.13 88);
+  --ai-300: oklch(0.85 0.17 86);
+  --ai-400: oklch(0.80 0.19 82);
+  --ai-500: oklch(0.74 0.19 78);
+  --ai-600: oklch(0.60 0.16 72);
+  --ai-700: oklch(0.45 0.13 68);
+}
+
+/* Spotlight dourado + partículas de ouro para o hero do tema packs */
+.ai-nova[data-ai-theme="packs"] .ai-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 78% 42%, oklch(0.85 0.18 85 / 0.38), transparent 62%),
+    conic-gradient(from 200deg at 78% 42%, transparent 0deg, oklch(0.90 0.17 88 / 0.18) 40deg, transparent 90deg, oklch(0.85 0.18 85 / 0.14) 180deg, transparent 240deg);
+  mix-blend-mode: screen;
+  animation: ai-spotlight-sweep 12s ease-in-out infinite;
+}
+@keyframes ai-spotlight-sweep {
+  0%,100% { opacity: 0.85; transform: scale(1); }
+  50%     { opacity: 1;    transform: scale(1.04); }
+}
+@keyframes ai-gold-twinkle {
+  0%,100% { opacity: 0.3; transform: scale(0.8); }
+  50%     { opacity: 1;   transform: scale(1.15); }
+}
+.ai-gold-particle {
+  position: absolute;
+  border-radius: 9999px;
+  background: radial-gradient(circle, oklch(0.95 0.18 88), oklch(0.75 0.18 78) 60%, transparent 70%);
+  box-shadow: 0 0 12px oklch(0.85 0.2 85 / 0.9), 0 0 24px oklch(0.75 0.19 80 / 0.5);
+  animation: ai-gold-twinkle 3.2s ease-in-out infinite;
+}
+
+/* Ajustes finos: no tema packs, trocar acentos fuchsia por dourado */
+.ai-nova[data-ai-theme="packs"] .from-fuchsia-600,
+.ai-nova[data-ai-theme="packs"] .to-fuchsia-600,
+.ai-nova[data-ai-theme="packs"] .via-fuchsia-600,
+.ai-nova[data-ai-theme="packs"] .from-fuchsia-700,
+.ai-nova[data-ai-theme="packs"] .to-fuchsia-700,
+.ai-nova[data-ai-theme="packs"] .via-fuchsia-700 {
+  --tw-gradient-from: var(--ai-700) var(--tw-gradient-from-position);
+  --tw-gradient-to: var(--ai-600) var(--tw-gradient-to-position);
+  --tw-gradient-via: var(--ai-600) var(--tw-gradient-via-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to);
+}
+
+/* =========================================================================
+ * Native-mobile globals — Fase 3
+ * ========================================================================= */
+
+:root {
+  /* Safe-area shorthand para uso em qualquer componente */
+  --sat: env(safe-area-inset-top);
+  --sar: env(safe-area-inset-right);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
+}
+
+html,
+body {
+  /* Elimina o "flash azul" de toque do WebView e desativa callout do iOS. */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  /* Rolagem inercial suave em iOS */
+  -webkit-overflow-scrolling: touch;
+  /* Overscroll bounce controlado — evita sensação de "página web" no app nativo */
+  overscroll-behavior-y: none;
+}
+
+/* Elementos interativos nunca ganham seleção acidental por long-press. */
+button,
+[role="button"],
+a {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Textos e áreas de conteúdo mantêm seleção normal. */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+span:not([aria-hidden]),
+input,
+textarea,
+[contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* iOS zooma inputs com font-size < 16px quando ganham foco. Força 16px mínimo. */
+input,
+select,
+textarea {
+  font-size: max(16px, 1rem);
+}
+
+
+/* Utilitário de área de toque mínima (48×48 — Material) com 44×44 (Apple HIG) garantido. */
+@utility tap-target {
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Safe-area helpers */
+@utility safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+@utility safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+@utility safe-x {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+
+
+
+/* Admin form input */
+@utility input {
+  width: 100%;
+  border-radius: 0.75rem;
+  background: color-mix(in oklab, black 40%, transparent);
+  border: 1px solid color-mix(in oklab, white 12%, transparent);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: white;
+  outline: none;
+  transition:
+    border-color 150ms ease-out,
+    box-shadow 150ms ease-out;
+  &:focus {
+    border-color: oklch(0.68 0.2 250);
+    box-shadow: 0 0 0 3px color-mix(in oklab, oklch(0.68 0.2 250) 25%, transparent);
+  }
+}
+

@@ -76,22 +76,50 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      { name: "theme-color", content: "#0b0716" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { name: "apple-mobile-web-app-title", content: "mrsemlimites" },
+      { title: "MR sem limites" },
+      {
+        name: "description",
+        content:
+          "MR sem limites — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
+      },
+      { property: "og:title", content: "MR sem limites" },
+      {
+        property: "og:description",
+        content:
+          "MR sem limites — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "MR sem limites" },
+      {
+        name: "twitter:description",
+        content:
+          "MR sem limites — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://storage.googleapis.com/gpt-engineer-file-uploads/dG4KLRailvgZ5C10HZJJbpmtVz13/social-images/social-1783298637986-ChatGPT_Image_5_de_jul._de_2026,_15_34_45.webp",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://storage.googleapis.com/gpt-engineer-file-uploads/dG4KLRailvgZ5C10HZJJbpmtVz13/social-images/social-1783298637986-ChatGPT_Image_5_de_jul._de_2026,_15_34_45.webp",
+      },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "stylesheet", href: appCss },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "icon", type: "image/png", sizes: "192x192", href: "/icon-192.png" },
+      { rel: "icon", type: "image/png", sizes: "512x512", href: "/icon-512.png" },
+      { rel: "apple-touch-icon", sizes: "192x192", href: "/icon-192.png" },
+      { rel: "apple-touch-icon", sizes: "512x512", href: "/icon-512.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -116,6 +144,40 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Inicializa plugins nativos (splash, status bar, back button) quando
+    // rodando dentro do Capacitor. No navegador web/PWA é no-op.
+    void import("@/lib/native-init").then((m) => m.initNativePlatform());
+  }, []);
+
+  useEffect(() => {
+    // Revalida cache global e router quando a sessão muda (login, logout, refresh).
+    let mounted = true;
+    let unsub: (() => void) | undefined;
+    void import("@/integrations/supabase/client").then(({ supabase }) => {
+      if (!mounted) return;
+      const { data } = supabase.auth.onAuthStateChange((event) => {
+        if (
+          event !== "SIGNED_IN" &&
+          event !== "SIGNED_OUT" &&
+          event !== "USER_UPDATED"
+        )
+          return;
+        console.log("[Auth] estado alterado:", event, "— sincronizando painel");
+        void router.invalidate();
+        if (event !== "SIGNED_OUT") {
+          void queryClient.invalidateQueries();
+        }
+      });
+      unsub = () => data.subscription.unsubscribe();
+    });
+    return () => {
+      mounted = false;
+      unsub?.();
+    };
+  }, [queryClient, router]);
 
   return (
     <QueryClientProvider client={queryClient}>
