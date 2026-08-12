@@ -16,8 +16,8 @@ import { Route as EsqueciSenhaRouteImport } from './routes/esqueci-senha'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AppRouteImport } from './routes/_app'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
-import { Route as AppIndexRouteImport } from './routes/_app.index'
 import { Route as AdminVisualizacaoRouteImport } from './routes/admin.visualizacao'
 import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as AdminSonsRouteImport } from './routes/admin.sons'
@@ -117,15 +117,15 @@ const AppRoute = AppRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
-} as any)
-const AppIndexRoute = AppIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AppRoute,
 } as any)
 const AdminVisualizacaoRoute = AdminVisualizacaoRouteImport.update({
   id: '/visualizacao',
@@ -465,7 +465,7 @@ const ApiPublicExtStorageV1ObjectSplatRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof AppIndexRoute
+  '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/checkout': typeof CheckoutRoute
   '/esqueci-senha': typeof EsqueciSenhaRoute
@@ -539,6 +539,7 @@ export interface FileRoutesByFullPath {
   '/api/public/ext/storage/v1/object/$': typeof ApiPublicExtStorageV1ObjectSplatRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/checkout': typeof CheckoutRoute
   '/esqueci-senha': typeof EsqueciSenhaRoute
   '/login': typeof LoginRoute
@@ -583,7 +584,6 @@ export interface FileRoutesByTo {
   '/admin/sons': typeof AdminSonsRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/admin/visualizacao': typeof AdminVisualizacaoRoute
-  '/': typeof AppIndexRoute
   '/admin': typeof AdminIndexRoute
   '/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
@@ -613,6 +613,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
   '/admin': typeof AdminRouteWithChildren
   '/checkout': typeof CheckoutRoute
@@ -659,7 +660,6 @@ export interface FileRoutesById {
   '/admin/sons': typeof AdminSonsRoute
   '/admin/usuarios': typeof AdminUsuariosRoute
   '/admin/visualizacao': typeof AdminVisualizacaoRoute
-  '/_app/': typeof AppIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/_app/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
@@ -764,6 +764,7 @@ export interface FileRouteTypes {
     | '/api/public/ext/storage/v1/object/$'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/checkout'
     | '/esqueci-senha'
     | '/login'
@@ -808,7 +809,6 @@ export interface FileRouteTypes {
     | '/admin/sons'
     | '/admin/usuarios'
     | '/admin/visualizacao'
-    | '/'
     | '/admin'
     | '/packs/$slug'
     | '/admin/clientes/$id'
@@ -837,6 +837,7 @@ export interface FileRouteTypes {
     | '/api/public/ext/storage/v1/object/$'
   id:
     | '__root__'
+    | '/'
     | '/_app'
     | '/admin'
     | '/checkout'
@@ -883,7 +884,6 @@ export interface FileRouteTypes {
     | '/admin/sons'
     | '/admin/usuarios'
     | '/admin/visualizacao'
-    | '/_app/'
     | '/admin/'
     | '/_app/packs/$slug'
     | '/admin/clientes/$id'
@@ -913,6 +913,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   AdminRoute: typeof AdminRouteWithChildren
   CheckoutRoute: typeof CheckoutRoute
@@ -996,19 +997,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/': {
       id: '/admin/'
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
-    }
-    '/_app/': {
-      id: '/_app/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof AppIndexRouteImport
-      parentRoute: typeof AppRoute
     }
     '/admin/visualizacao': {
       id: '/admin/visualizacao'
@@ -1491,7 +1492,6 @@ interface AppRouteChildren {
   AppQueroSerRevendedorRoute: typeof AppQueroSerRevendedorRoute
   AppRedefinirSenhaRoute: typeof AppRedefinirSenhaRoute
   AppRevendedorRoute: typeof AppRevendedorRoute
-  AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -1512,7 +1512,6 @@ const AppRouteChildren: AppRouteChildren = {
   AppQueroSerRevendedorRoute: AppQueroSerRevendedorRoute,
   AppRedefinirSenhaRoute: AppRedefinirSenhaRoute,
   AppRevendedorRoute: AppRevendedorRoute,
-  AppIndexRoute: AppIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -1584,6 +1583,7 @@ const AdminRouteChildren: AdminRouteChildren = {
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   AdminRoute: AdminRouteWithChildren,
   CheckoutRoute: CheckoutRoute,
@@ -1624,13 +1624,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

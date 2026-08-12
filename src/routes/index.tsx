@@ -78,7 +78,7 @@ import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useUserRole } from "@/hooks/useUserRole";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/_app/")({
+export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "MR Sem Limites — Plataforma completa de revenda digital" },
