@@ -165,8 +165,8 @@ function HeroSection({
         <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-widest text-muted-foreground">
           <span aria-hidden>{panelBadge.icon}</span> {panelBadge.label}
         </span>
-        <h1 className="gradient-text-warm text-3xl font-black tracking-tight md:text-5xl">
-          {BRAND_NAME}
+        <h1 className="gradient-text-warm text-3xl font-black tracking-tight md:text-5xl uppercase tracking-[0.2em]">
+          MR CENTRAL
         </h1>
         <p className="max-w-2xl px-2 text-sm text-muted-foreground md:text-base">
           Agentes IA, Prompts, Packs, Extensões, Automações, Templates e Comunidade —
