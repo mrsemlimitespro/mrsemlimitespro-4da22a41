@@ -335,30 +335,21 @@ function DashboardPage() {
 
   return (
     <div className="mx-auto w-full max-w-[1280px] space-y-8 pb-32">
-      {/* Hero — Logo centralizada + boas-vindas */}
-      <section className="relative flex flex-col items-center justify-center gap-4 py-6 md:py-10">
-        <div
-          className="relative grid place-items-center rounded-[26%] overflow-hidden"
-          style={{
-            width: "min(280px, 65vw)",
-            height: "min(280px, 65vw)",
-            boxShadow:
-              "0 0 0 1px color-mix(in oklab, var(--brand-magenta) 45%, transparent), 0 0 100px -4px color-mix(in oklab, var(--brand-magenta) 50%, transparent), 0 0 120px -10px color-mix(in oklab, var(--brand-blue) 45%, transparent)",
-          }}
-        >
-          <img
-            src={BRAND_LOGO_URL}
-            alt={`${BRAND_NAME} logo`}
-            className="h-full w-full object-contain"
-          draggable={false}
-          />
-        </div>
+      {/* Hero — Boas-vindas sem logo redundante (já está na watermark e sidebar) */}
+      <section className="relative flex flex-col items-center justify-center gap-2 py-6 md:py-10">
         <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="gradient-text-warm text-2xl font-bold tracking-tight md:text-3xl uppercase tracking-[0.2em]">
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-brand-red-neon/30 bg-brand-red-neon/10 px-3 py-1">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-red-neon opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-red-neon"></span>
+            </span>
+            <span className="text-[10px] font-bold tracking-[0.2em] text-brand-red-neon uppercase">SISTEMA ATIVO</span>
+          </div>
+          <h1 className="gradient-text text-3xl font-bold tracking-tight md:text-5xl uppercase tracking-[0.3em] drop-shadow-[0_0_20px_rgba(255,0,0,0.3)]">
             MR CENTRAL
           </h1>
-          <p className="max-w-md text-xs text-muted-foreground md:text-sm">
-            Bem-vindo ao seu portal unificado de produtos e licenciamento.
+          <p className="max-w-md text-xs font-medium text-muted-foreground md:text-sm uppercase tracking-widest opacity-60">
+            {BRAND_NAME} — ECOSSISTEMA PREMIUM
           </p>
         </div>
       </section>

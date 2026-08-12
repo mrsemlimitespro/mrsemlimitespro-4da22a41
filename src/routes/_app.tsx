@@ -2,6 +2,7 @@ import { Outlet, createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
 
 import { AppSidebar } from "@/components/app-sidebar";
+import { BrandWatermark, BrandDecorations } from "@/components/brand";
 import { InnerPillMenu } from "@/components/inner-pill-menu";
 import { MobileBottomNav } from "@/components/mobile-bottom-nav";
 import { TopBar } from "@/components/top-bar";
@@ -29,16 +30,15 @@ function AppLayout() {
   return (
     <div className="relative min-h-screen w-full">
       {/* Partículas só em telas >= md para preservar performance em mobile */}
-      <div className="pointer-events-none absolute inset-0 z-0 hidden md:block">
-        <Suspense fallback={null}>
-          <SoftParticles />
-        </Suspense>
-      </div>
+      {/* Brand visuals: Watermark and Decorations */}
+      <BrandWatermark />
+      <BrandDecorations />
+
       <AppSidebar />
       <ImpersonationBanner />
       <MustChangePasswordGuard />
       <div
-        className="relative z-10 flex min-h-screen flex-col pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[calc(0.5rem+env(safe-area-inset-top))] md:pl-[calc(5rem+env(safe-area-inset-left))] md:pt-[calc(1rem+env(safe-area-inset-top))]"
+        className="relative z-10 flex min-h-screen flex-col pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] pt-[calc(0.5rem+env(safe-area-inset-top))] md:pl-[calc(6.5rem+env(safe-area-inset-left))] md:pt-[calc(1rem+env(safe-area-inset-top))]"
       >
 
         <TopBar />
