@@ -109,7 +109,7 @@ type SpecialLink = {
 
 // Ordem canônica dos grupos no sidebar — Fase 2B: 5 grupos enterprise
 const GROUP_ORDER = [
-  "Dashboard",
+  "Ultra Admin",
   "MR CENTRAL",
   "Usuários",
   "Comercial",
@@ -118,8 +118,8 @@ const GROUP_ORDER = [
 
 const specialLinks: SpecialLink[] = [
   // 🏠 Dashboard
-  { key: "dashboard", to: "/admin", label: "Dashboard Central", icon: LayoutDashboard, exact: true, group: "Dashboard" },
-  { key: "home", to: "/admin/home", label: "Vitrine Home", icon: HomeIcon, group: "Dashboard" },
+  { key: "dashboard", to: "/admin", label: "Dashboard Central", icon: LayoutDashboard, exact: true, group: "Ultra Admin" },
+  { key: "home", to: "/admin/home", label: "Vitrine Home", icon: HomeIcon, group: "Ultra Admin" },
 
   // 📦 MR CENTRAL
   { key: "produtos", to: "/admin/loja-produtos", label: "Produtos", icon: Blocks, group: "MR CENTRAL" },

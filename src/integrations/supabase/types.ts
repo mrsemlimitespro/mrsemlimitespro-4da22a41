@@ -765,6 +765,80 @@ export type Database = {
           },
         ]
       }
+      creditos_ledger: {
+        Row: {
+          admin_id: string | null
+          created_at: string | null
+          id: string
+          idempotency_key: string | null
+          licenca_id: string | null
+          metadata: Json | null
+          motivo: string | null
+          pedido_id: string | null
+          produto_id: string | null
+          quantidade: number
+          revendedor_id: string
+          tipo: string
+        }
+        Insert: {
+          admin_id?: string | null
+          created_at?: string | null
+          id?: string
+          idempotency_key?: string | null
+          licenca_id?: string | null
+          metadata?: Json | null
+          motivo?: string | null
+          pedido_id?: string | null
+          produto_id?: string | null
+          quantidade: number
+          revendedor_id: string
+          tipo: string
+        }
+        Update: {
+          admin_id?: string | null
+          created_at?: string | null
+          id?: string
+          idempotency_key?: string | null
+          licenca_id?: string | null
+          metadata?: Json | null
+          motivo?: string | null
+          pedido_id?: string | null
+          produto_id?: string | null
+          quantidade?: number
+          revendedor_id?: string
+          tipo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "creditos_ledger_produto_id_fkey"
+            columns: ["produto_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "creditos_ledger_revendedor_id_fkey"
+            columns: ["revendedor_id"]
+            isOneToOne: false
+            referencedRelation: "revendedores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "creditos_ledger_revendedor_id_fkey"
+            columns: ["revendedor_id"]
+            isOneToOne: false
+            referencedRelation: "v_hierarquia_clientes"
+            referencedColumns: ["revendedor_id"]
+          },
+          {
+            foreignKeyName: "creditos_ledger_revendedor_id_fkey"
+            columns: ["revendedor_id"]
+            isOneToOne: false
+            referencedRelation: "v_revendedor_visao"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       creditos_movimentos: {
         Row: {
           created_at: string
@@ -1272,6 +1346,89 @@ export type Database = {
             foreignKeyName: "extensao_configs_produto_id_fkey"
             columns: ["produto_id"]
             isOneToOne: true
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      extensoes: {
+        Row: {
+          arquivo_download_url: string | null
+          bucket: string | null
+          capa: string | null
+          changelog: Json | null
+          created_at: string | null
+          descricao_completa: string | null
+          descricao_curta: string | null
+          download_publico: boolean | null
+          icone: string | null
+          id: string
+          metadata: Json | null
+          nome: string
+          path: string | null
+          produto_id: string
+          screenshots: string[] | null
+          slug: string
+          status: string | null
+          tamanho_bytes: number | null
+          trial_disponivel: boolean | null
+          updated_at: string | null
+          versao_atual: string | null
+          versao_minima: string | null
+        }
+        Insert: {
+          arquivo_download_url?: string | null
+          bucket?: string | null
+          capa?: string | null
+          changelog?: Json | null
+          created_at?: string | null
+          descricao_completa?: string | null
+          descricao_curta?: string | null
+          download_publico?: boolean | null
+          icone?: string | null
+          id?: string
+          metadata?: Json | null
+          nome: string
+          path?: string | null
+          produto_id: string
+          screenshots?: string[] | null
+          slug: string
+          status?: string | null
+          tamanho_bytes?: number | null
+          trial_disponivel?: boolean | null
+          updated_at?: string | null
+          versao_atual?: string | null
+          versao_minima?: string | null
+        }
+        Update: {
+          arquivo_download_url?: string | null
+          bucket?: string | null
+          capa?: string | null
+          changelog?: Json | null
+          created_at?: string | null
+          descricao_completa?: string | null
+          descricao_curta?: string | null
+          download_publico?: boolean | null
+          icone?: string | null
+          id?: string
+          metadata?: Json | null
+          nome?: string
+          path?: string | null
+          produto_id?: string
+          screenshots?: string[] | null
+          slug?: string
+          status?: string | null
+          tamanho_bytes?: number | null
+          trial_disponivel?: boolean | null
+          updated_at?: string | null
+          versao_atual?: string | null
+          versao_minima?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "extensoes_produto_id_fkey"
+            columns: ["produto_id"]
+            isOneToOne: false
             referencedRelation: "produtos"
             referencedColumns: ["id"]
           },
@@ -2350,12 +2507,85 @@ export type Database = {
         }
         Relationships: []
       }
+      pedidos: {
+        Row: {
+          cliente_id: string
+          created_at: string | null
+          id: string
+          metadata: Json | null
+          moeda: string | null
+          revendedor_id: string | null
+          status: string | null
+          total: number
+          updated_at: string | null
+        }
+        Insert: {
+          cliente_id: string
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          moeda?: string | null
+          revendedor_id?: string | null
+          status?: string | null
+          total: number
+          updated_at?: string | null
+        }
+        Update: {
+          cliente_id?: string
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          moeda?: string | null
+          revendedor_id?: string | null
+          status?: string | null
+          total?: number
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pedidos_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pedidos_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "v_hierarquia_clientes"
+            referencedColumns: ["cliente_id"]
+          },
+          {
+            foreignKeyName: "pedidos_revendedor_id_fkey"
+            columns: ["revendedor_id"]
+            isOneToOne: false
+            referencedRelation: "revendedores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pedidos_revendedor_id_fkey"
+            columns: ["revendedor_id"]
+            isOneToOne: false
+            referencedRelation: "v_hierarquia_clientes"
+            referencedColumns: ["revendedor_id"]
+          },
+          {
+            foreignKeyName: "pedidos_revendedor_id_fkey"
+            columns: ["revendedor_id"]
+            isOneToOne: false
+            referencedRelation: "v_revendedor_visao"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       planos: {
         Row: {
           ativo: boolean
           badge: string | null
           beneficios: Json
           botao_texto: string | null
+          comissao_revenda: number | null
           cor: string | null
           cor_gradiente: string | null
           created_at: string
@@ -2366,12 +2596,16 @@ export type Database = {
           icone: string | null
           id: string
           imagem_url: string | null
+          is_trial: boolean | null
           link: string | null
+          moeda: string | null
           nome: string
           ordem: number
           preco: number
           produto_id: string | null
+          slug: string | null
           tipo: string
+          unidade_duracao: string | null
           updated_at: string
         }
         Insert: {
@@ -2379,6 +2613,7 @@ export type Database = {
           badge?: string | null
           beneficios?: Json
           botao_texto?: string | null
+          comissao_revenda?: number | null
           cor?: string | null
           cor_gradiente?: string | null
           created_at?: string
@@ -2389,12 +2624,16 @@ export type Database = {
           icone?: string | null
           id?: string
           imagem_url?: string | null
+          is_trial?: boolean | null
           link?: string | null
+          moeda?: string | null
           nome: string
           ordem?: number
           preco?: number
           produto_id?: string | null
+          slug?: string | null
           tipo?: string
+          unidade_duracao?: string | null
           updated_at?: string
         }
         Update: {
@@ -2402,6 +2641,7 @@ export type Database = {
           badge?: string | null
           beneficios?: Json
           botao_texto?: string | null
+          comissao_revenda?: number | null
           cor?: string | null
           cor_gradiente?: string | null
           created_at?: string
@@ -2412,12 +2652,16 @@ export type Database = {
           icone?: string | null
           id?: string
           imagem_url?: string | null
+          is_trial?: boolean | null
           link?: string | null
+          moeda?: string | null
           nome?: string
           ordem?: number
           preco?: number
           produto_id?: string | null
+          slug?: string | null
           tipo?: string
+          unidade_duracao?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -2993,6 +3237,67 @@ export type Database = {
         }
         Relationships: []
       }
+      ranking: {
+        Row: {
+          clientes_novos: number | null
+          id: string
+          metadata: Json | null
+          periodo_fim: string
+          periodo_inicio: string
+          posicao: number | null
+          receita_total: number | null
+          revendedor_id: string
+          updated_at: string | null
+          vendas_count: number | null
+        }
+        Insert: {
+          clientes_novos?: number | null
+          id?: string
+          metadata?: Json | null
+          periodo_fim: string
+          periodo_inicio: string
+          posicao?: number | null
+          receita_total?: number | null
+          revendedor_id: string
+          updated_at?: string | null
+          vendas_count?: number | null
+        }
+        Update: {
+          clientes_novos?: number | null
+          id?: string
+          metadata?: Json | null
+          periodo_fim?: string
+          periodo_inicio?: string
+          posicao?: number | null
+          receita_total?: number | null
+          revendedor_id?: string
+          updated_at?: string | null
+          vendas_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ranking_revendedor_id_fkey"
+            columns: ["revendedor_id"]
+            isOneToOne: false
+            referencedRelation: "revendedores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ranking_revendedor_id_fkey"
+            columns: ["revendedor_id"]
+            isOneToOne: false
+            referencedRelation: "v_hierarquia_clientes"
+            referencedColumns: ["revendedor_id"]
+          },
+          {
+            foreignKeyName: "ranking_revendedor_id_fkey"
+            columns: ["revendedor_id"]
+            isOneToOne: false
+            referencedRelation: "v_revendedor_visao"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       revendedores: {
         Row: {
           auth_user_id: string | null
@@ -3203,6 +3508,70 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      trials: {
+        Row: {
+          cliente_id: string | null
+          created_at: string | null
+          device_id: string | null
+          email: string | null
+          expira_em: string
+          hwid: string | null
+          id: string
+          ip: string | null
+          metadata: Json | null
+          produto_id: string
+          status: string | null
+        }
+        Insert: {
+          cliente_id?: string | null
+          created_at?: string | null
+          device_id?: string | null
+          email?: string | null
+          expira_em: string
+          hwid?: string | null
+          id?: string
+          ip?: string | null
+          metadata?: Json | null
+          produto_id: string
+          status?: string | null
+        }
+        Update: {
+          cliente_id?: string | null
+          created_at?: string | null
+          device_id?: string | null
+          email?: string | null
+          expira_em?: string
+          hwid?: string | null
+          id?: string
+          ip?: string | null
+          metadata?: Json | null
+          produto_id?: string
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trials_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trials_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "v_hierarquia_clientes"
+            referencedColumns: ["cliente_id"]
+          },
+          {
+            foreignKeyName: "trials_produto_id_fkey"
+            columns: ["produto_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
