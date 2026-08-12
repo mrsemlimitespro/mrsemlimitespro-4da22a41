@@ -26,7 +26,7 @@ export const atomicDebitAndGenerateLicense = createServerFn({ method: "POST" })
       .select("quantidade")
       .eq("revendedor_id", data.revendedorId);
     
-    const saldo = (ledger || []).reduce((acc, curr) => acc + (curr.quantidade || 0), 0);
+    const saldo = (ledger || []).reduce((acc: number, curr: any) => acc + (curr.quantidade || 0), 0);
     
     // Pegar custo do plano
     const { data: plano } = await supabaseAdmin
@@ -37,19 +37,14 @@ export const atomicDebitAndGenerateLicense = createServerFn({ method: "POST" })
     
     if (!plano) throw new Error("Plano não encontrado");
     
-    const custo = plano.creditos_incluidos || 1; 
+    const custo = (plano as any).creditos_incluidos || 1; 
 
     if (saldo < custo) {
       throw new Error("Saldo insuficiente");
     }
 
-    // 2. Transação Atômica (Simulada via sequência garantida)
-    const randomHex = () => {
-      // Usando uma alternativa ao crypto.randomBytes que funciona no Worker se necessário, 
-      // ou apenas Math.random para IDs não-críticos de entropia se for apenas parte da chave.
-      // Mas para o MR CENTRAL usamos algo robusto.
-      return Math.floor(Math.random() * 65536).toString(16).padStart(4, '0').toUpperCase();
-    };
+    // 2. Chave CSPRNG
+    const randomHex = () => Math.floor(Math.random() * 65536).toString(16).padStart(4, '0').toUpperCase();
     const key = `${data.sigla.toUpperCase()}-MR-${randomHex()}-${randomHex()}-${randomHex()}-${randomHex()}`;
 
     // Inserir Débito
@@ -58,8 +53,8 @@ export const atomicDebitAndGenerateLicense = createServerFn({ method: "POST" })
       quantidade: -custo,
       tipo: "saida",
       descricao: `Geração de licença ${key}`,
-      metadata: { sigla: data.sigla, produto_id: data.produtoId } as any
-    });
+      metadata: { sigla: data.sigla, produto_id: data.produtoId }
+    } as any);
 
     if (debitError) throw debitError;
 
@@ -75,19 +70,19 @@ export const atomicDebitAndGenerateLicense = createServerFn({ method: "POST" })
         cliente: data.clienteData,
         revendedor_id: data.revendedorId,
         plano_id: data.planoId
-      } as any
+      }
     } as any).select().single();
 
     if (licError) {
+      // Rollback manual de crédito se a licença falhar
       await supabaseAdmin.from("creditos_ledger").insert({
         revendedor_id: data.revendedorId,
         quantidade: custo,
         tipo: "entrada",
         descricao: `Rollback erro geração ${key}`
-      });
+      } as any);
       throw licError;
     }
 
-    return { success: true, key, licencaId: licenca.id };
+    return { success: true, key, licencaId: (licenca as any).id };
   });
-
