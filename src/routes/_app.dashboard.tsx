@@ -35,8 +35,8 @@ import { useModules } from "@/lib/admin/use-modules";
 export const Route = createFileRoute("/_app/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — MR Lova" },
-      { name: "description", content: "Painel principal do MR Lova." },
+      { title: "Painel MR CENTRAL — Ecossistema Digital" },
+      { name: "description", content: "Dashboard unificado do ecossistema MR CENTRAL." },
     ],
   }),
   component: DashboardPage,
