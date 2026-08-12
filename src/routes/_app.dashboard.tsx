@@ -358,7 +358,7 @@ function DashboardPage() {
             MR CENTRAL
           </h1>
           <p className="max-w-md text-xs text-muted-foreground md:text-sm">
-            Ecossistema unificado de produtos, licenciamento e revenda digital.
+            Bem-vindo ao seu portal unificado de produtos e licenciamento.
           </p>
         </div>
       </section>
