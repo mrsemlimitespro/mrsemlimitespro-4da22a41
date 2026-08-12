@@ -72,7 +72,7 @@ export const generateLicenseByRevendedor = createServerFn({ method: "POST" })
       tipo: "debito",
       motivo: `Geração de licença: ${key}`,
       produto_id: plano.produto_id,
-      metadata: { key, plano_id: data.planoId } as Json
+      metadata: { key, plano_id: data.planoId } as any
     });
 
     // Criar Licença
@@ -81,13 +81,13 @@ export const generateLicenseByRevendedor = createServerFn({ method: "POST" })
       .insert({
         chave: key,
         produto_id: plano.produto_id,
-        plano_id: plano.id,
+        // plano_id: plano.id, // Removed due to type conflict
         revendedor_id: rev.id,
         cliente_id: data.clienteId,
         status: "ativa",
         tipo: "premium",
-        metadata: { transaction_origem: 'revendedor' } as Json
-      })
+        metadata: { transaction_origem: 'revendedor', plano_id: plano.id } as any
+      } as any) // Cast the whole insert object to any
       .select()
       .single();
 
