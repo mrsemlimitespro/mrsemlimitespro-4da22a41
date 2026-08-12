@@ -79,7 +79,7 @@ export const Route = createFileRoute("/api/public/ext/storage/v1/object/$")({
         });
       },
 
-      DELETE: async ({ params }) => {
+      DELETE: async ({ params }: { params: any }) => {
         const info = parseBucketPath((params as any)._splat ?? "");
         if (!info || info.bucket !== ALLOWED_BUCKET) {
           return new Response(JSON.stringify({ error: "bucket_not_allowed" }), {
