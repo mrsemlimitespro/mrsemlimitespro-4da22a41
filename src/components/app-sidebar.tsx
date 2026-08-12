@@ -127,7 +127,7 @@ export function AppSidebar() {
             aria-label={`${BRAND_NAME} — ir para o dashboard`}
             className="mb-2 transition-transform duration-200 hover:scale-105"
           >
-            <BrandMark size={38} />
+            <BrandMark size={42} />
           </Link>
 
           <PanelBadge authed={authed} role={role} />

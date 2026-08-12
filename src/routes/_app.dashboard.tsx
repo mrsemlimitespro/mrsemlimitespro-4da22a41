@@ -340,16 +340,16 @@ function DashboardPage() {
         <div
           className="relative grid place-items-center rounded-[26%] overflow-hidden"
           style={{
-            width: "min(220px, 55vw)",
-            height: "min(220px, 55vw)",
+            width: "min(280px, 65vw)",
+            height: "min(280px, 65vw)",
             boxShadow:
-              "0 0 0 1px color-mix(in oklab, var(--brand-magenta) 55%, transparent), 0 0 80px -4px color-mix(in oklab, var(--brand-magenta) 60%, transparent), 0 0 90px -10px color-mix(in oklab, var(--brand-blue) 55%, transparent)",
+              "0 0 0 1px color-mix(in oklab, var(--brand-magenta) 45%, transparent), 0 0 100px -4px color-mix(in oklab, var(--brand-magenta) 50%, transparent), 0 0 120px -10px color-mix(in oklab, var(--brand-blue) 45%, transparent)",
           }}
         >
           <img
             src={BRAND_LOGO_URL}
             alt={`${BRAND_NAME} logo`}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain"
             draggable={false}
           />
         </div>

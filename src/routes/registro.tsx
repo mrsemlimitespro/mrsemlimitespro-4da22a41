@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import { BRAND_NAME } from "@/components/brand";
 import { AuthShell, Field, inputCls, primaryBtn } from "./login";
 import { PasswordInput, SocialSignIn } from "@/components/auth-extras";
 

@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { BRAND_LOGO_URL } from "@/components/brand";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -104,13 +105,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         property: "og:image",
-        content:
-          "https://storage.googleapis.com/gpt-engineer-file-uploads/dG4KLRailvgZ5C10HZJJbpmtVz13/social-images/social-1783298637986-ChatGPT_Image_5_de_jul._de_2026,_15_34_45.webp",
+        content: BRAND_LOGO_URL,
       },
       {
         name: "twitter:image",
-        content:
-          "https://storage.googleapis.com/gpt-engineer-file-uploads/dG4KLRailvgZ5C10HZJJbpmtVz13/social-images/social-1783298637986-ChatGPT_Image_5_de_jul._de_2026,_15_34_45.webp",
+        content: BRAND_LOGO_URL,
       },
     ],
     links: [

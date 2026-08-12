@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { BRAND_NAME } from "@/components/brand";
 import { AuthShell, Field, inputCls, primaryBtn } from "./login";
 
 export const Route = createFileRoute("/esqueci-senha")({
