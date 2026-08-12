@@ -59,7 +59,13 @@ export function TopBar() {
         return;
       }
       setUserEmail(session.user.email ?? null);
-      if (mounted) setIsAdminUser(isAdminEmail(session.user.email));
+      if (mounted) {
+        // A verificação de admin agora é baseada puramente em user_roles e RLS no backend.
+        // O frontend apenas reflete o estado. 
+        // setIsAdminUser será atualizado via hooks dedicados se necessário, 
+        // ou podemos apenas desativar o check hardcoded aqui.
+        setIsAdminUser(false); 
+      }
       // Busca nome do revendedor para saudação personalizada.
       try {
         const { data: rev } = await (supabase as any)
