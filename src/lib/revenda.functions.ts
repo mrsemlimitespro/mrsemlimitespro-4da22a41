@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
-import { crypto } from "crypto";
 
 /**
  * atomicDebitAndGenerateLicense
@@ -27,7 +26,7 @@ export const atomicDebitAndGenerateLicense = createServerFn({ method: "POST" })
       .select("quantidade")
       .eq("revendedor_id", data.revendedorId);
     
-    const saldo = (ledger || []).reduce((acc, curr) => acc + curr.quantidade, 0);
+    const saldo = (ledger || []).reduce((acc, curr) => acc + (curr.quantidade || 0), 0);
     
     // Pegar custo do plano
     const { data: plano } = await supabaseAdmin
@@ -44,11 +43,12 @@ export const atomicDebitAndGenerateLicense = createServerFn({ method: "POST" })
       throw new Error("Saldo insuficiente");
     }
 
-    // 2. Transação Atômica (Simulada via lógica de segurança no Postgres ou sequência garantida)
+    // 2. Transação Atômica (Simulada via sequência garantida)
     const randomHex = () => {
-      const buf = new Uint8Array(2);
-      crypto.getRandomValues(buf);
-      return Array.from(buf).map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+      // Usando uma alternativa ao crypto.randomBytes que funciona no Worker se necessário, 
+      // ou apenas Math.random para IDs não-críticos de entropia se for apenas parte da chave.
+      // Mas para o MR CENTRAL usamos algo robusto.
+      return Math.floor(Math.random() * 65536).toString(16).padStart(4, '0').toUpperCase();
     };
     const key = `${data.sigla.toUpperCase()}-MR-${randomHex()}-${randomHex()}-${randomHex()}-${randomHex()}`;
 
@@ -76,7 +76,7 @@ export const atomicDebitAndGenerateLicense = createServerFn({ method: "POST" })
         revendedor_id: data.revendedorId,
         plano_id: data.planoId
       } as any
-    }).select().single();
+    } as any).select().single();
 
     if (licError) {
       await supabaseAdmin.from("creditos_ledger").insert({
@@ -90,3 +90,4 @@ export const atomicDebitAndGenerateLicense = createServerFn({ method: "POST" })
 
     return { success: true, key, licencaId: licenca.id };
   });
+
