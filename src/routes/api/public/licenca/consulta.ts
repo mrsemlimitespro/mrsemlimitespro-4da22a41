@@ -12,7 +12,7 @@ export const Route = createFileRoute("/api/public/licenca/consulta")({
   loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
-      GET: async ({ request }) => {
+      GET: async ({ request }: { request: Request }) => {
         const url = new URL(request.url);
         const chave = (url.searchParams.get("chave") ?? "").trim();
         // FASE 2 (multi-extensão): leitura opcional de `extension_id` (query param). Reservado para uso futuro.
