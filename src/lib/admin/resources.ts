@@ -16,6 +16,7 @@ import {
   Bell,
   Sparkles,
 } from "lucide-react";
+import { Blocks, Download } from "lucide-react";
 
 type IconType = ComponentType<SVGProps<SVGSVGElement>>;
 
