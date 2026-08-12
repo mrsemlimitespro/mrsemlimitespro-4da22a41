@@ -52,7 +52,7 @@ export const Route = createFileRoute("/api/public/ext/storage/v1/object/$")({
       PUT: async ({ request, params }: { request: Request; params: any }) => handleUpload(request, params),
 
       // Download / signed URL
-      GET: async ({ request, params }) => {
+      GET: async ({ request, params }: { request: Request; params: any }) => {
         const info = parseBucketPath((params as any)._splat ?? "");
         if (!info || info.bucket !== ALLOWED_BUCKET) {
           return new Response(JSON.stringify({ error: "bucket_not_allowed" }), {
