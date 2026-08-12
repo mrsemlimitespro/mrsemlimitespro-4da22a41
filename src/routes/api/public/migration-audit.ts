@@ -1,5 +1,5 @@
-import { createFileRoute } from '@tanstack/react-router'
 import { createClient } from '@supabase/supabase-js'
+import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/api/public/migration-audit')({
   server: {
@@ -9,7 +9,12 @@ export const Route = createFileRoute('/api/public/migration-audit')({
         const supabaseKey = process.env['SUPABASE_SERVICE_ROLE_KEY']
 
         if (!supabaseUrl || !supabaseKey) {
-          return new Response(JSON.stringify({ error: 'Missing credentials' }), { status: 500 })
+          return new Response(JSON.stringify({ 
+            error: 'Missing credentials', 
+            v_url: !!process.env['VITE_SUPABASE_URL'],
+            s_url: !!process.env['SUPABASE_URL'],
+            s_key: !!process.env['SUPABASE_SERVICE_ROLE_KEY']
+          }), { status: 500 })
         }
 
         const sb = createClient(supabaseUrl, supabaseKey)
@@ -33,34 +38,21 @@ export const Route = createFileRoute('/api/public/migration-audit')({
 
         const results = await Promise.all(tables.map(checkTable))
 
-        // Get Prompts
         const { data: prompts } = await sb.from('ai_prompts').select('*')
-        
-        // Get Agents
         const { data: agents } = await sb.from('ai_agents').select('*')
-
-        // Get extensions (checking products for extension-like slugs or searching for extension table if exists)
-        // Usually extensions are in 'produtos' or a specific 'extensoes' table.
-        // Let's also check if 'extensoes' table exists
-        const { accessible: hasExtTable, count: extCount } = await checkTable('extensoes')
-        let extensions = []
-        if (hasExtTable) {
-            const { data } = await sb.from('extensoes').select('*')
-            extensions = data || []
-        } else {
-            // Fallback: check products that might be extensions
-            const { data } = await sb.from('produtos').select('*')
-            extensions = data || []
-        }
-
-        // Check Storage
+        const { data: produtos } = await sb.from('produtos').select('*')
+        
         const { data: buckets, error: storageError } = await sb.storage.listBuckets()
 
         const inventory: any = { buckets: [] }
         if (buckets) {
            for (const bucket of buckets) {
              const { data: files } = await sb.storage.from(bucket.name).list('', { limit: 100 })
-             inventory.buckets.push({ name: bucket.name, fileCount: files?.length || 0, files: files?.slice(0, 5) })
+             inventory.buckets.push({ 
+               name: bucket.name, 
+               fileCount: files?.length || 0, 
+               files: files?.map(f => ({ name: f.name, metadata: f.metadata })) 
+             })
            }
         }
 
@@ -70,9 +62,13 @@ export const Route = createFileRoute('/api/public/migration-audit')({
           results,
           prompts,
           agents,
-          extensions,
+          produtos,
           inventory
-        }, null, 2))
+        }), {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
       }
     }
   }
