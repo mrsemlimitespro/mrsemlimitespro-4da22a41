@@ -23,6 +23,7 @@ import {
   Blocks,
   Home as HomeIcon,
   Server,
+  Users,
 } from "lucide-react";
 import { useModules } from "@/lib/admin/use-modules";
 
