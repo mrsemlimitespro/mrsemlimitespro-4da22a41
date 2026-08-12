@@ -35,6 +35,7 @@ import {
   Wrench,
   LayoutTemplate,
   Workflow,
+  Store,
 } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 
@@ -300,18 +301,12 @@ type Categoria = {
 };
 
 const CATEGORIAS: Categoria[] = [
-  { titulo: "Agentes IA", descricao: "Automação inteligente", icon: Bot, href: "/agents", color: "var(--brand-cyan)" },
-  { titulo: "Prompts", descricao: "Modelos prontos", icon: Wand2, href: "/prompts", color: "var(--brand-emerald)" },
-  { titulo: "Packs", descricao: "Bibliotecas exclusivas", icon: Package, href: "/packs", color: "var(--brand-magenta)" },
-  { titulo: "Extensões", descricao: "Ferramentas de apoio", icon: Puzzle, href: "/agents", color: "var(--brand-violet)" },
-  { titulo: "Ferramentas", descricao: "Recursos essenciais", icon: Wrench, href: "/packs", color: "var(--brand-blue)" },
-  { titulo: "Automações", descricao: "Fluxos que vendem", icon: Workflow, href: "/packs", color: "var(--brand-orange)" },
-  { titulo: "Templates", descricao: "Prontos para usar", icon: LayoutTemplate, href: "/packs", color: "var(--brand-pink)" },
-  { titulo: "Comunidade", descricao: "Networking premium", icon: Users, href: "/", color: "var(--brand-violet)" },
-  { titulo: "Inteligência Artificial", descricao: "IA aplicada ao negócio", icon: Brain, href: "/agents", color: "var(--brand-cyan)" },
-  { titulo: "Marketing Digital", descricao: "Conteúdo e tráfego", icon: Megaphone, href: "/packs", color: "var(--brand-magenta)" },
-  { titulo: "Transformação Digital", descricao: "Escale seu negócio", icon: Rocket, href: "/packs", color: "var(--brand-orange)" },
-  { titulo: "Vendas", descricao: "Feche mais clientes", icon: TrendingUp, href: "/packs", color: "var(--brand-emerald)" },
+  { titulo: "Extensões", descricao: "Ferramentas & Softwares", icon: Puzzle, href: "/catalog", color: "var(--brand-violet)" },
+  { titulo: "Agentes IA", descricao: "Automação inteligente", icon: Bot, href: "/catalog?cat=ia", color: "var(--brand-cyan)" },
+  { titulo: "Packs", descricao: "Bibliotecas exclusivas", icon: Package, href: "/catalog?cat=packs", color: "var(--brand-magenta)" },
+  { titulo: "Marketing", descricao: "Conteúdo e tráfego", icon: Megaphone, href: "/catalog?cat=marketing", color: "var(--brand-orange)" },
+  { titulo: "Revenda", descricao: "Oportunidade de negócio", icon: Store, href: "/quero-ser-revendedor", color: "var(--brand-blue)" },
+  { titulo: "Suporte", descricao: "Atendimento premium", icon: Headphones, href: "/", color: "var(--brand-emerald)" },
 ];
 
 

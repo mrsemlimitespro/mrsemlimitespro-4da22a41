@@ -428,10 +428,12 @@ export type Database = {
           created_by: string | null
           hash: string
           id: string
+          last_ip: string | null
           last_used_at: string | null
           metadata: Json
           nome: string
           prefixo: string
+          revendedor_id: string | null
           revoked_at: string | null
           scopes: string[]
           updated_at: string
@@ -441,10 +443,12 @@ export type Database = {
           created_by?: string | null
           hash: string
           id?: string
+          last_ip?: string | null
           last_used_at?: string | null
           metadata?: Json
           nome: string
           prefixo: string
+          revendedor_id?: string | null
           revoked_at?: string | null
           scopes?: string[]
           updated_at?: string
@@ -454,15 +458,39 @@ export type Database = {
           created_by?: string | null
           hash?: string
           id?: string
+          last_ip?: string | null
           last_used_at?: string | null
           metadata?: Json
           nome?: string
           prefixo?: string
+          revendedor_id?: string | null
           revoked_at?: string | null
           scopes?: string[]
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "api_keys_revendedor_id_fkey"
+            columns: ["revendedor_id"]
+            isOneToOne: false
+            referencedRelation: "revendedores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "api_keys_revendedor_id_fkey"
+            columns: ["revendedor_id"]
+            isOneToOne: false
+            referencedRelation: "v_hierarquia_clientes"
+            referencedColumns: ["revendedor_id"]
+          },
+          {
+            foreignKeyName: "api_keys_revendedor_id_fkey"
+            columns: ["revendedor_id"]
+            isOneToOne: false
+            referencedRelation: "v_revendedor_visao"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       audit_logs: {
         Row: {
@@ -1351,6 +1379,50 @@ export type Database = {
           },
         ]
       }
+      extensao_trials: {
+        Row: {
+          ativo: boolean | null
+          cooldown_dias: number | null
+          created_at: string | null
+          duracao_minutos: number | null
+          extensao_id: string | null
+          features_liberadas: string[] | null
+          id: string
+          limite_por_dispositivo: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          cooldown_dias?: number | null
+          created_at?: string | null
+          duracao_minutos?: number | null
+          extensao_id?: string | null
+          features_liberadas?: string[] | null
+          id?: string
+          limite_por_dispositivo?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          cooldown_dias?: number | null
+          created_at?: string | null
+          duracao_minutos?: number | null
+          extensao_id?: string | null
+          features_liberadas?: string[] | null
+          id?: string
+          limite_por_dispositivo?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "extensao_trials_extensao_id_fkey"
+            columns: ["extensao_id"]
+            isOneToOne: true
+            referencedRelation: "extensoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       extensoes: {
         Row: {
           arquivo_download_url: string | null
@@ -1430,6 +1502,51 @@ export type Database = {
             columns: ["produto_id"]
             isOneToOne: false
             referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hwid_resets: {
+        Row: {
+          auth_user_id: string | null
+          created_at: string | null
+          hwid_anterior: string | null
+          hwid_novo: string | null
+          id: string
+          licenca_id: string | null
+          origem: string | null
+        }
+        Insert: {
+          auth_user_id?: string | null
+          created_at?: string | null
+          hwid_anterior?: string | null
+          hwid_novo?: string | null
+          id?: string
+          licenca_id?: string | null
+          origem?: string | null
+        }
+        Update: {
+          auth_user_id?: string | null
+          created_at?: string | null
+          hwid_anterior?: string | null
+          hwid_novo?: string | null
+          id?: string
+          licenca_id?: string | null
+          origem?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hwid_resets_licenca_id_fkey"
+            columns: ["licenca_id"]
+            isOneToOne: false
+            referencedRelation: "licencas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hwid_resets_licenca_id_fkey"
+            columns: ["licenca_id"]
+            isOneToOne: false
+            referencedRelation: "v_licenca_estado"
             referencedColumns: ["id"]
           },
         ]
@@ -3569,6 +3686,44 @@ export type Database = {
             columns: ["produto_id"]
             isOneToOne: false
             referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trials_emitidos: {
+        Row: {
+          auth_user_id: string | null
+          created_at: string | null
+          expires_at: string
+          extensao_id: string | null
+          hwid: string
+          id: string
+          metadata: Json | null
+        }
+        Insert: {
+          auth_user_id?: string | null
+          created_at?: string | null
+          expires_at: string
+          extensao_id?: string | null
+          hwid: string
+          id?: string
+          metadata?: Json | null
+        }
+        Update: {
+          auth_user_id?: string | null
+          created_at?: string | null
+          expires_at?: string
+          extensao_id?: string | null
+          hwid?: string
+          id?: string
+          metadata?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trials_emitidos_extensao_id_fkey"
+            columns: ["extensao_id"]
+            isOneToOne: false
+            referencedRelation: "extensoes"
             referencedColumns: ["id"]
           },
         ]
