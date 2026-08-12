@@ -1,37 +1,16 @@
 /**
- * MR SEM LIMITES — FASE 1.10: CONECTAR E VALIDAR O SUPABASE DESTINO
- * O projeto Supabase destino foi confirmado manualmente no Dashboard.
+ * MR CENTRAL — ECOSSISTEMA MULTI-PRODUTO E LICENCIAMENTO
  * 
- * DESTINO OFICIAL
- * Nome: mr-sem-limites
- * Project ID: nbehebyxnkpihbiathmx
- * Região: sa-east-1 — América do Sul (São Paulo)
+ * Este projeto é a central unificada para gestão de produtos, extensões,
+ * revendedores e licenciamento criptográfico.
  * 
- * ORIGEM ATUAL
- * Project ID: dbyoofojkakaigdemoyp
- * A origem é o backend atual e deve permanecer funcionando e intocada durante toda a migração.
+ * FASE 7 — PREPARAÇÃO DO NOVO ECOSSISTEMA
  * 
- * 🚨 REGRA ABSOLUTA
- * Nesta etapa NÃO fazer migração.
- * NÃO executar migrations.
- * NÃO criar tabelas.
- * NÃO criar funções.
- * NÃO criar RPCs.
- * NÃO criar triggers.
- * NÃO criar policies.
- * NÃO alterar RLS.
- * NÃO criar buckets.
- * NÃO migrar Storage.
- * NÃO migrar Auth.
- * NÃO copiar usuários.
- * NÃO copiar dados.
- * NÃO alterar pagamentos.
- * NÃO alterar licenças.
- * NÃO alterar a extensão.
- * NÃO alterar versões da extensão.
- * NÃO alterar o MR Remote Cloud.
- * NÃO alterar o banco de origem.
- * Esta etapa é SOMENTE para conectar e validar o projeto destino.
+ * Regras:
+ * 1. Independência Total: O sistema é autônomo e não depende de backend externo.
+ * 2. Multi-perfil: Ultra Admin, Revendedor e Cliente Final.
+ * 3. Multi-produto: Gestão centralizada de múltiplas extensões e softwares.
+ * 4. Segurança: Licenciamento proprietário validado via Heartbeat e Anti-tamper.
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import React, { useEffect, useState } from "react";
@@ -186,8 +165,8 @@ function HeroSection({
         <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-widest text-muted-foreground">
           <span aria-hidden>{panelBadge.icon}</span> {panelBadge.label}
         </span>
-        <h1 className="gradient-text-warm text-3xl font-black tracking-tight md:text-5xl">
-          {BRAND_NAME}
+        <h1 className="gradient-text-warm text-3xl font-black tracking-tight md:text-5xl uppercase tracking-[0.2em]">
+          MR CENTRAL
         </h1>
         <p className="max-w-2xl px-2 text-sm text-muted-foreground md:text-base">
           Agentes IA, Prompts, Packs, Extensões, Automações, Templates e Comunidade —
