@@ -1,0 +1,1 @@
+ALTER TABLE public.planos ALTER COLUMN tipo SET DEFAULT 'mensal';

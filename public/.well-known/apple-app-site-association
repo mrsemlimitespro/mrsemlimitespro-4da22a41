@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["SUBSTITUA_TEAM_ID.app.lovable.mrsemlimites"],
+        "components": [
+          { "/": "/*", "comment": "todas as rotas abrem no app quando instalado" }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["SUBSTITUA_TEAM_ID.app.lovable.mrsemlimites"]
+  }
+}

@@ -1,0 +1,2 @@
+ALTER TABLE public.planos DROP CONSTRAINT IF EXISTS planos_tipo_check;
+ALTER TABLE public.planos ADD CONSTRAINT planos_tipo_check CHECK (tipo = ANY (ARRAY['mensal'::text, 'anual'::text, 'vitalicio'::text, 'pacote'::text]));
