@@ -350,15 +350,15 @@ function DashboardPage() {
             src={BRAND_LOGO_URL}
             alt={`${BRAND_NAME} logo`}
             className="h-full w-full object-contain"
-            draggable={false}
+          draggable={false}
           />
         </div>
         <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="gradient-text-warm text-2xl font-bold tracking-tight md:text-3xl">
-            {BRAND_NAME}
+          <h1 className="gradient-text-warm text-2xl font-bold tracking-tight md:text-3xl uppercase tracking-[0.2em]">
+            MR CENTRAL
           </h1>
           <p className="max-w-md text-xs text-muted-foreground md:text-sm">
-            Painel de controle em tempo real — vendas, clientes e atividade.
+            Ecossistema unificado de produtos, licenciamento e revenda digital.
           </p>
         </div>
       </section>
