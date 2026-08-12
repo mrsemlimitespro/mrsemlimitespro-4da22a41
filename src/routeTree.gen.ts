@@ -62,6 +62,7 @@ import { Route as AdminClientesIdRouteImport } from './routes/admin.clientes.$id
 import { Route as ApiPublicDownloadExtensaoRouteImport } from './routes/api/public/download-extensao'
 import { Route as ApiPublicMigrationAuditRouteImport } from './routes/api/public/migration-audit'
 import { Route as ApiPublicMigrationAuditV2RouteImport } from './routes/api/public/migration-audit-v2'
+import { Route as ApiPublicMigrationAuditV3RouteImport } from './routes/api/public/migration-audit-v3'
 import { Route as ApiPublicValidarLicencaRouteImport } from './routes/api/public/validar-licenca'
 import { Route as ApiPublicExtSendCommandRouteImport } from './routes/api/public/ext/send-command'
 import { Route as ApiPublicExtValidateLicenseRouteImport } from './routes/api/public/ext/validate-license'
@@ -351,6 +352,12 @@ const ApiPublicMigrationAuditV2Route =
     path: '/api/public/migration-audit-v2',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicMigrationAuditV3Route =
+  ApiPublicMigrationAuditV3RouteImport.update({
+    id: '/api/public/migration-audit-v3',
+    path: '/api/public/migration-audit-v3',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicValidarLicencaRoute = ApiPublicValidarLicencaRouteImport.update({
   id: '/api/public/validar-licenca',
   path: '/api/public/validar-licenca',
@@ -530,6 +537,7 @@ export interface FileRoutesByFullPath {
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
   '/api/public/migration-audit': typeof ApiPublicMigrationAuditRoute
   '/api/public/migration-audit-v2': typeof ApiPublicMigrationAuditV2Route
+  '/api/public/migration-audit-v3': typeof ApiPublicMigrationAuditV3Route
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/validate-license': typeof ApiPublicExtValidateLicenseRoute
@@ -605,6 +613,7 @@ export interface FileRoutesByTo {
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
   '/api/public/migration-audit': typeof ApiPublicMigrationAuditRoute
   '/api/public/migration-audit-v2': typeof ApiPublicMigrationAuditV2Route
+  '/api/public/migration-audit-v3': typeof ApiPublicMigrationAuditV3Route
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/validate-license': typeof ApiPublicExtValidateLicenseRoute
@@ -683,6 +692,7 @@ export interface FileRoutesById {
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
   '/api/public/migration-audit': typeof ApiPublicMigrationAuditRoute
   '/api/public/migration-audit-v2': typeof ApiPublicMigrationAuditV2Route
+  '/api/public/migration-audit-v3': typeof ApiPublicMigrationAuditV3Route
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/validate-license': typeof ApiPublicExtValidateLicenseRoute
@@ -761,6 +771,7 @@ export interface FileRouteTypes {
     | '/api/public/download-extensao'
     | '/api/public/migration-audit'
     | '/api/public/migration-audit-v2'
+    | '/api/public/migration-audit-v3'
     | '/api/public/validar-licenca'
     | '/api/public/ext/send-command'
     | '/api/public/ext/validate-license'
@@ -836,6 +847,7 @@ export interface FileRouteTypes {
     | '/api/public/download-extensao'
     | '/api/public/migration-audit'
     | '/api/public/migration-audit-v2'
+    | '/api/public/migration-audit-v3'
     | '/api/public/validar-licenca'
     | '/api/public/ext/send-command'
     | '/api/public/ext/validate-license'
@@ -913,6 +925,7 @@ export interface FileRouteTypes {
     | '/api/public/download-extensao'
     | '/api/public/migration-audit'
     | '/api/public/migration-audit-v2'
+    | '/api/public/migration-audit-v3'
     | '/api/public/validar-licenca'
     | '/api/public/ext/send-command'
     | '/api/public/ext/validate-license'
@@ -949,6 +962,7 @@ export interface RootRouteChildren {
   ApiPublicDownloadExtensaoRoute: typeof ApiPublicDownloadExtensaoRoute
   ApiPublicMigrationAuditRoute: typeof ApiPublicMigrationAuditRoute
   ApiPublicMigrationAuditV2Route: typeof ApiPublicMigrationAuditV2Route
+  ApiPublicMigrationAuditV3Route: typeof ApiPublicMigrationAuditV3Route
   ApiPublicValidarLicencaRoute: typeof ApiPublicValidarLicencaRoute
   ApiPublicExtSendCommandRoute: typeof ApiPublicExtSendCommandRoute
   ApiPublicExtValidateLicenseRoute: typeof ApiPublicExtValidateLicenseRoute
@@ -1346,6 +1360,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicMigrationAuditV2RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/migration-audit-v3': {
+      id: '/api/public/migration-audit-v3'
+      path: '/api/public/migration-audit-v3'
+      fullPath: '/api/public/migration-audit-v3'
+      preLoaderRoute: typeof ApiPublicMigrationAuditV3RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/validar-licenca': {
       id: '/api/public/validar-licenca'
       path: '/api/public/validar-licenca'
@@ -1635,6 +1656,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicDownloadExtensaoRoute: ApiPublicDownloadExtensaoRoute,
   ApiPublicMigrationAuditRoute: ApiPublicMigrationAuditRoute,
   ApiPublicMigrationAuditV2Route: ApiPublicMigrationAuditV2Route,
+  ApiPublicMigrationAuditV3Route: ApiPublicMigrationAuditV3Route,
   ApiPublicValidarLicencaRoute: ApiPublicValidarLicencaRoute,
   ApiPublicExtSendCommandRoute: ApiPublicExtSendCommandRoute,
   ApiPublicExtValidateLicenseRoute: ApiPublicExtValidateLicenseRoute,
