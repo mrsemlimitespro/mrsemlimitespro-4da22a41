@@ -117,19 +117,3 @@ export const Route = createFileRoute('/api/public/setup-migration-v6a')({
   }
 });
 
-
-export const Route = createFileRoute('/api/public/setup-migration-v6a')({
-  server: {
-    handlers: {
-      POST: async ({ request }) => {
-        try {
-          const body = await request.json();
-          const results = await executeMigration({ data: body });
-          return new Response(JSON.stringify(results), { status: 200 });
-        } catch (e: any) {
-          return new Response(e.message, { status: 500 });
-        }
-      }
-    }
-  }
-});
