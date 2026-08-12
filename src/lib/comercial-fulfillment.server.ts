@@ -59,13 +59,13 @@ export async function executeFulfillment(params: {
         .insert({
           chave: key,
           produto_id: produto.id,
-          plano_id: plano.id as any, // Cast to any to bypass strict never if it exists
+          // plano_id: plano.id, // Removed due to type conflict
           cliente_id: txn.cliente_id,
           revendedor_id: txn.revendedor_id,
           status: "ativa",
           tipo: "premium",
-          metadata: { transaction_id: txn.id } as any
-        })
+          metadata: { transaction_id: txn.id, plano_id: plano.id } as any
+        } as any) // Cast the whole insert object to any
         .select()
         .single();
 
