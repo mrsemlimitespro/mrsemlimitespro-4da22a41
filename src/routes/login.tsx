@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate, useRouter } from "@tanstack/react-r
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { BRAND_NAME, BRAND_TAGLINE, BrandLockup, BrandMark } from "@/components/brand";
+import { BRAND_NAME, BRAND_TAGLINE, BRAND_LOGO_URL, BrandLockup, BrandMark } from "@/components/brand";
 import { PasswordInput, SocialSignIn } from "@/components/auth-extras";
 import { NativeService } from "@/native/NativeService";
 import {
@@ -243,18 +243,30 @@ export function Field({ label, children }: { label: string; children: React.Reac
 
 export function AuthShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative min-h-screen w-full">
-      <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-6 px-5 py-10">
-        <BrandMark size={140} className="mb-2" />
-        <div className="text-center">
-          <p className="text-sm font-semibold tracking-[0.2em] text-foreground uppercase">
-            {BRAND_NAME}
-          </p>
-          <p className="text-[10px] font-medium tracking-[0.4em] text-primary mt-1 uppercase">
-            {BRAND_TAGLINE}
+    <div className="relative min-h-screen w-full flex items-center justify-center">
+      {/* Background visual support handled by __root BrandWatermark/Decorations */}
+      <div className="relative z-10 mx-auto flex w-full max-w-md flex-col items-center gap-8 px-5 py-10">
+        <div className="relative group transition-transform duration-500 hover:scale-105" style={{ width: 240 }}>
+          <img
+            src={BRAND_LOGO_URL}
+            alt={BRAND_NAME}
+            className="h-auto w-full object-contain"
+            style={{ filter: "drop-shadow(0 0 20px color-mix(in oklab, var(--brand-red-neon) 30%, transparent))" }}
+          />
+        </div>
+        
+        <div className="flex flex-col items-center text-center -mt-2">
+          <h1 className="text-2xl font-black tracking-[0.3em] text-foreground uppercase drop-shadow-[0_0_10px_rgba(255,0,0,0.3)]">
+            MR CENTRAL
+          </h1>
+          <p className="text-[10px] font-bold tracking-[0.5em] text-brand-red-neon mt-2 uppercase opacity-80">
+            {BRAND_TAGLINE} — ECOSSISTEMA DIGITAL
           </p>
         </div>
-        <div className="glass w-full rounded-2xl p-6">{children}</div>
+
+        <div className="glass w-full rounded-2xl p-7 relative border-t border-white/10">
+          {children}
+        </div>
       </div>
     </div>
   );
