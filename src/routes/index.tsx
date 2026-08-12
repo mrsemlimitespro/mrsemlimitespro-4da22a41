@@ -1,4 +1,4 @@
-/**
+/** MR SEM LIMITES — SISTEMA ATIVO **/
  * MR CENTRAL — ECOSSISTEMA MULTI-PRODUTO E LICENCIAMENTO
  * 
  * FASE 8C — ATIVAÇÃO CONTROLADA DE PRODUÇÃO FINANCEIRA
@@ -60,13 +60,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MR CENTRAL — Ecossistema Digital de Alta Performance" },
+      { title: "MR SEM LIMITES — Ecossistema Digital de Alta Performance" },
       {
         name: "description",
         content:
           "A plataforma definitiva para licenciamento, revenda e distribuição de softwares, extensões e inteligência artificial.",
       },
-      { property: "og:title", content: "MR CENTRAL — Ecossistema Digital" },
+      { property: "og:title", content: "MR SEM LIMITES — Ecossistema Digital" },
       {
         property: "og:description",
         content: "Gestão profissional de produtos digitais, licenças e revendedores.",
@@ -168,8 +168,8 @@ function HeroSection({
           </span>
           {panelBadge.label}
         </span>
-        <h1 className="text-4xl font-black tracking-tight md:text-6xl uppercase tracking-[0.4em] drop-shadow-[0_0_15px_rgba(255,0,0,0.4)]">
-          MR CENTRAL
+        <h1 className="text-4xl font-black tracking-tight md:text-6xl uppercase tracking-[0.4em] drop-shadow-[0_0_20px_rgba(255,0,0,0.5)] text-white">
+          MR SEM LIMITES
         </h1>
         <p className="max-w-2xl px-4 text-xs font-medium text-muted-foreground md:text-sm uppercase tracking-[0.2em] opacity-80">
           ECOSSISTEMA DIGITAL DE ALTA PERFORMANCE — GESTÃO, LICENCIAMENTO E INTELIGÊNCIA
