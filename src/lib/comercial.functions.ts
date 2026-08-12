@@ -1,6 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { createClient } from "@supabase/supabase-js";
+import { Database } from "@/integrations/supabase/types";
+
+type Json = Database['public']['Tables']['licencas']['Row']['metadata'];
 
 const KeyGeneratorSchema = z.object({
   produtoSigla: z.string().min(2).max(10),
@@ -16,7 +19,7 @@ const KeyGeneratorSchema = z.object({
 export const generateLicenseByRevendedor = createServerFn({ method: "POST" })
   .inputValidator((data) => KeyGeneratorSchema.parse(data))
   .handler(async ({ data }) => {
-    const sb = createClient(
+    const sb = createClient<Database>(
       process.env.SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
@@ -54,8 +57,7 @@ export const generateLicenseByRevendedor = createServerFn({ method: "POST" })
     }
     const key = `${data.produtoSigla.toUpperCase()}-MR-${segments.join('-')}`;
 
-    // 4. Operação Atômica (RPC recomendado, mas aqui simulamos via transação lógica)
-    // Em produção, usar RPC para garantir atomicidade total
+    // 4. Operação Atômica
     const { error: errUpdate } = await sb
       .from("revendedores")
       .update({ saldo_creditos: Number(rev.saldo_creditos) - custo })
@@ -70,7 +72,7 @@ export const generateLicenseByRevendedor = createServerFn({ method: "POST" })
       tipo: "debito",
       motivo: `Geração de licença: ${key}`,
       produto_id: plano.produto_id,
-      metadata: { key, plano_id: data.planoId }
+      metadata: { key, plano_id: data.planoId } as Json
     });
 
     // Criar Licença
@@ -83,7 +85,8 @@ export const generateLicenseByRevendedor = createServerFn({ method: "POST" })
         revendedor_id: rev.id,
         cliente_id: data.clienteId,
         status: "ativa",
-        tipo: "premium"
+        tipo: "premium",
+        metadata: { transaction_origem: 'revendedor' } as Json
       })
       .select()
       .single();
