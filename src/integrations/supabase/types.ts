@@ -238,7 +238,9 @@ export type Database = {
           destaque: boolean
           id: string
           instrucoes: string | null
+          legacy_id: string | null
           max_tokens: number | null
+          metadata: Json | null
           modelo: string | null
           nivel: string | null
           numero: number | null
@@ -268,7 +270,9 @@ export type Database = {
           destaque?: boolean
           id?: string
           instrucoes?: string | null
+          legacy_id?: string | null
           max_tokens?: number | null
+          metadata?: Json | null
           modelo?: string | null
           nivel?: string | null
           numero?: number | null
@@ -298,7 +302,9 @@ export type Database = {
           destaque?: boolean
           id?: string
           instrucoes?: string | null
+          legacy_id?: string | null
           max_tokens?: number | null
+          metadata?: Json | null
           modelo?: string | null
           nivel?: string | null
           numero?: number | null
@@ -329,6 +335,8 @@ export type Database = {
           destaque: boolean
           downloads: number
           id: string
+          legacy_id: string | null
+          metadata: Json | null
           mobile_featured: boolean
           mobile_order: number | null
           mostrar_premium: boolean
@@ -359,6 +367,8 @@ export type Database = {
           destaque?: boolean
           downloads?: number
           id?: string
+          legacy_id?: string | null
+          metadata?: Json | null
           mobile_featured?: boolean
           mobile_order?: number | null
           mostrar_premium?: boolean
@@ -389,6 +399,8 @@ export type Database = {
           destaque?: boolean
           downloads?: number
           id?: string
+          legacy_id?: string | null
+          metadata?: Json | null
           mobile_featured?: boolean
           mobile_order?: number | null
           mostrar_premium?: boolean
