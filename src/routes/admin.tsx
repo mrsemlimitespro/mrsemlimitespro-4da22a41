@@ -24,6 +24,7 @@ import {
   Home as HomeIcon,
   Server,
   Users,
+  Download,
 } from "lucide-react";
 import { useModules } from "@/lib/admin/use-modules";
 
