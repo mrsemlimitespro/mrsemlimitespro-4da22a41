@@ -2,6 +2,7 @@ import { Outlet, createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
 
 import { AppSidebar } from "@/components/app-sidebar";
+import { BrandWatermark, BrandDecorations } from "@/components/brand";
 import { InnerPillMenu } from "@/components/inner-pill-menu";
 import { MobileBottomNav } from "@/components/mobile-bottom-nav";
 import { TopBar } from "@/components/top-bar";
@@ -29,11 +30,10 @@ function AppLayout() {
   return (
     <div className="relative min-h-screen w-full">
       {/* Partículas só em telas >= md para preservar performance em mobile */}
-      <div className="pointer-events-none absolute inset-0 z-0 hidden md:block">
-        <Suspense fallback={null}>
-          <SoftParticles />
-        </Suspense>
-      </div>
+      {/* Brand visuals: Watermark and Decorations */}
+      <BrandWatermark />
+      <BrandDecorations />
+
       <AppSidebar />
       <ImpersonationBanner />
       <MustChangePasswordGuard />
