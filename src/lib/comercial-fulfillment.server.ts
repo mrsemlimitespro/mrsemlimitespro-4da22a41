@@ -64,7 +64,7 @@ export async function executeFulfillment(params: {
           revendedor_id: txn.revendedor_id,
           status: "ativa",
           tipo: "premium",
-          validade: new Date(Date.now() + (plano.duracao_dias || 30) * 24 * 60 * 60 * 1000).toISOString(),
+          // validade: new Date(Date.now() + (plano.duracao_dias || 30) * 24 * 60 * 60 * 1000).toISOString(),
           metadata: { transaction_id: txn.id } as Json
         })
         .select()
