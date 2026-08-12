@@ -102,6 +102,7 @@ function AdminLayout() {
 type SpecialLink = {
   key: string;
   to: string;
+  params?: Record<string, string>;
   label: string;
   icon: typeof LayoutDashboard;
   exact?: boolean;
