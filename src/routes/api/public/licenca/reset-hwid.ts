@@ -13,7 +13,7 @@ const cors = {
  * `/admin/licencas` (usa a função existente `resetar_device_licenca`).
  */
 export const Route = createFileRoute("/api/public/licenca/reset-hwid")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
       POST: async ({ request }) => {

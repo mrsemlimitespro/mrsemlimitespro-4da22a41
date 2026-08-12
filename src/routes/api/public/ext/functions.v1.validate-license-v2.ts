@@ -23,7 +23,7 @@ function signSessionToken(licencaId: string, hwid: string | null): string {
 }
 
 export const Route = createFileRoute("/api/public/ext/functions/v1/validate-license-v2")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
       POST: async ({ request }) => {

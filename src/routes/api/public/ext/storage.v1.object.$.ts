@@ -43,7 +43,7 @@ function admin() {
 }
 
 export const Route = createFileRoute("/api/public/ext/storage/v1/object/$")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
 

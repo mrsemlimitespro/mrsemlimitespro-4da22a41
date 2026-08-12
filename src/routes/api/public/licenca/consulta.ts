@@ -9,7 +9,7 @@ const cors = {
 };
 
 export const Route = createFileRoute("/api/public/licenca/consulta")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
       GET: async ({ request }) => {

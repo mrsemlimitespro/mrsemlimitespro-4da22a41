@@ -14,7 +14,7 @@ const cors = {
 };
 
 export const Route = createFileRoute("/api/public/ext/functions/v1/inject-config")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
       POST: async ({ request }) => {

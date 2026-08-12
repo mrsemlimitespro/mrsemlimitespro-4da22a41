@@ -15,7 +15,7 @@ const cors = {
  * admin em `/admin/licencas`. Assim evitamos autorenovação sem cobrança real.
  */
 export const Route = createFileRoute("/api/public/licenca/renovar")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
       POST: async ({ request }) => {

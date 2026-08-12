@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/api/public/premium-cover/$")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       GET: async ({ params }) => {
         const path = (params as any)._splat as string;

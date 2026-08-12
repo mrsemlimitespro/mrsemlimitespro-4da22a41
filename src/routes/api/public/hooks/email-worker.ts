@@ -25,7 +25,7 @@ type QueueRow = {
 };
 
 export const Route = createFileRoute("/api/public/hooks/email-worker")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       POST: async ({ request }) => {
         const key = request.headers.get("apikey");

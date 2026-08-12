@@ -6,7 +6,7 @@ import currentExtensionAsset from "../../../../public/mr-sem-limites-2.2.6.zip.a
 const FILENAME = "mr-sem-limites-2.2.6.zip";
 
 export const Route = createFileRoute("/api/public/download-extensao")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       GET: async ({ request }) => {
         const url = new URL(request.url);

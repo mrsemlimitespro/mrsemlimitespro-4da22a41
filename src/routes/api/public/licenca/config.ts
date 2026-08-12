@@ -10,7 +10,7 @@ const cors = {
 };
 
 export const Route = createFileRoute("/api/public/licenca/config")({
-  server: {
+  loader: async () => ({}), server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
       GET: async () => {
