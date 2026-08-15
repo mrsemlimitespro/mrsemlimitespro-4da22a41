@@ -271,7 +271,7 @@ class SDKServer {
       }
     }
 
-    const session = await this.verifySession(sessionToken);
+    const session = await this.verifySession(sessionToken as string | null | undefined);
 
     if (!session) {
       throw ForbiddenError("Invalid session cookie");
