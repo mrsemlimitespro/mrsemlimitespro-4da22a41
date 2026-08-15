@@ -58,8 +58,7 @@ export default function Home() {
     return localStorage.getItem("selected_workspace_id");
   });
   const [newWorkspaceName, setNewWorkspaceName] = useState("");
-
-  // utils is already declared above for workspaces logic
+  const utils = trpc.useUtils();
 
   const { data: workspaces = [], isLoading: isLoadingWorkspaces } = trpc.workspaces.list.useQuery();
   
@@ -91,6 +90,7 @@ export default function Home() {
       localStorage.setItem("selected_workspace_id", selectedWorkspaceId);
     }
   }, [selectedWorkspaceId]);
+
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
     overview: true,
     channels: true,
@@ -100,14 +100,37 @@ export default function Home() {
   const [selectedChannel, setSelectedChannel] = useState("omni");
 
   // Estado para Gerenciamento de Instâncias (WhatsApp - Evolution API Real via tRPC)
-  const utils = trpc.useUtils();
   const { data: dbInstances = [], isLoading: isLoadingInstances } = trpc.evolution.list.useQuery({ 
     workspaceId: selectedWorkspaceId || undefined 
   });
+
   const createInstanceMutation = trpc.evolution.createInstance.useMutation({
     onSuccess: () => {
       utils.evolution.list.invalidate();
       toast.success("Instância criada e conectada à Evolution API!");
+    },
+    onError: (err) => {
+      toast.error("Erro ao criar instância: " + err.message);
+    }
+  });
+
+  const deleteInstanceMutation = trpc.evolution.deleteInstance.useMutation({
+    onSuccess: () => {
+      utils.evolution.list.invalidate();
+      toast.success("Instância removida com sucesso.");
+    }
+  });
+
+  const refreshInstanceMutation = trpc.evolution.refreshInstance.useMutation({
+    onSuccess: () => {
+      utils.evolution.list.invalidate();
+      toast.success("Status e QR Code atualizados com sucesso!");
+    },
+    onError: (err) => {
+      toast.error("Falha ao atualizar status: " + err.message);
+    }
+  });
+
     },
     onError: (err) => {
       toast.error("Erro ao criar instância: " + err.message);
