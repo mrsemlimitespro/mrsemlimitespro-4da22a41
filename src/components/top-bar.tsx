@@ -388,11 +388,11 @@ function PanelChip({
 }) {
   const cfg = (() => {
     if (isAdminUser || role === "admin")
-      return { emoji: "⭐", label: "Painel Administrador", glow: "var(--brand-orange)" };
+      return { emoji: "⭐", label: "Administrador", glow: "var(--brand-orange)" };
     if (role === "revendedor")
-      return { emoji: "🏪", label: "Painel Revendedor", glow: "var(--brand-blue)" };
+      return { emoji: "🏪", label: "Revendedor", glow: "var(--primary)" };
     if (authed === true && role === "cliente")
-      return { emoji: "👤", label: "Painel Cliente", glow: "var(--brand-emerald)" };
+      return { emoji: "👤", label: "Cliente", glow: "var(--brand-emerald)" };
     if (authed === false) return { emoji: "🌐", label: "Visitante", glow: "oklch(0.75 0.02 260)" };
     return null; // loading
   })();
