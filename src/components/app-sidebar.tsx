@@ -162,7 +162,7 @@ export function AppSidebar() {
               aria-label={`${BRAND_NAME} — ir para o dashboard`}
               className="relative transition-transform duration-300 hover:scale-105 active:scale-95"
             >
-              <BrandLogo className="h-16 w-full" />
+              <BrandLogo className="h-12 w-full" />
             </Link>
           </div>
 
