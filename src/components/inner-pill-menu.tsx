@@ -13,10 +13,10 @@ type PillItem = {
 };
 
 const items: PillItem[] = [
-  { label: "Loja", icon: Store, to: "/" },
-  { label: "Prompts", icon: MessageSquare, to: "/prompts" },
-  { label: "Agents", icon: Bot, to: "/agents" },
-  { label: "Packs", icon: Package, to: "/packs" },
+  { label: "Dashboard", icon: Store, to: "/dashboard" },
+  { label: "WhatsApp", icon: MessageSquare, to: "/whatsapp" },
+  { label: "Prompts", icon: Bot, to: "/prompts" },
+  { label: "Config", icon: Package, to: "/configuracoes" },
 ];
 
 export function InnerPillMenu() {

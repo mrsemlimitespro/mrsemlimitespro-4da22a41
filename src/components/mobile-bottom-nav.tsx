@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Home, Wrench, ShoppingBag, LayoutGrid, User } from "lucide-react";
+import { Home, MessageSquare, Megaphone, ShoppingBag, User } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 
 import { cn } from "@/lib/utils";
@@ -23,11 +23,18 @@ type TabItem = {
 const items: TabItem[] = [
   { id: "home", title: "Início", to: "/", icon: Home, matches: ["/"] },
   {
-    id: "ferramentas",
-    title: "Ferramentas",
-    to: "/ferramentas",
-    icon: Wrench,
-    matches: ["/ferramentas", "/agents", "/packs", "/prompts", "/baixar-extensao"],
+    id: "whatsapp",
+    title: "WhatsApp",
+    to: "/whatsapp",
+    icon: MessageSquare,
+    matches: ["/whatsapp", "/contatos", "/grupos"],
+  },
+  {
+    id: "campanhas",
+    title: "Campanhas",
+    to: "/campanhas",
+    icon: Megaphone,
+    matches: ["/campanhas", "/filas"],
   },
   {
     id: "loja",
@@ -37,18 +44,11 @@ const items: TabItem[] = [
     matches: ["/loja", "/creditos", "/dashboard", "/checkout"],
   },
   {
-    id: "gestao",
-    title: "Gestão",
-    to: "/gestao",
-    icon: LayoutGrid,
-    matches: ["/gestao", "/clientes", "/licencas", "/admin/revendedores-gestao", "/revendedor"],
-  },
-  {
     id: "perfil",
     title: "Perfil",
     to: "/perfil",
     icon: User,
-    matches: ["/perfil", "/minha-conta", "/aulas"],
+    matches: ["/perfil", "/minha-conta", "/configuracoes"],
   },
 ];
 
