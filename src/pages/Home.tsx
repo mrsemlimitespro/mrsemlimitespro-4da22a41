@@ -100,7 +100,9 @@ export default function Home() {
 
   // Estado para Gerenciamento de Instâncias (WhatsApp - Evolution API Real via tRPC)
   const utils = trpc.useUtils();
-  const { data: dbInstances = [], isLoading: isLoadingInstances } = trpc.evolution.list.useQuery();
+  const { data: dbInstances = [], isLoading: isLoadingInstances } = trpc.evolution.list.useQuery({ 
+    workspaceId: selectedWorkspaceId || undefined 
+  });
   const createInstanceMutation = trpc.evolution.createInstance.useMutation({
     onSuccess: () => {
       utils.evolution.list.invalidate();
@@ -306,6 +308,7 @@ export default function Home() {
     }
     createInstanceMutation.mutate({
       instanceName: newInstanceName,
+      workspaceId: selectedWorkspaceId || undefined,
       apiUrl: evolutionApiUrl || undefined,
       apiKey: evolutionApiKey || undefined,
     });

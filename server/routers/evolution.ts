@@ -25,20 +25,28 @@ export const evolutionRouter = router({
   // Legacy methods kept for compatibility or removed if not used
 
 
-  list: protectedProcedure.query(async ({ ctx }) => {
-    const db = await getDb();
-    if (!db) return [];
-    const rows = await db.select().from(evolutionInstances).where(eq(evolutionInstances.userId, ctx.user.id));
-    // Omitir ou mascarar apiKey para segurança no cliente
-    return rows.map(r => ({
-      ...r,
-      apiKey: r.apiKey ? "••••••••" : null,
-    }));
-  }),
+  list: protectedProcedure
+    .input(z.object({ workspaceId: z.string().optional() }))
+    .query(async ({ ctx, input }) => {
+      const db = await getDb();
+      if (!db) return [];
+      
+      const filters = [eq(evolutionInstances.userId, ctx.user.id)];
+      if (input.workspaceId) {
+        filters.push(eq(evolutionInstances.workspaceId, input.workspaceId));
+      }
+      
+      const rows = await db.select().from(evolutionInstances).where(and(...filters));
+      return rows.map(r => ({
+        ...r,
+        apiKey: r.apiKey ? "••••••••" : null,
+      }));
+    }),
 
   createInstance: protectedProcedure
     .input(z.object({
       instanceName: z.string().min(1),
+      workspaceId: z.string().optional(),
       apiUrl: z.string().optional(),
       apiKey: z.string().optional(),
     }))
@@ -82,6 +90,7 @@ export const evolutionRouter = router({
 
       await db.insert(evolutionInstances).values({
         userId: ctx.user.id,
+        workspaceId: input.workspaceId || null,
         instanceName: input.instanceName,
         status,
         apiUrl: input.apiUrl || null,
