@@ -1264,7 +1264,56 @@ export default function Home() {
             </div>
           )}
 
-          {!activeChannel && activeTab !== "dashboard" && activeTab !== "connections" && activeTab !== "api-keys" && activeTab !== "campaigns" && activeTab !== "maps" && activeTab !== "contacts" && activeTab !== "queues" && (
+          {activeTab === "webhooks" && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between bg-[#090a10] p-6 rounded-3xl border border-[#1a223f]">
+                <div>
+                  <h2 className="text-xl font-extrabold text-white">Configuração de Webhooks</h2>
+                  <p className="text-xs text-slate-400">Receba notificações em tempo real da Evolution API e integre com CRMs.</p>
+                </div>
+                <Button className="bg-[#00f0ff] text-[#030407] font-bold">
+                  <Plus className="w-4 h-4 mr-2" /> Novo Webhook
+                </Button>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card className="bg-[#090a10] border-[#1a223f] p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/30">
+                      <Globe className="h-5 w-5 text-blue-400" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-white">Endpoint de Recepção</h3>
+                      <p className="text-[10px] text-slate-500 uppercase tracking-tighter">Evolution API Callback</p>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2 p-3 rounded-xl bg-black/40 border border-white/5">
+                      <code className="text-[10px] text-cyan-300 flex-1 truncate">
+                        https://mrsemlimitespro.lovable.app/api/public/evolution/webhook
+                      </code>
+                      <Button size="icon" variant="ghost" className="h-6 w-6 hover:text-cyan-400">
+                        <Copy className="h-3.5 w-3.5" />
+                      </Button>
+                    </div>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      Configure esta URL na sua Evolution API para receber eventos de mensagens, status de conexão e mais de forma segura.
+                    </p>
+                  </div>
+                </Card>
+
+                <Card className="bg-[#090a10] border-[#1a223f] p-6 flex flex-col justify-center items-center text-center">
+                  <div className="w-12 h-12 bg-slate-800/30 rounded-full flex items-center justify-center mb-4">
+                    <Layers className="w-6 h-6 text-slate-600" />
+                  </div>
+                  <h4 className="text-sm font-bold text-slate-300">Nenhum Webhook Ativo</h4>
+                  <p className="text-xs text-slate-500 max-w-[200px] mt-1">Integre seu painel com n8n ou Make criando seu primeiro webhook de saída.</p>
+                </Card>
+              </div>
+            </div>
+          )}
+
+          {!activeChannel && activeTab !== "dashboard" && activeTab !== "connections" && activeTab !== "api-keys" && activeTab !== "campaigns" && activeTab !== "maps" && activeTab !== "contacts" && activeTab !== "queues" && activeTab !== "webhooks" && (
             <div className="p-12 rounded-3xl bg-[#090a10] border border-[#1a223f] text-center max-w-xl mx-auto space-y-4">
               <div className="w-16 h-16 rounded-2xl bg-[#00f0ff]/10 text-[#00f0ff] border border-[#00f0ff]/30 flex items-center justify-center mx-auto neon-glow-blue">
                 <Sparkles className="w-8 h-8" />

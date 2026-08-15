@@ -6,6 +6,7 @@ import { evolutionRouter } from "./routers/evolution";
 import { workspacesRouter } from "./routers/workspaces";
 import { contactsRouter } from "./routers/contacts";
 import { campaignsRouter } from "./routers/campaigns";
+import { webhooksRouter } from "./routers/webhooks";
 
 
 export const appRouter = router({
@@ -24,6 +25,7 @@ export const appRouter = router({
   workspaces: workspacesRouter,
   contacts: contactsRouter,
   campaigns: campaignsRouter,
+  webhooks: webhooksRouter,
 });
 
 
