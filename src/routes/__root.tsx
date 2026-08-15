@@ -97,7 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "MR sem limites" },
+      { name: "twitter:title", content: "MR Sem Limite Pro" },
       {
         name: "twitter:description",
         content:
