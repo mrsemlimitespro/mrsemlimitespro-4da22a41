@@ -1,7 +1,7 @@
 import { AXIOS_TIMEOUT_MS, COOKIE_NAME, ONE_YEAR_MS, decodeOAuthState } from "../../shared/const";
 import { ForbiddenError } from "../../shared/_core/errors";
 import axios, { type AxiosInstance } from "axios";
-import cookie from "cookie";
+import * as cookie from "cookie";
 const parseCookieHeader = (cookie as any).parse || cookie;
 import type { Request } from "express";
 import { SignJWT, jwtVerify } from "jose";
@@ -278,8 +278,8 @@ class SDKServer {
     }
 
     if (session.openId.startsWith(CRON_OPEN_ID_PREFIX)) {
-      const userInfo = await this.getUserInfoWithJwt(sessionToken ?? "");
-      const taskUid = userInfo.taskUid ?? null;
+      const userInfo = await this.getUserInfoWithJwt(((sessionToken as any) ?? ""));
+      const taskUid = ((userInfo.taskUid as any) ?? null);
       if (!taskUid) {
         throw ForbiddenError("Cron session missing task_uid");
       }
@@ -293,7 +293,7 @@ class SDKServer {
     // If user not in DB, sync from OAuth server automatically
     if (!user) {
       try {
-        const userInfo = await this.getUserInfoWithJwt(sessionToken ?? "");
+        const userInfo = await this.getUserInfoWithJwt(((sessionToken as any) ?? ""));
         await db.upsertUser({
           openId: userInfo.openId,
           name: userInfo.name || null,
