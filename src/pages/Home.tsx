@@ -250,6 +250,7 @@ export default function Home() {
       icon: Sparkles,
       items: [
         { id: "campaigns", label: "Campanhas & Disparos", icon: Megaphone },
+        { id: "contacts", label: "Contatos & Grupos", icon: Users },
         { id: "scheduler", label: "Agendamento", icon: Calendar },
         { id: "omni", label: "Omni / Misturado", icon: MessageSquare, badge: "Multicanal" },
         { id: "ai", label: "Central de IA", icon: Bot },
@@ -260,9 +261,10 @@ export default function Home() {
       label: "Operação do sistema",
       icon: Cpu,
       items: [
-        { id: "leads", label: "Leads", icon: Users },
-        { id: "crm", label: "CRM / Kanban", icon: Kanban },
-        { id: "connections", label: "Conexões Evolution", icon: Cpu },
+        { id: "leads", label: "Leads Google Maps", icon: MapPin },
+        { id: "queues", label: "Filas de Disparo", icon: Layers },
+        { id: "connections", label: "Conexões Evolution", icon: Smartphone },
+        { id: "webhooks", label: "Webhooks", icon: Globe },
         { id: "api-keys", label: "Chaves de API", icon: Key },
         { id: "settings", label: "Configurações", icon: Settings },
         { id: "help", label: "Ajuda & Suporte", icon: HelpCircle },
@@ -270,11 +272,14 @@ export default function Home() {
     },
   ];
 
+
   const pageTitles: Record<string, string> = {
     dashboard: "Visão Geral",
     maps: "Google Maps",
-    leads: "Leads",
-    crm: "CRM / Kanban",
+    leads: "Leads Google Maps",
+    contacts: "Contatos & Grupos",
+    queues: "Filas de Disparo",
+    webhooks: "Webhooks",
     campaigns: "Campanhas & Disparos",
     scheduler: "Agendamento",
     omni: "Omni / Misturado",
@@ -286,6 +291,7 @@ export default function Home() {
     settings: "Configurações",
     help: "Ajuda & Suporte",
   };
+
 
   const activeChannel = channelItems.find((channel) => channel.id === activeTab);
 
