@@ -9,7 +9,10 @@ export const Route = createFileRoute("/login")({
   component: LoginPage,
 });
 
-function LoginPage() {
+export const inputCls = "w-full bg-surface border border-border px-4 py-3 rounded-lg outline-none focus:border-primary text-white";
+export const primaryBtn = "w-full bg-primary py-3 rounded-lg font-bold text-white shadow-glow hover:opacity-90";
+
+export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -30,19 +33,17 @@ function LoginPage() {
             placeholder="E-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full bg-surface border border-border px-4 py-3 rounded-lg outline-none focus:border-primary"
+            className={inputCls}
           />
           <input
             type="password"
             placeholder="Senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full bg-surface border border-border px-4 py-3 rounded-lg outline-none focus:border-primary"
+            className={inputCls}
           />
         </div>
-        <button className="w-full bg-primary py-3 rounded-lg font-bold text-white shadow-glow hover:opacity-90">
-          Entrar
-        </button>
+        <button className={primaryBtn}>Entrar</button>
       </form>
     </div>
   );

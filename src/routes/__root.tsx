@@ -86,26 +86,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "MR Sem Limite Pro" },
       {
         name: "description",
-        content:
-          "MR Sem Limite Pro — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
+        content: "MR Sem Limite Pro — Dispatch Multicanal & Automação.",
       },
       { property: "og:title", content: "MR Sem Limite Pro" },
       {
         property: "og:description",
-        content:
-          "MR Sem Limite Pro — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
+        content: "MR Sem Limite Pro — Dispatch Multicanal & Automação.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "MR Sem Limite Pro" },
       {
         name: "twitter:description",
-        content:
-          "MR Sem Limite Pro — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
+        content: "MR Sem Limite Pro — Dispatch Multicanal & Automação.",
       },
       {
         property: "og:image",
-        content: BRAND_LOGO_URL,
+        content: "/logo.png",
       },
       {
         name: "twitter:image",
