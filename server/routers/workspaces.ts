@@ -30,7 +30,7 @@ export const workspacesRouter = router({
   create: protectedProcedure
     .input(z.object({ 
       name: z.string().min(1),
-      type: z.enum(["personal", "business"]).default("personal")
+      type: z.string().default("personal")
     }))
     .mutation(async ({ ctx, input }) => {
       const db = await getDb();
