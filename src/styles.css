@@ -206,7 +206,7 @@
   --destructive-foreground: oklch(0.98 0.005 20);
   --border: oklch(1 0 0 / 7%);
   --input: oklch(1 0 0 / 9%);
-  --ring: oklch(0.72 0.26 340);
+  --ring: #3b82f6;
 }
 
 
