@@ -1,8 +1,8 @@
 import { AXIOS_TIMEOUT_MS, COOKIE_NAME, ONE_YEAR_MS, decodeOAuthState } from "../../shared/const";
 import { ForbiddenError } from "../../shared/_core/errors";
 import axios, { type AxiosInstance } from "axios";
-import * as cookie from "cookie";
-const parseCookieHeader = cookie.parse;
+import cookie from "cookie";
+const parseCookieHeader = (cookie as any).parse || cookie;
 import type { Request } from "express";
 import { SignJWT, jwtVerify } from "jose";
 import type { User } from "../../drizzle/schema";
