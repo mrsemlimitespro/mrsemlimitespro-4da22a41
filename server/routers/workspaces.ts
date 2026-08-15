@@ -37,22 +37,25 @@ export const workspacesRouter = router({
       if (!db) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Database not available" });
       
       const slug = input.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + Math.random().toString(36).substring(2, 5);
+      const workspaceId = crypto.randomUUID();
       
-      const [newWorkspace] = await db.insert(workspaces).values({
+      await db.insert(workspaces).values({
+        id: workspaceId,
         ownerId: ctx.user.openId,
         name: input.name,
         slug,
         type: input.type,
-      }).$returningId();
+      });
 
       await db.insert(workspaceMembers).values({
-        workspaceId: newWorkspace.id,
+        id: crypto.randomUUID(),
+        workspaceId,
         userId: ctx.user.openId,
         role: "owner",
         status: "active",
       });
 
-      return { success: true, workspaceId: newWorkspace.id };
+      return { success: true, workspaceId };
     }),
 
   ensureInitial: protectedProcedure.mutation(async ({ ctx }) => {
@@ -67,12 +70,12 @@ export const workspacesRouter = router({
       .limit(1);
 
     if (existing.length > 0) {
-      return { success: true, created: false };
+      return { success: true, created: false, workspaceId: existing[0].workspaceId };
     }
 
     // Create personal workspace
     const name = ctx.user.name || "Meu Workspace";
-    const slug = `personal-${ctx.user.openId.substring(0, 8)}`;
+    const slug = `personal-${ctx.user.openId.substring(0, 8)}-${Math.random().toString(36).substring(2, 5)}`;
     
     try {
       const workspaceId = crypto.randomUUID();
