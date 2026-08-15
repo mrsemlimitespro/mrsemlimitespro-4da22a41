@@ -44,6 +44,7 @@ import {
   FolderTree
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
