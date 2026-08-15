@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   LayoutDashboard, 
   MapPin, 
@@ -44,6 +44,7 @@ import {
   FolderTree,
   LogOut
 } from "lucide-react";
+
 import { trpc } from "@/lib/trpc";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
