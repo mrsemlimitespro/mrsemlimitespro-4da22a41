@@ -85,6 +85,7 @@ export const workspacesRouter = router({
       });
 
       await db.insert(workspaceMembers).values({
+        id: crypto.randomUUID(),
         workspaceId,
         userId: ctx.user.openId,
         role: "owner",

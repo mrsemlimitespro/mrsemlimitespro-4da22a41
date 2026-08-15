@@ -58,7 +58,8 @@ export default function Home() {
   });
   const [newWorkspaceName, setNewWorkspaceName] = useState("");
 
-  const utils = trpc.useUtils();
+  // utils is already declared above for workspaces logic
+
   const { data: workspaces = [], isLoading: isLoadingWorkspaces } = trpc.workspaces.list.useQuery();
   
   const ensureInitialMutation = trpc.workspaces.ensureInitial.useMutation({
