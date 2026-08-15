@@ -184,7 +184,7 @@ const EVENT_META: Record<string, { label: string; icon: IconType; color: string 
   compra_aprovada: { label: "Compra aprovada", icon: CreditCard, color: "var(--brand-blue)" },
   compra_recusada: { label: "Compra recusada", icon: XCircle, color: "var(--brand-orange)" },
   licenca_criada: { label: "Licença criada", icon: FileText, color: "var(--brand-violet)" },
-  credito_comprado: { label: "Crédito comprado", icon: Coins, color: "var(--brand-magenta)" },
+  credito_comprado: { label: "Crédito comprado", icon: Coins, color: "var(--brand-blue)" },
   login: { label: "Login realizado", icon: LogIn, color: "var(--brand-cyan)" },
   cadastro: { label: "Novo cadastro", icon: KeyRound, color: "var(--brand-emerald)" },
   alteracao: { label: "Alteração importante", icon: Settings, color: "var(--brand-blue)" },
@@ -338,14 +338,14 @@ function DashboardPage() {
       {/* Hero — Boas-vindas sem logo redundante (já está na watermark e sidebar) */}
       <section className="relative flex flex-col items-center justify-center gap-2 py-6 md:py-10">
         <div className="flex flex-col items-center gap-1 text-center">
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-brand-red-neon/30 bg-brand-red-neon/10 px-3 py-1">
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-red-neon opacity-75"></span>
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-red-neon"></span>
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
             </span>
-            <span className="text-[10px] font-bold tracking-[0.2em] text-brand-red-neon uppercase">SISTEMA ATIVO</span>
+            <span className="text-[10px] font-bold tracking-[0.2em] text-primary uppercase">SISTEMA ATIVO</span>
           </div>
-          <h1 className="gradient-text text-3xl font-bold tracking-tight md:text-5xl uppercase tracking-[0.3em] drop-shadow-[0_0_25px_rgba(255,0,0,0.4)] text-white">
+          <h1 className="gradient-text text-3xl font-bold tracking-tight md:text-5xl uppercase tracking-[0.3em] drop-shadow-[0_0_25px_rgba(59,130,246,0.4)] text-white">
             MR Sem Limite Pro
           </h1>
           <p className="max-w-md text-xs font-medium text-muted-foreground md:text-sm uppercase tracking-widest opacity-60">
@@ -438,7 +438,7 @@ function ActivityCard({ items }: { items: ActivityRow[] }) {
         </span>
       </div>
       {items.length === 0 ? (
-        <p className="text-xs text-muted-foreground">Nenhuma atividade registrada ainda.</p>
+        <p className="text-xs text-muted-foreground py-4 text-center">Ainda não há dados</p>
       ) : (
         <ul className="space-y-3">
           {items.map((a) => {
@@ -494,7 +494,7 @@ function RecentSalesCard({ sales }: { sales: PaymentRow[] }) {
         </span>
       </div>
       {sales.length === 0 ? (
-        <p className="text-xs text-muted-foreground">Nenhuma venda registrada ainda.</p>
+        <p className="text-xs text-muted-foreground py-4 text-center">Ainda não há dados</p>
       ) : (
         <ul className="space-y-3">
           {sales.map((s) => {

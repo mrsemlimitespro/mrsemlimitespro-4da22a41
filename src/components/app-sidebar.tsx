@@ -5,7 +5,7 @@ import {
   Building2,
   MessageSquare,
   Users,
-  UserGroupIcon,
+  Users2,
   Megaphone,
   ListOrdered,
   FileCode,
@@ -20,6 +20,8 @@ import {
   Server,
   Download,
   UserRound,
+  KeyRound,
+  Coins,
 } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 import { toast } from "sonner";
@@ -44,7 +46,33 @@ type NavItem = {
 // Público: acessível sem login
 const publicItems: NavItem[] = [
   { title: "Home", url: "/", icon: LayoutDashboard },
-  { title: "Catálogo", url: "/extensoes", icon: Store },
+  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+];
+
+// WhatsApp e CRM
+const whatsappItems: NavItem[] = [
+  { title: "WhatsApp", url: "/whatsapp", icon: MessageSquare },
+  { title: "Contatos", url: "/contatos", icon: Users },
+  { title: "Grupos", url: "/grupos", icon: Users2 },
+];
+
+// Campanhas e Automação
+const automationItems: NavItem[] = [
+  { title: "Campanhas", url: "/campanhas", icon: Megaphone },
+  { title: "Filas", url: "/filas", icon: ListOrdered },
+];
+
+// Técnico e Integrações
+const technicalItems: NavItem[] = [
+  { title: "Logs", url: "/logs", icon: FileCode },
+  { title: "Webhooks", url: "/webhooks", icon: Webhook },
+  { title: "Integrações", url: "/integracoes", icon: Zap },
+];
+
+// Gestão e Configuração
+const managementItems: NavItem[] = [
+  { title: "Empresas", url: "/empresas", icon: Building2 },
+  { title: "Configurações", url: "/configuracoes", icon: Settings },
 ];
 
 // Área de IA (Novo Centralizado)
@@ -53,27 +81,9 @@ const aiItems: NavItem[] = [
   { title: "Agentes IA", url: "/agents", icon: Bot },
 ];
 
-// Cliente final: acessa seus produtos e downloads
-const clienteItems: NavItem[] = [
-  { title: "Minha Conta", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Minhas Licenças", url: "/licencas", icon: KeyRound },
-  { title: "Downloads", url: "/baixar-extensao", icon: Download },
-];
-
-// Revendedor: operação comercial
-const revendedorItems: NavItem[] = [
-  { title: "Painel Revenda", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Gerar Licenças", url: "/licencas", icon: KeyRound },
-  { title: "Meus Clientes", url: "/clientes", icon: Users },
-  { title: "Saldo/Créditos", url: "/creditos", icon: Coins },
-];
-
 // Ultra Admin: controle total
 const adminItems: NavItem[] = [
-  { title: "Ultra Admin", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Produtos & Extensões", url: "/admin/loja-produtos", icon: Store },
   { title: "Gestão Licenças", url: "/admin/licencas", icon: KeyRound },
-  { title: "Revendedores", url: "/admin/revendedores-gestao", icon: Users },
   { title: "Financeiro", url: "/admin/pagamentos", icon: Coins },
   { title: "Segurança & API", url: "/admin/api-dashboard", icon: Server },
 ];
@@ -116,11 +126,17 @@ export function AppSidebar() {
   // Antes da checagem terminar, mostramos só os itens públicos para evitar flash.
   // Cliente final não enxerga funções de revendedor (Painel/Licenças/Clientes/Créditos).
   const primaryItems: NavItem[] = (() => {
-    if (authed !== true) return publicItems;
-    if (role === "admin") return [...publicItems, ...adminItems, ...aiItems];
-    if (isPrivilegedRole(role)) return [...publicItems, ...revendedorItems, ...aiItems];
-    // cliente ou role ainda carregando
-    return [...publicItems, ...clienteItems, ...aiItems];
+    const base = [
+      ...publicItems,
+      ...managementItems,
+      ...whatsappItems,
+      ...automationItems,
+      ...technicalItems,
+      ...aiItems,
+    ];
+    if (authed !== true) return base;
+    if (role === "admin") return [...base, ...adminItems];
+    return base;
   })();
   const footerItems: FooterItem[] = authed === true ? authedFooterItems : anonFooterItems;
 
@@ -137,7 +153,7 @@ export function AppSidebar() {
           )}
           style={{
             boxShadow:
-              "0 0 0 1px oklch(1 0 0 / 4%), 0 20px 60px -20px oklch(0 0 0 / 70%), 0 0 40px -6px color-mix(in oklab, var(--brand-red-neon) 25%, transparent)",
+              "0 0 0 1px oklch(1 0 0 / 4%), 0 20px 60px -20px oklch(0 0 0 / 70%), 0 0 40px -6px color-mix(in oklab, var(--primary) 25%, transparent)",
           }}
         >
           <div className="mb-4 flex w-full flex-col items-center px-1">

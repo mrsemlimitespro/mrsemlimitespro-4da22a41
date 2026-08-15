@@ -149,7 +149,7 @@ function HeroSection({
         className="relative group transition-transform duration-500 hover:scale-105"
         style={{
           width: "min(320px, 75vw)",
-          filter: "drop-shadow(0 0 30px color-mix(in oklab, var(--brand-red-neon) 30%, transparent))"
+      filter: "drop-shadow(0 0 30px color-mix(in oklab, var(--primary) 30%, transparent))"
         }}
       >
         <img
@@ -158,18 +158,18 @@ function HeroSection({
           className="h-full w-full object-contain"
           draggable={false}
         />
-        <div className="absolute -inset-4 bg-brand-red-neon/5 blur-[80px] -z-10 rounded-full animate-pulse" />
+        <div className="absolute -inset-4 bg-primary/5 blur-[80px] -z-10 rounded-full animate-pulse" />
       </div>
 
       <div className="flex flex-col items-center gap-4 mt-4">
-        <span className="inline-flex items-center gap-2 rounded-full border border-brand-red-neon/30 bg-brand-red-neon/5 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.25em] text-brand-red-neon backdrop-blur-md">
+        <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.25em] text-primary backdrop-blur-md">
           <span aria-hidden className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-red-neon opacity-75"></span>
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-red-neon"></span>
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
           </span>
           {panelBadge.label}
         </span>
-        <h1 className="text-4xl font-black tracking-tight md:text-6xl uppercase tracking-[0.4em] drop-shadow-[0_0_20px_rgba(255,0,0,0.5)] text-white">
+        <h1 className="text-4xl font-black tracking-tight md:text-6xl uppercase tracking-[0.4em] drop-shadow-[0_0_20px_rgba(59,130,246,0.5)] text-white">
           MR Sem Limite Pro
         </h1>
         <p className="max-w-2xl px-4 text-xs font-medium text-muted-foreground md:text-sm uppercase tracking-[0.2em] opacity-80">
