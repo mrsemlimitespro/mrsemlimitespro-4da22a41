@@ -339,13 +339,6 @@ export default function Home() {
     logoutInstanceMutation.mutate({ id });
   };
 
-  const logoutInstanceMutation = trpc.evolution.logoutInstance.useMutation({
-    onSuccess: () => {
-      utils.evolution.list.invalidate();
-      toast.success("Instância desconectada com sucesso.");
-    },
-    onError: (err) => toast.error("Erro ao desconectar: " + err.message)
-  });
 
   // Ações de Chaves de API
   const handleCreateApiKey = (e: React.FormEvent) => {
