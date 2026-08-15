@@ -15,8 +15,8 @@ export const users = mysqlTable("users", {
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
 });
 
-export type User = typeof users.;
-export type InsertUser = typeof users.;
+export type User = typeof users.$inferSelect;
+export type InsertUser = typeof users.$inferInsert;
 
 /**
  * Workspaces table for multi-tenant companies / personal spaces.
@@ -32,8 +32,8 @@ export const workspaces = mysqlTable("workspaces", {
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
-export type Workspace = typeof workspaces.;
-export type InsertWorkspace = typeof workspaces.;
+export type Workspace = typeof workspaces.$inferSelect;
+export type InsertWorkspace = typeof workspaces.$inferInsert;
 
 /**
  * Workspace members table for role-based access control within a workspace.
@@ -47,8 +47,8 @@ export const workspaceMembers = mysqlTable("workspace_members", {
   joinedAt: timestamp("joinedAt").defaultNow().notNull(),
 });
 
-export type WorkspaceMember = typeof workspaceMembers.;
-export type InsertWorkspaceMember = typeof workspaceMembers.;
+export type WorkspaceMember = typeof workspaceMembers.$inferSelect;
+export type InsertWorkspaceMember = typeof workspaceMembers.$inferInsert;
 
 /**
  * Evolution API Instances table for real WhatsApp connections.
@@ -68,5 +68,5 @@ export const evolutionInstances = mysqlTable("evolution_instances", {
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
 
-export type EvolutionInstance = typeof evolutionInstances.;
-export type InsertEvolutionInstance = typeof evolutionInstances.;
+export type EvolutionInstance = typeof evolutionInstances.$inferSelect;
+export type InsertEvolutionInstance = typeof evolutionInstances.$inferInsert;
