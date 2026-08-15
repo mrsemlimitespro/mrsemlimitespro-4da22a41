@@ -131,28 +131,6 @@ export default function Home() {
     }
   });
 
-    },
-    onError: (err) => {
-      toast.error("Erro ao criar instância: " + err.message);
-    }
-  });
-  const deleteInstanceMutation = trpc.evolution.deleteInstance.useMutation({
-    onSuccess: () => {
-      utils.evolution.list.invalidate();
-      toast.success("Instância removida com sucesso.");
-    }
-  });
-
-  const refreshInstanceMutation = trpc.evolution.refreshInstance.useMutation({
-    onSuccess: () => {
-      utils.evolution.list.invalidate();
-      toast.success("Status e QR Code atualizados com sucesso!");
-    },
-    onError: (err) => {
-      toast.error("Falha ao atualizar status: " + err.message);
-    }
-  });
-
   const [newInstanceName, setNewInstanceName] = useState("");
   const [evolutionApiUrl, setEvolutionApiUrl] = useState("");
   const [evolutionApiKey, setEvolutionApiKey] = useState("");
