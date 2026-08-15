@@ -1264,7 +1264,7 @@ export default function Home() {
             </div>
           )}
 
-          {!activeChannel && activeTab !== "dashboard" && activeTab !== "connections" && activeTab !== "api-keys" && activeTab !== "campaigns" && activeTab !== "maps" && (
+          {!activeChannel && activeTab !== "dashboard" && activeTab !== "connections" && activeTab !== "api-keys" && activeTab !== "campaigns" && activeTab !== "maps" && activeTab !== "contacts" && activeTab !== "queues" && (
             <div className="p-12 rounded-3xl bg-[#090a10] border border-[#1a223f] text-center max-w-xl mx-auto space-y-4">
               <div className="w-16 h-16 rounded-2xl bg-[#00f0ff]/10 text-[#00f0ff] border border-[#00f0ff]/30 flex items-center justify-center mx-auto neon-glow-blue">
                 <Sparkles className="w-8 h-8" />
