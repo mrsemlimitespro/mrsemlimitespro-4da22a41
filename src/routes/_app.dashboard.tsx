@@ -346,7 +346,7 @@ function DashboardPage() {
             <span className="text-[10px] font-bold tracking-[0.2em] text-brand-red-neon uppercase">SISTEMA ATIVO</span>
           </div>
           <h1 className="gradient-text text-3xl font-bold tracking-tight md:text-5xl uppercase tracking-[0.3em] drop-shadow-[0_0_25px_rgba(255,0,0,0.4)] text-white">
-            MR SEM LIMITES
+            MR Sem Limite Pro
           </h1>
           <p className="max-w-md text-xs font-medium text-muted-foreground md:text-sm uppercase tracking-widest opacity-60">
             {BRAND_NAME} — ECOSSISTEMA PREMIUM
