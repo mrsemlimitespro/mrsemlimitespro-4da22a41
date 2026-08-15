@@ -61,7 +61,7 @@ function LoginPage() {
   async function handleBiometricUnlock() {
     setBioLoading(true);
     setError(null);
-    const r = await unlockWithBiometric("Entre no MR sem limites com sua biometria.");
+    const r = await unlockWithBiometric("Entre no MR Sem Limite Pro com sua biometria.");
     setBioLoading(false);
     if (!r.ok) {
       if (r.code !== "cancelled") setError(r.message);
