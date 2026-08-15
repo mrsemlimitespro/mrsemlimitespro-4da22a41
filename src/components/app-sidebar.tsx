@@ -2,18 +2,24 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   LayoutDashboard,
-  KeyRound,
+  Building2,
+  MessageSquare,
   Users,
-  Coins,
-  GraduationCap,
-  Download,
-  UserRound,
+  UserGroupIcon,
+  Megaphone,
+  ListOrdered,
+  FileCode,
+  Webhook,
+  Zap,
+  Settings,
   LogOut,
   LogIn,
   Bot,
   Wand2,
   Store,
   Server,
+  Download,
+  UserRound,
 } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 import { toast } from "sonner";
