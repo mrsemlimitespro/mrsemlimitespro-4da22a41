@@ -70,3 +70,63 @@ export const evolutionInstances = mysqlTable("evolution_instances", {
 
 export type EvolutionInstance = typeof evolutionInstances.$inferSelect;
 export type InsertEvolutionInstance = typeof evolutionInstances.$inferInsert;
+
+/**
+ * Contacts table for workspace-isolated lead management.
+ */
+export const contacts = mysqlTable("contacts", {
+  id: int("id").autoincrement().primaryKey(),
+  workspaceId: varchar("workspace_id", { length: 36 }).notNull(),
+  name: varchar("name", { length: 255 }),
+  number: varchar("number", { length: 32 }).notNull(),
+  email: varchar("email", { length: 255 }),
+  tags: text("tags"),
+  metadata: text("metadata"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+/**
+ * Campaigns table for mass messaging orchestration.
+ */
+export const campaigns = mysqlTable("campaigns", {
+  id: int("id").autoincrement().primaryKey(),
+  workspaceId: varchar("workspace_id", { length: 36 }).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  status: varchar("status", { length: 32 }).default("pending").notNull(),
+  type: varchar("type", { length: 32 }).default("whatsapp").notNull(),
+  message: text("message").notNull(),
+  mediaUrl: text("media_url"),
+  scheduledAt: timestamp("scheduled_at"),
+  settings: text("settings"), // JSON for rotation, delays, etc.
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+});
+
+/**
+ * Dispatch logs for real-time tracking and auditing.
+ */
+export const dispatchLogs = mysqlTable("dispatch_logs", {
+  id: int("id").autoincrement().primaryKey(),
+  workspaceId: varchar("workspace_id", { length: 36 }).notNull(),
+  campaignId: int("campaign_id"),
+  instanceId: int("instance_id"),
+  contactNumber: varchar("contact_number", { length: 32 }).notNull(),
+  status: varchar("status", { length: 32 }).notNull(), // sent, delivered, failed
+  errorMessage: text("error_message"),
+  metadata: text("metadata"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+/**
+ * Webhooks for Evolution API events.
+ */
+export const webhooks = mysqlTable("webhooks", {
+  id: int("id").autoincrement().primaryKey(),
+  workspaceId: varchar("workspace_id", { length: 36 }).notNull(),
+  url: text("url").notNull(),
+  events: text("events"), // Comma separated events
+  status: varchar("status", { length: 32 }).default("active").notNull(),
+  secret: varchar("secret", { length: 255 }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
