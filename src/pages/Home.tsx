@@ -53,18 +53,42 @@ import { toast } from "sonner";
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<number | null>(null);
+  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string | null>(() => {
+    return localStorage.getItem("selected_workspace_id");
+  });
   const [newWorkspaceName, setNewWorkspaceName] = useState("");
 
-  const { data: workspaces = [], refetch: refetchWorkspaces } = trpc.evolution.listWorkspaces.useQuery();
-  const createWorkspaceMutation = trpc.evolution.createWorkspace.useMutation({
+  const utils = trpc.useUtils();
+  const { data: workspaces = [], isLoading: isLoadingWorkspaces } = trpc.workspaces.list.useQuery();
+  
+  const ensureInitialMutation = trpc.workspaces.ensureInitial.useMutation({
+    onSuccess: (data) => {
+      if (data.workspaceId && !selectedWorkspaceId) {
+        setSelectedWorkspaceId(data.workspaceId);
+        localStorage.setItem("selected_workspace_id", data.workspaceId);
+      }
+      utils.workspaces.list.invalidate();
+    }
+  });
+
+  const createWorkspaceMutation = trpc.workspaces.create.useMutation({
     onSuccess: () => {
       toast.success("Empresa/Workspace criada com sucesso!");
       setNewWorkspaceName("");
-      refetchWorkspaces();
+      utils.workspaces.list.invalidate();
     },
     onError: (err) => toast.error(`Erro ao criar empresa: ${err.message}`),
   });
+
+  React.useEffect(() => {
+    ensureInitialMutation.mutate();
+  }, []);
+
+  React.useEffect(() => {
+    if (selectedWorkspaceId) {
+      localStorage.setItem("selected_workspace_id", selectedWorkspaceId);
+    }
+  }, [selectedWorkspaceId]);
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
     overview: true,
     channels: true,
@@ -381,12 +405,29 @@ export default function Home() {
             </button>
           </div>
           {sidebarOpen && (
-            <div className="mt-5 flex items-center justify-between rounded-xl border border-emerald-300/15 bg-emerald-300/[0.06] px-3 py-2">
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(110,231,183,0.8)]" />
-                <span className="text-[10px] font-semibold text-emerald-100/80">Workspace principal</span>
+            <div className="mt-5">
+              <div className="flex items-center justify-between mb-2 px-1">
+                <span className="text-[9px] font-black uppercase tracking-[0.24em] text-slate-500">Workspace</span>
+                <button 
+                  onClick={() => {
+                    const name = prompt("Nome da nova empresa:");
+                    if (name) createWorkspaceMutation.mutate({ name });
+                  }}
+                  className="text-cyan-400 hover:text-cyan-300 transition-colors"
+                >
+                  <Plus className="h-3 w-3" />
+                </button>
               </div>
-              <span className="font-mono text-[9px] text-emerald-300/80">PRO</span>
+              <select
+                value={selectedWorkspaceId || ""}
+                onChange={(e) => setSelectedWorkspaceId(e.target.value)}
+                className="w-full bg-[#0d111d] border border-white/10 rounded-lg px-3 py-2 text-[11px] font-medium text-slate-200 focus:outline-none focus:ring-1 focus:ring-cyan-500/50 appearance-none cursor-pointer"
+              >
+                {workspaces.map(ws => (
+                  <option key={ws.id} value={ws.id}>{ws.name}</option>
+                ))}
+                {workspaces.length === 0 && <option value="">Carregando...</option>}
+              </select>
             </div>
           )}
         </div>

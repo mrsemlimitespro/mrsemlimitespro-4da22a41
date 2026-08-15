@@ -20,36 +20,10 @@ async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutM
   }
 }
 
-import { workspaces } from "../../drizzle/schema";
-
+// Workspaces management moved to workspaces.ts
 export const evolutionRouter = router({
-  listWorkspaces: protectedProcedure.query(async ({ ctx }) => {
-    const db = await getDb();
-    if (!db) return [];
-    const rows = await db.select().from(workspaces).where(eq(workspaces.userId, ctx.user.id));
-    if (rows.length === 0) {
-      // Criar workspace padrão se não existir
-      const defaultWs = { userId: ctx.user.id, name: "Workspace Principal", slug: "workspace-principal" };
-      await db.insert(workspaces).values(defaultWs);
-      const newRows = await db.select().from(workspaces).where(eq(workspaces.userId, ctx.user.id));
-      return newRows;
-    }
-    return rows;
-  }),
+  // Legacy methods kept for compatibility or removed if not used
 
-  createWorkspace: protectedProcedure
-    .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ ctx, input }) => {
-      const db = await getDb();
-      if (!db) throw new Error("Database not available");
-      const slug = input.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-      await db.insert(workspaces).values({
-        userId: ctx.user.id,
-        name: input.name,
-        slug,
-      });
-      return { success: true };
-    }),
 
   list: protectedProcedure.query(async ({ ctx }) => {
     const db = await getDb();
