@@ -951,6 +951,79 @@ export default function Home() {
             </div>
           )}
 
+          {activeTab === "contacts" && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#090a10] p-6 rounded-3xl border border-[#1a223f]">
+                <div>
+                  <h2 className="text-xl font-extrabold text-white">Gestão de Contatos & Grupos</h2>
+                  <p className="text-xs text-slate-400">Importe e gerencie seus contatos de forma isolada por workspace.</p>
+                </div>
+                <div className="flex gap-2">
+                  <Button variant="outline" className="border-[#1a223f] bg-[#0f1220] text-slate-200">
+                    <FileText className="w-4 h-4 mr-2" /> Importar CSV
+                  </Button>
+                  <Button className="bg-[#00f0ff] text-[#030407] font-bold">
+                    <Plus className="w-4 h-4 mr-2" /> Novo Contato
+                  </Button>
+                </div>
+              </div>
+
+              <div className="bg-[#090a10] border border-[#1a223f] rounded-3xl overflow-hidden">
+                <div className="p-6 border-b border-[#1a223f] flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-white">Listagem de Contatos</h3>
+                  <div className="relative w-64">
+                    <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <input type="text" placeholder="Buscar por nome ou número..." className="w-full bg-[#0f1220] border border-[#1a223f] rounded-xl pl-9 pr-4 py-1.5 text-xs text-slate-200 focus:outline-none" />
+                  </div>
+                </div>
+                <div className="p-12 text-center">
+                  <div className="w-16 h-16 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Users className="w-8 h-8 text-slate-600" />
+                  </div>
+                  <h4 className="text-sm font-bold text-slate-300 mb-1">Ainda não há dados</h4>
+                  <p className="text-xs text-slate-500">Comece importando uma lista de contatos para este workspace.</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "queues" && (
+            <div className="space-y-6">
+              <div className="bg-[#090a10] p-6 rounded-3xl border border-[#1a223f]">
+                <h2 className="text-xl font-extrabold text-white mb-2">Filas de Disparo & Logs</h2>
+                <p className="text-xs text-slate-400">Acompanhe em tempo real o status dos seus envios programados.</p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <Card className="bg-[#090a10] border-[#1a223f] p-4 text-center">
+                  <div className="text-[10px] font-bold text-slate-500 uppercase mb-1">Aguardando</div>
+                  <div className="text-2xl font-black text-white">0</div>
+                </Card>
+                <Card className="bg-[#090a10] border-[#1a223f] p-4 text-center border-cyan-500/30">
+                  <div className="text-[10px] font-bold text-slate-500 uppercase mb-1">Enviando</div>
+                  <div className="text-2xl font-black text-cyan-400">0</div>
+                </Card>
+                <Card className="bg-[#090a10] border-[#1a223f] p-4 text-center border-emerald-500/30">
+                  <div className="text-[10px] font-bold text-slate-500 uppercase mb-1">Concluídos</div>
+                  <div className="text-2xl font-black text-emerald-400">0</div>
+                </Card>
+                <Card className="bg-[#090a10] border-[#1a223f] p-4 text-center border-rose-500/30">
+                  <div className="text-[10px] font-bold text-slate-500 uppercase mb-1">Falhas</div>
+                  <div className="text-2xl font-black text-rose-400">0</div>
+                </Card>
+              </div>
+
+              <div className="bg-[#090a10] border border-[#1a223f] rounded-3xl overflow-hidden">
+                <div className="p-6 border-b border-[#1a223f]">
+                  <h3 className="text-sm font-bold text-white">Histórico Recente</h3>
+                </div>
+                <div className="p-12 text-center text-slate-500 text-xs italic">
+                  Nenhum registro de disparo encontrado para este workspace.
+                </div>
+              </div>
+            </div>
+          )}
+
           {activeTab === "campaigns" && (
             <div className="space-y-6">
               <div className="bg-[#090a10] p-6 rounded-3xl border border-[#1a223f]">
@@ -975,7 +1048,8 @@ export default function Home() {
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold text-slate-300 block mb-2">Mensagem da Campanha (suporta variáveis como {`{nome}`})</label>
+                      <label className="text-xs font-bold text-slate-300 block mb-2">Mensagem da Campanha (suporta variáveis como {"{nome}"})</label>
+
                       <textarea 
                         rows={6}
                         value={campaignText}
