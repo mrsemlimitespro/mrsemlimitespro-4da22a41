@@ -112,7 +112,7 @@ type SpecialLink = {
 // Ordem canônica dos grupos no sidebar — Fase 2B: 5 grupos enterprise
 const GROUP_ORDER = [
   "Ultra Admin",
-  "MR CENTRAL",
+  "MR SEM LIMITE PRO",
   "Usuários",
   "Comercial",
   "Sistema",
@@ -123,13 +123,13 @@ const specialLinks: SpecialLink[] = [
   { key: "dashboard", to: "/admin", label: "Dashboard Central", icon: LayoutDashboard, exact: true, group: "Ultra Admin" },
   { key: "home", to: "/admin/home", label: "Vitrine Home", icon: HomeIcon, group: "Ultra Admin" },
 
-  // 📦 MR CENTRAL
-  { key: "extensoes", to: "/admin/$resource", params: { resource: "extensoes" }, label: "Extensões", icon: Blocks, group: "MR CENTRAL" },
-  { key: "product_versions", to: "/admin/$resource", params: { resource: "product_versions" }, label: "Releases & Versões", icon: Download, group: "MR CENTRAL" },
-  { key: "produtos", to: "/admin/loja-produtos", label: "Produtos Venda", icon: Store, group: "MR CENTRAL" },
-  { key: "licencas", to: "/admin/licencas", label: "Gestão de Licenças", icon: KeySquare, group: "MR CENTRAL" },
-  { key: "clientes", to: "/admin/clientes", label: "Base de Clientes", icon: Users, group: "MR CENTRAL" },
-  { key: "api-dashboard", to: "/admin/api-dashboard", label: "API & Conectividade", icon: Server, group: "MR CENTRAL" },
+  // 📦 MR SEM LIMITE PRO
+  { key: "extensoes", to: "/admin/$resource", params: { resource: "extensoes" }, label: "Extensões", icon: Blocks, group: "MR SEM LIMITE PRO" },
+  { key: "product_versions", to: "/admin/$resource", params: { resource: "product_versions" }, label: "Releases & Versões", icon: Download, group: "MR SEM LIMITE PRO" },
+  { key: "produtos", to: "/admin/loja-produtos", label: "Produtos Venda", icon: Store, group: "MR SEM LIMITE PRO" },
+  { key: "licencas", to: "/admin/licencas", label: "Gestão de Licenças", icon: KeySquare, group: "MR SEM LIMITE PRO" },
+  { key: "clientes", to: "/admin/clientes", label: "Base de Clientes", icon: Users, group: "MR SEM LIMITE PRO" },
+  { key: "api-dashboard", to: "/admin/api-dashboard", label: "API & Conectividade", icon: Server, group: "MR SEM LIMITE PRO" },
 
   // 👥 Usuários
   { key: "usuarios", to: "/admin/usuarios", label: "Equipe Admin", icon: UserCircle, group: "Usuários" },
