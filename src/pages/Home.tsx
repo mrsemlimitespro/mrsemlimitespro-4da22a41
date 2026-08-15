@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   LayoutDashboard, 
   MapPin, 
@@ -44,6 +44,7 @@ import {
   FolderTree,
   LogOut
 } from "lucide-react";
+
 import { trpc } from "@/lib/trpc";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
@@ -58,8 +59,7 @@ export default function Home() {
     return localStorage.getItem("selected_workspace_id");
   });
   const [newWorkspaceName, setNewWorkspaceName] = useState("");
-
-  // utils is already declared above for workspaces logic
+  const utils = trpc.useUtils();
 
   const { data: workspaces = [], isLoading: isLoadingWorkspaces } = trpc.workspaces.list.useQuery();
   
@@ -82,15 +82,17 @@ export default function Home() {
     onError: (err) => toast.error(`Erro ao criar empresa: ${err.message}`),
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     ensureInitialMutation.mutate();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedWorkspaceId) {
       localStorage.setItem("selected_workspace_id", selectedWorkspaceId);
     }
   }, [selectedWorkspaceId]);
+
+
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
     overview: true,
     channels: true,
@@ -100,10 +102,10 @@ export default function Home() {
   const [selectedChannel, setSelectedChannel] = useState("omni");
 
   // Estado para Gerenciamento de Instâncias (WhatsApp - Evolution API Real via tRPC)
-  const utils = trpc.useUtils();
   const { data: dbInstances = [], isLoading: isLoadingInstances } = trpc.evolution.list.useQuery({ 
     workspaceId: selectedWorkspaceId || undefined 
   });
+
   const createInstanceMutation = trpc.evolution.createInstance.useMutation({
     onSuccess: () => {
       utils.evolution.list.invalidate();
@@ -113,6 +115,7 @@ export default function Home() {
       toast.error("Erro ao criar instância: " + err.message);
     }
   });
+
   const deleteInstanceMutation = trpc.evolution.deleteInstance.useMutation({
     onSuccess: () => {
       utils.evolution.list.invalidate();
@@ -129,6 +132,17 @@ export default function Home() {
       toast.error("Falha ao atualizar status: " + err.message);
     }
   });
+
+  const logoutInstanceMutation = trpc.evolution.logoutInstance.useMutation({
+    onSuccess: () => {
+      utils.evolution.list.invalidate();
+      toast.success("Instância desconectada com sucesso.");
+    },
+    onError: (err) => {
+      toast.error("Erro ao desconectar: " + err.message);
+    }
+  });
+
 
   const [newInstanceName, setNewInstanceName] = useState("");
   const [evolutionApiUrl, setEvolutionApiUrl] = useState("");
@@ -336,13 +350,6 @@ export default function Home() {
     logoutInstanceMutation.mutate({ id });
   };
 
-  const logoutInstanceMutation = trpc.evolution.logoutInstance.useMutation({
-    onSuccess: () => {
-      utils.evolution.list.invalidate();
-      toast.success("Instância desconectada com sucesso.");
-    },
-    onError: (err) => toast.error("Erro ao desconectar: " + err.message)
-  });
 
   // Ações de Chaves de API
   const handleCreateApiKey = (e: React.FormEvent) => {
