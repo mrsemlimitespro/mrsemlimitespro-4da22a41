@@ -1,10 +1,13 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Outlet } from "@tanstack/react-router";
+import { RouterProvider } from "@tanstack/react-router";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { getRouter } from "./router";
 
 function App() {
+  const router = getRouter();
+  
   return (
     <ErrorBoundary>
       <ThemeProvider
@@ -12,7 +15,7 @@ function App() {
       >
         <TooltipProvider>
           <Toaster position="top-right" richColors />
-          <Outlet />
+          <RouterProvider router={router} />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
@@ -20,3 +23,4 @@ function App() {
 }
 
 export default App;
+
