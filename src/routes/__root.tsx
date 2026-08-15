@@ -87,9 +87,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "MR sem limites — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
+          "MR Sem Limite Pro — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
       },
-      { property: "og:title", content: "MR sem limites" },
+      { property: "og:title", content: "MR Sem Limite Pro" },
       {
         property: "og:description",
         content:
