@@ -85,9 +85,9 @@
   --popover: oklch(0.16 0.032 295);
   --popover-foreground: oklch(0.985 0.004 320);
 
-  /* Primary = warm magenta→pink brand (usado em botões/gradiente) */
-  --primary: oklch(0.68 0.28 340);
-  --primary-foreground: oklch(0.99 0.005 20);
+  /* Primary = Azul Neon (MR Sem Limite Pro) */
+  --primary: #3b82f6; 
+  --primary-foreground: #ffffff;
 
   --secondary: oklch(0.22 0.04 295);
   --secondary-foreground: oklch(0.97 0.01 20);
@@ -103,16 +103,16 @@
 
   --border: oklch(1 0 0 / 7%);
   --input: oklch(1 0 0 / 9%);
-  --ring: oklch(0.72 0.26 340);
+  --ring: #3b82f6;
 
-  /* Brand palette — magenta/violet/pink/orange do print */
+  /* Brand palette */
   --brand-violet: oklch(0.62 0.24 295);
-  --brand-blue: #3b82f6; /* Electric Blue */
-  --brand-cyan: #06b6d4; /* Cyan / Electric */
-  --brand-magenta: #d946ef; /* Complementary */
-  --brand-red-neon: #ff0000; /* Blood Red / Neon */
-  --brand-orange-neon: #ff6600; /* Fire Orange / Neon */
-  --brand-emerald: oklch(0.72 0.16 165);
+  --brand-blue: #3b82f6; /* Azul Neon */
+  --brand-cyan: #06b6d4; 
+  --brand-magenta: #d946ef;
+  --brand-red-neon: #ff0000;
+  --brand-orange-neon: #ff6600;
+  --brand-emerald: #10b981; /* Verde Neon (Estado Positivo) */
   --brand-amber: oklch(0.78 0.16 80);
 
 
