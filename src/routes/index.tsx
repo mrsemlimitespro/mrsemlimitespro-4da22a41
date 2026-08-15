@@ -67,7 +67,7 @@ export const Route = createFileRoute("/")({
         content:
           "A plataforma definitiva para licenciamento, revenda e distribuição de softwares, extensões e inteligência artificial.",
       },
-      { property: "og:title", content: "MR SEM LIMITES — Ecossistema Digital" },
+      { property: "og:title", content: "MR Sem Limite Pro — Ecossistema Digital" },
       {
         property: "og:description",
         content: "Gestão profissional de produtos digitais, licenças e revendedores.",
