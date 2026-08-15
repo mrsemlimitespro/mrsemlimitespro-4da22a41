@@ -82,15 +82,16 @@ export default function Home() {
     onError: (err) => toast.error(`Erro ao criar empresa: ${err.message}`),
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     ensureInitialMutation.mutate();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedWorkspaceId) {
       localStorage.setItem("selected_workspace_id", selectedWorkspaceId);
     }
   }, [selectedWorkspaceId]);
+
 
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
     overview: true,
