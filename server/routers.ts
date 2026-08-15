@@ -25,6 +25,7 @@ export const appRouter = router({
   workspaces: workspacesRouter,
   contacts: contactsRouter,
   campaigns: campaignsRouter,
+  webhooks: webhooksRouter,
 });
 
 
