@@ -15,8 +15,8 @@ import {
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
-      { title: "Entrar — MR SEM LIMITES" },
-      { name: "description", content: "Acesse sua conta MR sem limites." },
+      { title: "Entrar — MR Sem Limite Pro" },
+      { name: "description", content: "Acesse sua conta MR Sem Limite Pro." },
     ],
   }),
   component: LoginPage,
