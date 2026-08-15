@@ -10,9 +10,9 @@ export const runAudit = createServerFn({ method: "POST" })
       
       const tablesToCheck = ['tenants', 'tenant_members', 'whatsapp_instances', 'leads', 'campanhas'];
       
-      // Tentativa de verificar existência via queries simples (se falhar 404/403, pode indicar existência ou não)
       const auditResults = await Promise.all(tablesToCheck.map(async (table) => {
-        const { error } = await supabase.from(table).select('*', { count: 'exact', head: true }).limit(1);
+        // @ts-ignore - Bypass typed check for audit
+        const { error } = await supabase.from(table as any).select('*', { count: 'exact', head: true }).limit(1);
         return { table, status: error ? error.code : 'exists', message: error ? error.message : 'Table accessible' };
       }));
 
