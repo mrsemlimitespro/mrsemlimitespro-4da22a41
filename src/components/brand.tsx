@@ -24,7 +24,7 @@ export function BrandLogo({
         )}
         draggable={false}
         style={{
-          filter: "drop-shadow(0 0 15px color-mix(in oklab, var(--brand-red-neon) 40%, transparent))"
+          filter: "drop-shadow(0 0 15px color-mix(in oklab, var(--primary) 40%, transparent))"
         }}
       />
     </div>
@@ -46,7 +46,7 @@ export function BrandWatermark() {
         className="relative aspect-square w-[75vw] max-w-[1200px] animate-pulse"
         style={{ 
           transform: "rotate(-8deg)",
-          filter: "blur(1px) drop-shadow(0 0 40px var(--brand-red-neon))",
+          filter: "blur(1px) drop-shadow(0 0 40px var(--primary))",
           animationDuration: "8s",
           mixBlendMode: "screen"
         }}
@@ -59,8 +59,8 @@ export function BrandWatermark() {
         />
         
         {/* Decorative corner energy */}
-        <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-brand-red-neon/20 blur-[100px]" />
-        <div className="absolute -right-20 -bottom-20 h-64 w-64 rounded-full bg-brand-orange-neon/20 blur-[100px]" />
+        <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-primary/20 blur-[100px]" />
+        <div className="absolute -right-20 -bottom-20 h-64 w-64 rounded-full bg-brand-emerald/20 blur-[100px]" />
       </div>
     </div>
   );
@@ -70,15 +70,15 @@ export function BrandDecorations() {
   return (
     <div className="pointer-events-none fixed inset-0 z-10 overflow-hidden" aria-hidden="true">
       {/* Top Left energy */}
-      <div className="absolute -left-10 -top-10 h-40 w-40 rounded-full border-t-2 border-l-2 border-brand-red-neon/30 blur-sm animate-pulse" />
+      <div className="absolute -left-10 -top-10 h-40 w-40 rounded-full border-t-2 border-l-2 border-primary/30 blur-sm animate-pulse" />
       
       {/* Top Right futuristic fragment */}
       <div className="absolute right-10 top-10 h-px w-32 bg-gradient-to-r from-transparent via-brand-blue to-transparent opacity-40 rotate-45" />
       <div className="absolute right-12 top-12 h-px w-24 bg-gradient-to-r from-transparent via-brand-cyan to-transparent opacity-30 rotate-45" />
       
       {/* Bottom energy arcs */}
-      <div className="absolute -bottom-20 left-1/2 h-40 w-[80vw] -translate-x-1/2 rounded-[100%] border-t border-brand-orange-neon/10 blur-md" />
-      <div className="absolute -bottom-24 left-1/2 h-40 w-[60vw] -translate-x-1/2 rounded-[100%] border-t border-brand-red-neon/5 blur-xl" />
+      <div className="absolute -bottom-20 left-1/2 h-40 w-[80vw] -translate-x-1/2 rounded-[100%] border-t border-brand-emerald/10 blur-md" />
+      <div className="absolute -bottom-24 left-1/2 h-40 w-[60vw] -translate-x-1/2 rounded-[100%] border-t border-primary/5 blur-xl" />
     </div>
   );
 }
@@ -107,7 +107,7 @@ export function BrandMark({
             className="pointer-events-none absolute -inset-4 rounded-full blur-2xl"
             style={{
               background:
-                "radial-gradient(closest-side, color-mix(in oklab, var(--brand-red-neon) 40%, transparent), transparent 70%)",
+                "radial-gradient(closest-side, color-mix(in oklab, var(--primary) 40%, transparent), transparent 70%)",
               animation: "brand-halo 4s ease-in-out infinite",
             }}
           />
@@ -116,13 +116,13 @@ export function BrandMark({
             className="pointer-events-none absolute -inset-[1px] rounded-[30%]"
             style={{
               background:
-                "conic-gradient(from 0deg, transparent 0 65%, var(--brand-red-neon) 78%, var(--brand-orange-neon) 90%, transparent 100%)",
+                "conic-gradient(from 0deg, transparent 0 65%, var(--primary) 78%, var(--brand-cyan) 90%, transparent 100%)",
               padding: "1px",
               WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
               WebkitMaskComposite: "xor",
               maskComposite: "exclude",
               animation: "brand-scan 3s linear infinite",
-              filter: "drop-shadow(0 0 5px var(--brand-red-neon))",
+              filter: "drop-shadow(0 0 5px var(--primary))",
             }}
           />
         </>
