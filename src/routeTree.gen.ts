@@ -10,9 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AppRouteImport } from './routes/_app'
 import { Route as EsqueciSenhaRouteImport } from './routes/esqueci-senha'
-import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
@@ -52,18 +50,9 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppRoute = AppRouteImport.update({
-  id: '/_app',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EsqueciSenhaRoute = EsqueciSenhaRouteImport.update({
   id: '/esqueci-senha',
   path: '/esqueci-senha',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegistroRoute = RegistroRouteImport.update({
@@ -77,14 +66,14 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
-  id: '/dashboard',
+  id: '/_app/dashboard',
   path: '/dashboard',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AppPerfilRoute = AppPerfilRouteImport.update({
-  id: '/perfil',
+  id: '/_app/perfil',
   path: '/perfil',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
@@ -97,9 +86,9 @@ const AdminResourceRoute = AdminResourceRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppPacksSlugRoute = AppPacksSlugRouteImport.update({
-  id: '/packs/$slug',
+  id: '/_app/packs/$slug',
   path: '/packs/$slug',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminClientesIdRoute = AdminClientesIdRouteImport.update({
   id: '/admin/clientes/$id',
@@ -252,7 +241,6 @@ const ApiPublicExtStorageV1ObjectSplatRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/esqueci-senha': typeof EsqueciSenhaRoute
-  '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AppDashboardRoute
@@ -290,7 +278,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/esqueci-senha': typeof EsqueciSenhaRoute
-  '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AppDashboardRoute
@@ -328,9 +315,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_app': typeof AppRouteWithChildren
   '/esqueci-senha': typeof EsqueciSenhaRoute
-  '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_app/dashboard': typeof AppDashboardRoute
@@ -370,7 +355,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/esqueci-senha'
-    | '/login'
     | '/registro'
     | '/reset-password'
     | '/dashboard'
@@ -408,7 +392,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/esqueci-senha'
-    | '/login'
     | '/registro'
     | '/reset-password'
     | '/dashboard'
@@ -445,9 +428,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/_app'
     | '/esqueci-senha'
-    | '/login'
     | '/registro'
     | '/reset-password'
     | '/_app/dashboard'
@@ -485,13 +466,14 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AppRoute: typeof AppRouteWithChildren
   EsqueciSenhaRoute: typeof EsqueciSenhaRoute
-  LoginRoute: typeof LoginRoute
   RegistroRoute: typeof RegistroRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppPerfilRoute: typeof AppPerfilRoute
   AdminResourceRoute: typeof AdminResourceRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AppPacksSlugRoute: typeof AppPacksSlugRoute
   AdminClientesIdRoute: typeof AdminClientesIdRoute
   ApiPublicDownloadExtensaoRoute: typeof ApiPublicDownloadExtensaoRoute
   ApiPublicHomologCheckoutRoute: typeof ApiPublicHomologCheckoutRoute
@@ -529,25 +511,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app': {
-      id: '/_app'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AppRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/esqueci-senha': {
       id: '/esqueci-senha'
       path: '/esqueci-senha'
       fullPath: '/esqueci-senha'
       preLoaderRoute: typeof EsqueciSenhaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/registro': {
@@ -569,14 +537,14 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AppDashboardRouteImport
-      parentRoute: typeof AppRoute
+      parentRoute: typeof rootRouteImport
     }
     '/_app/perfil': {
       id: '/_app/perfil'
       path: '/perfil'
       fullPath: '/perfil'
       preLoaderRoute: typeof AppPerfilRouteImport
-      parentRoute: typeof AppRoute
+      parentRoute: typeof rootRouteImport
     }
     '/admin/': {
       id: '/admin/'
@@ -597,7 +565,7 @@ declare module '@tanstack/react-router' {
       path: '/packs/$slug'
       fullPath: '/packs/$slug'
       preLoaderRoute: typeof AppPacksSlugRouteImport
-      parentRoute: typeof AppRoute
+      parentRoute: typeof rootRouteImport
     }
     '/admin/clientes/$id': {
       id: '/admin/clientes/$id'
@@ -784,29 +752,16 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface AppRouteChildren {
-  AppDashboardRoute: typeof AppDashboardRoute
-  AppPerfilRoute: typeof AppPerfilRoute
-  AppPacksSlugRoute: typeof AppPacksSlugRoute
-}
-
-const AppRouteChildren: AppRouteChildren = {
-  AppDashboardRoute: AppDashboardRoute,
-  AppPerfilRoute: AppPerfilRoute,
-  AppPacksSlugRoute: AppPacksSlugRoute,
-}
-
-const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AppRoute: AppRouteWithChildren,
   EsqueciSenhaRoute: EsqueciSenhaRoute,
-  LoginRoute: LoginRoute,
   RegistroRoute: RegistroRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppPerfilRoute: AppPerfilRoute,
   AdminResourceRoute: AdminResourceRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AppPacksSlugRoute: AppPacksSlugRoute,
   AdminClientesIdRoute: AdminClientesIdRoute,
   ApiPublicDownloadExtensaoRoute: ApiPublicDownloadExtensaoRoute,
   ApiPublicHomologCheckoutRoute: ApiPublicHomologCheckoutRoute,
