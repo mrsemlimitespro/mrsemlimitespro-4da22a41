@@ -82,26 +82,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
-      { name: "apple-mobile-web-app-title", content: "mrsemlimites" },
-      { title: "MR sem limites" },
+      { name: "apple-mobile-web-app-title", content: "MR Sem Limite Pro" },
+      { title: "MR Sem Limite Pro" },
       {
         name: "description",
         content:
-          "MR sem limites — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
+          "MR Sem Limite Pro — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
       },
-      { property: "og:title", content: "MR sem limites" },
+      { property: "og:title", content: "MR Sem Limite Pro" },
       {
         property: "og:description",
         content:
-          "MR sem limites — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
+          "MR Sem Limite Pro — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "MR sem limites" },
+      { name: "twitter:title", content: "MR Sem Limite Pro" },
       {
         name: "twitter:description",
         content:
-          "MR sem limites — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
+          "MR Sem Limite Pro — painel premium dark com glassmorphism, gradientes neon e componentes refinados.",
       },
       {
         property: "og:image",
