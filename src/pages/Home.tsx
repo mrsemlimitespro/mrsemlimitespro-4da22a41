@@ -133,6 +133,17 @@ export default function Home() {
     }
   });
 
+  const logoutInstanceMutation = trpc.evolution.logoutInstance.useMutation({
+    onSuccess: () => {
+      utils.evolution.list.invalidate();
+      toast.success("Instância desconectada com sucesso.");
+    },
+    onError: (err) => {
+      toast.error("Erro ao desconectar: " + err.message);
+    }
+  });
+
+
   const [newInstanceName, setNewInstanceName] = useState("");
   const [evolutionApiUrl, setEvolutionApiUrl] = useState("");
   const [evolutionApiKey, setEvolutionApiKey] = useState("");
