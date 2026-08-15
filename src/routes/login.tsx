@@ -257,7 +257,7 @@ export function AuthShell({ children }: { children: React.ReactNode }) {
         
         <div className="flex flex-col items-center text-center -mt-2">
           <h1 className="text-2xl font-black tracking-[0.3em] text-foreground uppercase drop-shadow-[0_0_15px_rgba(255,0,0,0.4)]">
-            MR SEM LIMITES
+            MR Sem Limite Pro
           </h1>
           <p className="text-[10px] font-bold tracking-[0.5em] text-brand-red-neon mt-2 uppercase opacity-80">
             {BRAND_TAGLINE} — ECOSSISTEMA DIGITAL
