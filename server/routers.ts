@@ -4,6 +4,9 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
 import { evolutionRouter } from "./routers/evolution";
 import { workspacesRouter } from "./routers/workspaces";
+import { contactsRouter } from "./routers/contacts";
+import { campaignsRouter } from "./routers/campaigns";
+
 
 export const appRouter = router({
   system: systemRouter,
@@ -19,6 +22,9 @@ export const appRouter = router({
   }),
   evolution: evolutionRouter,
   workspaces: workspacesRouter,
+  contacts: contactsRouter,
+  campaigns: campaignsRouter,
 });
+
 
 export type AppRouter = typeof appRouter;
