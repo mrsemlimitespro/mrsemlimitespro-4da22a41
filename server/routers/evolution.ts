@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { protectedProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
-import { evolutionInstances } from "../drizzle/schema";
+import { evolutionInstances } from "../../drizzle/schema";
 import { eq, and } from "drizzle-orm";
 
 async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 10000): Promise<Response> {
@@ -20,7 +20,7 @@ async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutM
   }
 }
 
-import { workspaces } from "../drizzle/schema";
+import { workspaces } from "../../drizzle/schema";
 
 export const evolutionRouter = router({
   listWorkspaces: protectedProcedure.query(async ({ ctx }) => {
