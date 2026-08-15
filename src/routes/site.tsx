@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
-import { Smartphone, Zap, ShieldCheck, Globe, LayoutDashboard, CheckCircle2, MessageSquare, Layers } from "lucide-react";
-import { BrandWatermark } from "@/components/brand";
+import { Smartphone, Zap, ShieldCheck, Globe, LayoutDashboard, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/site")({
   component: LandingPage,
@@ -11,7 +10,6 @@ export const Route = createFileRoute("/site")({
 function LandingPage() {
   return (
     <div className="min-h-screen bg-[#030407] text-[#f8fafc] selection:bg-blue-500/30 overflow-x-hidden font-sans">
-      <BrandWatermark />
       
       {/* Background Glows */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -32,7 +30,7 @@ function LandingPage() {
         </div>
         
         <div className="flex items-center gap-4">
-          <Link to="/login">
+          <Link to="/">
             <Button variant="ghost" className="text-slate-300 hover:text-white hover:bg-white/5">Entrar</Button>
           </Link>
           <Link to="/">
