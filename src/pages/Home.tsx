@@ -306,9 +306,13 @@ export default function Home() {
       toast.error("Digite um nome para a instância.");
       return;
     }
+    if (!selectedWorkspaceId) {
+      toast.error("Selecione um workspace primeiro.");
+      return;
+    }
     createInstanceMutation.mutate({
       instanceName: newInstanceName,
-      workspaceId: selectedWorkspaceId || undefined,
+      workspaceId: selectedWorkspaceId,
       apiUrl: evolutionApiUrl || undefined,
       apiKey: evolutionApiKey || undefined,
     });
@@ -316,8 +320,22 @@ export default function Home() {
   };
 
   const handleDeleteInstance = (id: number) => {
-    deleteInstanceMutation.mutate({ id });
+    if (confirm("Tem certeza que deseja remover esta instância?")) {
+      deleteInstanceMutation.mutate({ id });
+    }
   };
+
+  const handleLogoutInstance = (id: number) => {
+    logoutInstanceMutation.mutate({ id });
+  };
+
+  const logoutInstanceMutation = trpc.evolution.logoutInstance.useMutation({
+    onSuccess: () => {
+      utils.evolution.list.invalidate();
+      toast.success("Instância desconectada com sucesso.");
+    },
+    onError: (err) => toast.error("Erro ao desconectar: " + err.message)
+  });
 
   // Ações de Chaves de API
   const handleCreateApiKey = (e: React.FormEvent) => {
