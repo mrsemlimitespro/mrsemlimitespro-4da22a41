@@ -11,16 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as EsqueciSenhaRouteImport } from './routes/esqueci-senha'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
-import { Route as AppMinhaContaRouteImport } from './routes/_app.minha-conta'
 import { Route as AppPerfilRouteImport } from './routes/_app.perfil'
-import { Route as AppRedefinirSenhaRouteImport } from './routes/_app.redefinir-senha'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminResourceRouteImport } from './routes/admin.$resource'
 import { Route as AppPacksSlugRouteImport } from './routes/_app.packs.$slug'
@@ -60,16 +56,6 @@ const AppRoute = AppRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CheckoutRoute = CheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EsqueciSenhaRoute = EsqueciSenhaRouteImport.update({
   id: '/esqueci-senha',
   path: '/esqueci-senha',
@@ -95,30 +81,20 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AppRoute,
 } as any)
-const AppMinhaContaRoute = AppMinhaContaRouteImport.update({
-  id: '/minha-conta',
-  path: '/minha-conta',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppPerfilRoute = AppPerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
   getParentRoute: () => AppRoute,
 } as any)
-const AppRedefinirSenhaRoute = AppRedefinirSenhaRouteImport.update({
-  id: '/redefinir-senha',
-  path: '/redefinir-senha',
-  getParentRoute: () => AppRoute,
-} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminRoute,
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminResourceRoute = AdminResourceRouteImport.update({
-  id: '/$resource',
-  path: '/$resource',
-  getParentRoute: () => AdminRoute,
+  id: '/admin/$resource',
+  path: '/admin/$resource',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AppPacksSlugRoute = AppPacksSlugRouteImport.update({
   id: '/packs/$slug',
@@ -126,9 +102,9 @@ const AppPacksSlugRoute = AppPacksSlugRouteImport.update({
   getParentRoute: () => AppRoute,
 } as any)
 const AdminClientesIdRoute = AdminClientesIdRouteImport.update({
-  id: '/clientes/$id',
-  path: '/clientes/$id',
-  getParentRoute: () => AdminRoute,
+  id: '/admin/clientes/$id',
+  path: '/admin/clientes/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicDownloadExtensaoRoute =
   ApiPublicDownloadExtensaoRouteImport.update({
@@ -275,16 +251,12 @@ const ApiPublicExtStorageV1ObjectSplatRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
-  '/checkout': typeof CheckoutRoute
   '/esqueci-senha': typeof EsqueciSenhaRoute
   '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AppDashboardRoute
-  '/minha-conta': typeof AppMinhaContaRoute
   '/perfil': typeof AppPerfilRoute
-  '/redefinir-senha': typeof AppRedefinirSenhaRoute
   '/admin/$resource': typeof AdminResourceRoute
   '/admin/': typeof AdminIndexRoute
   '/packs/$slug': typeof AppPacksSlugRoute
@@ -317,15 +289,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/checkout': typeof CheckoutRoute
   '/esqueci-senha': typeof EsqueciSenhaRoute
   '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AppDashboardRoute
-  '/minha-conta': typeof AppMinhaContaRoute
   '/perfil': typeof AppPerfilRoute
-  '/redefinir-senha': typeof AppRedefinirSenhaRoute
   '/admin/$resource': typeof AdminResourceRoute
   '/admin': typeof AdminIndexRoute
   '/packs/$slug': typeof AppPacksSlugRoute
@@ -360,16 +329,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
-  '/admin': typeof AdminRouteWithChildren
-  '/checkout': typeof CheckoutRoute
   '/esqueci-senha': typeof EsqueciSenhaRoute
   '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_app/dashboard': typeof AppDashboardRoute
-  '/_app/minha-conta': typeof AppMinhaContaRoute
   '/_app/perfil': typeof AppPerfilRoute
-  '/_app/redefinir-senha': typeof AppRedefinirSenhaRoute
   '/admin/$resource': typeof AdminResourceRoute
   '/admin/': typeof AdminIndexRoute
   '/_app/packs/$slug': typeof AppPacksSlugRoute
@@ -404,16 +369,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/admin'
-    | '/checkout'
     | '/esqueci-senha'
     | '/login'
     | '/registro'
     | '/reset-password'
     | '/dashboard'
-    | '/minha-conta'
     | '/perfil'
-    | '/redefinir-senha'
     | '/admin/$resource'
     | '/admin/'
     | '/packs/$slug'
@@ -446,15 +407,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/checkout'
     | '/esqueci-senha'
     | '/login'
     | '/registro'
     | '/reset-password'
     | '/dashboard'
-    | '/minha-conta'
     | '/perfil'
-    | '/redefinir-senha'
     | '/admin/$resource'
     | '/admin'
     | '/packs/$slug'
@@ -488,16 +446,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_app'
-    | '/admin'
-    | '/checkout'
     | '/esqueci-senha'
     | '/login'
     | '/registro'
     | '/reset-password'
     | '/_app/dashboard'
-    | '/_app/minha-conta'
     | '/_app/perfil'
-    | '/_app/redefinir-senha'
     | '/admin/$resource'
     | '/admin/'
     | '/_app/packs/$slug'
@@ -532,12 +486,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
-  AdminRoute: typeof AdminRouteWithChildren
-  CheckoutRoute: typeof CheckoutRoute
   EsqueciSenhaRoute: typeof EsqueciSenhaRoute
   LoginRoute: typeof LoginRoute
   RegistroRoute: typeof RegistroRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  AdminResourceRoute: typeof AdminResourceRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminClientesIdRoute: typeof AdminClientesIdRoute
   ApiPublicDownloadExtensaoRoute: typeof ApiPublicDownloadExtensaoRoute
   ApiPublicHomologCheckoutRoute: typeof ApiPublicHomologCheckoutRoute
   ApiPublicSetupCheckoutRoute: typeof ApiPublicSetupCheckoutRoute
@@ -581,20 +536,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/checkout': {
-      id: '/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof CheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/esqueci-senha': {
       id: '/esqueci-senha'
       path: '/esqueci-senha'
@@ -630,13 +571,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/minha-conta': {
-      id: '/_app/minha-conta'
-      path: '/minha-conta'
-      fullPath: '/minha-conta'
-      preLoaderRoute: typeof AppMinhaContaRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/perfil': {
       id: '/_app/perfil'
       path: '/perfil'
@@ -644,26 +578,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPerfilRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/redefinir-senha': {
-      id: '/_app/redefinir-senha'
-      path: '/redefinir-senha'
-      fullPath: '/redefinir-senha'
-      preLoaderRoute: typeof AppRedefinirSenhaRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/admin/': {
       id: '/admin/'
-      path: '/'
+      path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof AdminRoute
+      parentRoute: typeof rootRouteImport
     }
     '/admin/$resource': {
       id: '/admin/$resource'
-      path: '/$resource'
+      path: '/admin/$resource'
       fullPath: '/admin/$resource'
       preLoaderRoute: typeof AdminResourceRouteImport
-      parentRoute: typeof AdminRoute
+      parentRoute: typeof rootRouteImport
     }
     '/_app/packs/$slug': {
       id: '/_app/packs/$slug'
@@ -674,10 +601,10 @@ declare module '@tanstack/react-router' {
     }
     '/admin/clientes/$id': {
       id: '/admin/clientes/$id'
-      path: '/clientes/$id'
+      path: '/admin/clientes/$id'
       fullPath: '/admin/clientes/$id'
       preLoaderRoute: typeof AdminClientesIdRouteImport
-      parentRoute: typeof AdminRoute
+      parentRoute: typeof rootRouteImport
     }
     '/api/public/download-extensao': {
       id: '/api/public/download-extensao'
@@ -859,45 +786,28 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppDashboardRoute: typeof AppDashboardRoute
-  AppMinhaContaRoute: typeof AppMinhaContaRoute
   AppPerfilRoute: typeof AppPerfilRoute
-  AppRedefinirSenhaRoute: typeof AppRedefinirSenhaRoute
   AppPacksSlugRoute: typeof AppPacksSlugRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppDashboardRoute: AppDashboardRoute,
-  AppMinhaContaRoute: AppMinhaContaRoute,
   AppPerfilRoute: AppPerfilRoute,
-  AppRedefinirSenhaRoute: AppRedefinirSenhaRoute,
   AppPacksSlugRoute: AppPacksSlugRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
-interface AdminRouteChildren {
-  AdminResourceRoute: typeof AdminResourceRoute
-  AdminIndexRoute: typeof AdminIndexRoute
-  AdminClientesIdRoute: typeof AdminClientesIdRoute
-}
-
-const AdminRouteChildren: AdminRouteChildren = {
-  AdminResourceRoute: AdminResourceRoute,
-  AdminIndexRoute: AdminIndexRoute,
-  AdminClientesIdRoute: AdminClientesIdRoute,
-}
-
-const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
-  AdminRoute: AdminRouteWithChildren,
-  CheckoutRoute: CheckoutRoute,
   EsqueciSenhaRoute: EsqueciSenhaRoute,
   LoginRoute: LoginRoute,
   RegistroRoute: RegistroRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  AdminResourceRoute: AdminResourceRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  AdminClientesIdRoute: AdminClientesIdRoute,
   ApiPublicDownloadExtensaoRoute: ApiPublicDownloadExtensaoRoute,
   ApiPublicHomologCheckoutRoute: ApiPublicHomologCheckoutRoute,
   ApiPublicSetupCheckoutRoute: ApiPublicSetupCheckoutRoute,
