@@ -2,7 +2,7 @@ import { z } from "zod";
 import { protectedProcedure, router } from "../_core/trpc";
 import { getDb } from "../db";
 import { contacts } from "../../drizzle/schema";
-import { eq, and, like, or } from "drizzle-orm";
+import { eq, and, like, or, SQL } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 
 export const contactsRouter = router({
@@ -15,12 +15,12 @@ export const contactsRouter = router({
       const db = await getDb();
       if (!db) return [];
       
-      const filters = [eq(contacts.workspaceId, input.workspaceId)];
+      const filters: SQL[] = [eq(contacts.workspaceId, input.workspaceId)];
       if (input.search) {
         filters.push(or(
           like(contacts.name, `%${input.search}%`),
           like(contacts.number, `%${input.search}%`)
-        ));
+        ) as SQL);
       }
       
       return await db.select().from(contacts).where(and(...filters));
