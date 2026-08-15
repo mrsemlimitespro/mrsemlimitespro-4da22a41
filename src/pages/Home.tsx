@@ -41,7 +41,8 @@ import {
   ChevronDown,
   ChevronRight,
   MessageCircle,
-  FolderTree
+  FolderTree,
+  LogOut
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { Link, useNavigate } from "@tanstack/react-router";
