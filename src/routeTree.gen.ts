@@ -17,46 +17,12 @@ import { Route as EsqueciSenhaRouteImport } from './routes/esqueci-senha'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegistroRouteImport } from './routes/registro'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as AppAgentsRouteImport } from './routes/_app.agents'
-import { Route as AppAulasRouteImport } from './routes/_app.aulas'
-import { Route as AppBaixarExtensaoRouteImport } from './routes/_app.baixar-extensao'
-import { Route as AppClientesRouteImport } from './routes/_app.clientes'
-import { Route as AppCreditosRouteImport } from './routes/_app.creditos'
 import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
-import { Route as AppFerramentasRouteImport } from './routes/_app.ferramentas'
-import { Route as AppGestaoRouteImport } from './routes/_app.gestao'
-import { Route as AppLicencasRouteImport } from './routes/_app.licencas'
-import { Route as AppLojaRouteImport } from './routes/_app.loja'
 import { Route as AppMinhaContaRouteImport } from './routes/_app.minha-conta'
-import { Route as AppPacksRouteImport } from './routes/_app.packs'
 import { Route as AppPerfilRouteImport } from './routes/_app.perfil'
-import { Route as AppPromptsRouteImport } from './routes/_app.prompts'
-import { Route as AppQueroSerRevendedorRouteImport } from './routes/_app.quero-ser-revendedor'
 import { Route as AppRedefinirSenhaRouteImport } from './routes/_app.redefinir-senha'
-import { Route as AppRevendedorRouteImport } from './routes/_app.revendedor'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminResourceRouteImport } from './routes/admin.$resource'
-import { Route as AdminAjustarCreditosRouteImport } from './routes/admin.ajustar-creditos'
-import { Route as AdminAnimacoesRouteImport } from './routes/admin.animacoes'
-import { Route as AdminApiDashboardRouteImport } from './routes/admin.api-dashboard'
-import { Route as AdminBackupRouteImport } from './routes/admin.backup'
-import { Route as AdminClientesRouteImport } from './routes/admin.clientes'
-import { Route as AdminComunicacaoRouteImport } from './routes/admin.comunicacao'
-import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
-import { Route as AdminHomeRouteImport } from './routes/admin.home'
-import { Route as AdminLicencasRouteImport } from './routes/admin.licencas'
-import { Route as AdminLicencasDashboardRouteImport } from './routes/admin.licencas-dashboard'
-import { Route as AdminLojaRouteImport } from './routes/admin.loja'
-import { Route as AdminLojaProdutosRouteImport } from './routes/admin.loja-produtos'
-import { Route as AdminModulosRouteImport } from './routes/admin.modulos'
-import { Route as AdminPackAutorizacoesRouteImport } from './routes/admin.pack-autorizacoes'
-import { Route as AdminPagamentosRouteImport } from './routes/admin.pagamentos'
-import { Route as AdminPersonalizacaoRouteImport } from './routes/admin.personalizacao'
-import { Route as AdminRevendedoresGestaoRouteImport } from './routes/admin.revendedores-gestao'
-import { Route as AdminSegurancaRouteImport } from './routes/admin.seguranca'
-import { Route as AdminSonsRouteImport } from './routes/admin.sons'
-import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
-import { Route as AdminVisualizacaoRouteImport } from './routes/admin.visualizacao'
 import { Route as AppPacksSlugRouteImport } from './routes/_app.packs.$slug'
 import { Route as AdminClientesIdRouteImport } from './routes/admin.clientes.$id'
 import { Route as ApiPublicDownloadExtensaoRouteImport } from './routes/api/public/download-extensao'
@@ -124,54 +90,9 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppAgentsRoute = AppAgentsRouteImport.update({
-  id: '/agents',
-  path: '/agents',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppAulasRoute = AppAulasRouteImport.update({
-  id: '/aulas',
-  path: '/aulas',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppBaixarExtensaoRoute = AppBaixarExtensaoRouteImport.update({
-  id: '/baixar-extensao',
-  path: '/baixar-extensao',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppClientesRoute = AppClientesRouteImport.update({
-  id: '/clientes',
-  path: '/clientes',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppCreditosRoute = AppCreditosRouteImport.update({
-  id: '/creditos',
-  path: '/creditos',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppFerramentasRoute = AppFerramentasRouteImport.update({
-  id: '/ferramentas',
-  path: '/ferramentas',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppGestaoRoute = AppGestaoRouteImport.update({
-  id: '/gestao',
-  path: '/gestao',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppLicencasRoute = AppLicencasRouteImport.update({
-  id: '/licencas',
-  path: '/licencas',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppLojaRoute = AppLojaRouteImport.update({
-  id: '/loja',
-  path: '/loja',
   getParentRoute: () => AppRoute,
 } as any)
 const AppMinhaContaRoute = AppMinhaContaRouteImport.update({
@@ -179,34 +100,14 @@ const AppMinhaContaRoute = AppMinhaContaRouteImport.update({
   path: '/minha-conta',
   getParentRoute: () => AppRoute,
 } as any)
-const AppPacksRoute = AppPacksRouteImport.update({
-  id: '/packs',
-  path: '/packs',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppPerfilRoute = AppPerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
   getParentRoute: () => AppRoute,
 } as any)
-const AppPromptsRoute = AppPromptsRouteImport.update({
-  id: '/prompts',
-  path: '/prompts',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppQueroSerRevendedorRoute = AppQueroSerRevendedorRouteImport.update({
-  id: '/quero-ser-revendedor',
-  path: '/quero-ser-revendedor',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppRedefinirSenhaRoute = AppRedefinirSenhaRouteImport.update({
   id: '/redefinir-senha',
   path: '/redefinir-senha',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppRevendedorRoute = AppRevendedorRouteImport.update({
-  id: '/revendedor',
-  path: '/revendedor',
   getParentRoute: () => AppRoute,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -219,120 +120,15 @@ const AdminResourceRoute = AdminResourceRouteImport.update({
   path: '/$resource',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminAjustarCreditosRoute = AdminAjustarCreditosRouteImport.update({
-  id: '/ajustar-creditos',
-  path: '/ajustar-creditos',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminAnimacoesRoute = AdminAnimacoesRouteImport.update({
-  id: '/animacoes',
-  path: '/animacoes',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminApiDashboardRoute = AdminApiDashboardRouteImport.update({
-  id: '/api-dashboard',
-  path: '/api-dashboard',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminBackupRoute = AdminBackupRouteImport.update({
-  id: '/backup',
-  path: '/backup',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminClientesRoute = AdminClientesRouteImport.update({
-  id: '/clientes',
-  path: '/clientes',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminComunicacaoRoute = AdminComunicacaoRouteImport.update({
-  id: '/comunicacao',
-  path: '/comunicacao',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
-  id: '/configuracoes',
-  path: '/configuracoes',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminHomeRoute = AdminHomeRouteImport.update({
-  id: '/home',
-  path: '/home',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminLicencasRoute = AdminLicencasRouteImport.update({
-  id: '/licencas',
-  path: '/licencas',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminLicencasDashboardRoute = AdminLicencasDashboardRouteImport.update({
-  id: '/licencas-dashboard',
-  path: '/licencas-dashboard',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminLojaRoute = AdminLojaRouteImport.update({
-  id: '/loja',
-  path: '/loja',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminLojaProdutosRoute = AdminLojaProdutosRouteImport.update({
-  id: '/loja-produtos',
-  path: '/loja-produtos',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminModulosRoute = AdminModulosRouteImport.update({
-  id: '/modulos',
-  path: '/modulos',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminPackAutorizacoesRoute = AdminPackAutorizacoesRouteImport.update({
-  id: '/pack-autorizacoes',
-  path: '/pack-autorizacoes',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminPagamentosRoute = AdminPagamentosRouteImport.update({
-  id: '/pagamentos',
-  path: '/pagamentos',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminPersonalizacaoRoute = AdminPersonalizacaoRouteImport.update({
-  id: '/personalizacao',
-  path: '/personalizacao',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminRevendedoresGestaoRoute = AdminRevendedoresGestaoRouteImport.update({
-  id: '/revendedores-gestao',
-  path: '/revendedores-gestao',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminSegurancaRoute = AdminSegurancaRouteImport.update({
-  id: '/seguranca',
-  path: '/seguranca',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminSonsRoute = AdminSonsRouteImport.update({
-  id: '/sons',
-  path: '/sons',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
-  id: '/usuarios',
-  path: '/usuarios',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminVisualizacaoRoute = AdminVisualizacaoRouteImport.update({
-  id: '/visualizacao',
-  path: '/visualizacao',
-  getParentRoute: () => AdminRoute,
-} as any)
 const AppPacksSlugRoute = AppPacksSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => AppPacksRoute,
+  id: '/packs/$slug',
+  path: '/packs/$slug',
+  getParentRoute: () => AppRoute,
 } as any)
 const AdminClientesIdRoute = AdminClientesIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AdminClientesRoute,
+  id: '/clientes/$id',
+  path: '/clientes/$id',
+  getParentRoute: () => AdminRoute,
 } as any)
 const ApiPublicDownloadExtensaoRoute =
   ApiPublicDownloadExtensaoRouteImport.update({
@@ -485,45 +281,11 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/agents': typeof AppAgentsRoute
-  '/aulas': typeof AppAulasRoute
-  '/baixar-extensao': typeof AppBaixarExtensaoRoute
-  '/clientes': typeof AppClientesRoute
-  '/creditos': typeof AppCreditosRoute
   '/dashboard': typeof AppDashboardRoute
-  '/ferramentas': typeof AppFerramentasRoute
-  '/gestao': typeof AppGestaoRoute
-  '/licencas': typeof AppLicencasRoute
-  '/loja': typeof AppLojaRoute
   '/minha-conta': typeof AppMinhaContaRoute
-  '/packs': typeof AppPacksRouteWithChildren
   '/perfil': typeof AppPerfilRoute
-  '/prompts': typeof AppPromptsRoute
-  '/quero-ser-revendedor': typeof AppQueroSerRevendedorRoute
   '/redefinir-senha': typeof AppRedefinirSenhaRoute
-  '/revendedor': typeof AppRevendedorRoute
   '/admin/$resource': typeof AdminResourceRoute
-  '/admin/ajustar-creditos': typeof AdminAjustarCreditosRoute
-  '/admin/animacoes': typeof AdminAnimacoesRoute
-  '/admin/api-dashboard': typeof AdminApiDashboardRoute
-  '/admin/backup': typeof AdminBackupRoute
-  '/admin/clientes': typeof AdminClientesRouteWithChildren
-  '/admin/comunicacao': typeof AdminComunicacaoRoute
-  '/admin/configuracoes': typeof AdminConfiguracoesRoute
-  '/admin/home': typeof AdminHomeRoute
-  '/admin/licencas': typeof AdminLicencasRoute
-  '/admin/licencas-dashboard': typeof AdminLicencasDashboardRoute
-  '/admin/loja': typeof AdminLojaRoute
-  '/admin/loja-produtos': typeof AdminLojaProdutosRoute
-  '/admin/modulos': typeof AdminModulosRoute
-  '/admin/pack-autorizacoes': typeof AdminPackAutorizacoesRoute
-  '/admin/pagamentos': typeof AdminPagamentosRoute
-  '/admin/personalizacao': typeof AdminPersonalizacaoRoute
-  '/admin/revendedores-gestao': typeof AdminRevendedoresGestaoRoute
-  '/admin/seguranca': typeof AdminSegurancaRoute
-  '/admin/sons': typeof AdminSonsRoute
-  '/admin/usuarios': typeof AdminUsuariosRoute
-  '/admin/visualizacao': typeof AdminVisualizacaoRoute
   '/admin/': typeof AdminIndexRoute
   '/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
@@ -560,45 +322,11 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/agents': typeof AppAgentsRoute
-  '/aulas': typeof AppAulasRoute
-  '/baixar-extensao': typeof AppBaixarExtensaoRoute
-  '/clientes': typeof AppClientesRoute
-  '/creditos': typeof AppCreditosRoute
   '/dashboard': typeof AppDashboardRoute
-  '/ferramentas': typeof AppFerramentasRoute
-  '/gestao': typeof AppGestaoRoute
-  '/licencas': typeof AppLicencasRoute
-  '/loja': typeof AppLojaRoute
   '/minha-conta': typeof AppMinhaContaRoute
-  '/packs': typeof AppPacksRouteWithChildren
   '/perfil': typeof AppPerfilRoute
-  '/prompts': typeof AppPromptsRoute
-  '/quero-ser-revendedor': typeof AppQueroSerRevendedorRoute
   '/redefinir-senha': typeof AppRedefinirSenhaRoute
-  '/revendedor': typeof AppRevendedorRoute
   '/admin/$resource': typeof AdminResourceRoute
-  '/admin/ajustar-creditos': typeof AdminAjustarCreditosRoute
-  '/admin/animacoes': typeof AdminAnimacoesRoute
-  '/admin/api-dashboard': typeof AdminApiDashboardRoute
-  '/admin/backup': typeof AdminBackupRoute
-  '/admin/clientes': typeof AdminClientesRouteWithChildren
-  '/admin/comunicacao': typeof AdminComunicacaoRoute
-  '/admin/configuracoes': typeof AdminConfiguracoesRoute
-  '/admin/home': typeof AdminHomeRoute
-  '/admin/licencas': typeof AdminLicencasRoute
-  '/admin/licencas-dashboard': typeof AdminLicencasDashboardRoute
-  '/admin/loja': typeof AdminLojaRoute
-  '/admin/loja-produtos': typeof AdminLojaProdutosRoute
-  '/admin/modulos': typeof AdminModulosRoute
-  '/admin/pack-autorizacoes': typeof AdminPackAutorizacoesRoute
-  '/admin/pagamentos': typeof AdminPagamentosRoute
-  '/admin/personalizacao': typeof AdminPersonalizacaoRoute
-  '/admin/revendedores-gestao': typeof AdminRevendedoresGestaoRoute
-  '/admin/seguranca': typeof AdminSegurancaRoute
-  '/admin/sons': typeof AdminSonsRoute
-  '/admin/usuarios': typeof AdminUsuariosRoute
-  '/admin/visualizacao': typeof AdminVisualizacaoRoute
   '/admin': typeof AdminIndexRoute
   '/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
@@ -638,45 +366,11 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/registro': typeof RegistroRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/_app/agents': typeof AppAgentsRoute
-  '/_app/aulas': typeof AppAulasRoute
-  '/_app/baixar-extensao': typeof AppBaixarExtensaoRoute
-  '/_app/clientes': typeof AppClientesRoute
-  '/_app/creditos': typeof AppCreditosRoute
   '/_app/dashboard': typeof AppDashboardRoute
-  '/_app/ferramentas': typeof AppFerramentasRoute
-  '/_app/gestao': typeof AppGestaoRoute
-  '/_app/licencas': typeof AppLicencasRoute
-  '/_app/loja': typeof AppLojaRoute
   '/_app/minha-conta': typeof AppMinhaContaRoute
-  '/_app/packs': typeof AppPacksRouteWithChildren
   '/_app/perfil': typeof AppPerfilRoute
-  '/_app/prompts': typeof AppPromptsRoute
-  '/_app/quero-ser-revendedor': typeof AppQueroSerRevendedorRoute
   '/_app/redefinir-senha': typeof AppRedefinirSenhaRoute
-  '/_app/revendedor': typeof AppRevendedorRoute
   '/admin/$resource': typeof AdminResourceRoute
-  '/admin/ajustar-creditos': typeof AdminAjustarCreditosRoute
-  '/admin/animacoes': typeof AdminAnimacoesRoute
-  '/admin/api-dashboard': typeof AdminApiDashboardRoute
-  '/admin/backup': typeof AdminBackupRoute
-  '/admin/clientes': typeof AdminClientesRouteWithChildren
-  '/admin/comunicacao': typeof AdminComunicacaoRoute
-  '/admin/configuracoes': typeof AdminConfiguracoesRoute
-  '/admin/home': typeof AdminHomeRoute
-  '/admin/licencas': typeof AdminLicencasRoute
-  '/admin/licencas-dashboard': typeof AdminLicencasDashboardRoute
-  '/admin/loja': typeof AdminLojaRoute
-  '/admin/loja-produtos': typeof AdminLojaProdutosRoute
-  '/admin/modulos': typeof AdminModulosRoute
-  '/admin/pack-autorizacoes': typeof AdminPackAutorizacoesRoute
-  '/admin/pagamentos': typeof AdminPagamentosRoute
-  '/admin/personalizacao': typeof AdminPersonalizacaoRoute
-  '/admin/revendedores-gestao': typeof AdminRevendedoresGestaoRoute
-  '/admin/seguranca': typeof AdminSegurancaRoute
-  '/admin/sons': typeof AdminSonsRoute
-  '/admin/usuarios': typeof AdminUsuariosRoute
-  '/admin/visualizacao': typeof AdminVisualizacaoRoute
   '/admin/': typeof AdminIndexRoute
   '/_app/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
@@ -716,45 +410,11 @@ export interface FileRouteTypes {
     | '/login'
     | '/registro'
     | '/reset-password'
-    | '/agents'
-    | '/aulas'
-    | '/baixar-extensao'
-    | '/clientes'
-    | '/creditos'
     | '/dashboard'
-    | '/ferramentas'
-    | '/gestao'
-    | '/licencas'
-    | '/loja'
     | '/minha-conta'
-    | '/packs'
     | '/perfil'
-    | '/prompts'
-    | '/quero-ser-revendedor'
     | '/redefinir-senha'
-    | '/revendedor'
     | '/admin/$resource'
-    | '/admin/ajustar-creditos'
-    | '/admin/animacoes'
-    | '/admin/api-dashboard'
-    | '/admin/backup'
-    | '/admin/clientes'
-    | '/admin/comunicacao'
-    | '/admin/configuracoes'
-    | '/admin/home'
-    | '/admin/licencas'
-    | '/admin/licencas-dashboard'
-    | '/admin/loja'
-    | '/admin/loja-produtos'
-    | '/admin/modulos'
-    | '/admin/pack-autorizacoes'
-    | '/admin/pagamentos'
-    | '/admin/personalizacao'
-    | '/admin/revendedores-gestao'
-    | '/admin/seguranca'
-    | '/admin/sons'
-    | '/admin/usuarios'
-    | '/admin/visualizacao'
     | '/admin/'
     | '/packs/$slug'
     | '/admin/clientes/$id'
@@ -791,45 +451,11 @@ export interface FileRouteTypes {
     | '/login'
     | '/registro'
     | '/reset-password'
-    | '/agents'
-    | '/aulas'
-    | '/baixar-extensao'
-    | '/clientes'
-    | '/creditos'
     | '/dashboard'
-    | '/ferramentas'
-    | '/gestao'
-    | '/licencas'
-    | '/loja'
     | '/minha-conta'
-    | '/packs'
     | '/perfil'
-    | '/prompts'
-    | '/quero-ser-revendedor'
     | '/redefinir-senha'
-    | '/revendedor'
     | '/admin/$resource'
-    | '/admin/ajustar-creditos'
-    | '/admin/animacoes'
-    | '/admin/api-dashboard'
-    | '/admin/backup'
-    | '/admin/clientes'
-    | '/admin/comunicacao'
-    | '/admin/configuracoes'
-    | '/admin/home'
-    | '/admin/licencas'
-    | '/admin/licencas-dashboard'
-    | '/admin/loja'
-    | '/admin/loja-produtos'
-    | '/admin/modulos'
-    | '/admin/pack-autorizacoes'
-    | '/admin/pagamentos'
-    | '/admin/personalizacao'
-    | '/admin/revendedores-gestao'
-    | '/admin/seguranca'
-    | '/admin/sons'
-    | '/admin/usuarios'
-    | '/admin/visualizacao'
     | '/admin'
     | '/packs/$slug'
     | '/admin/clientes/$id'
@@ -868,45 +494,11 @@ export interface FileRouteTypes {
     | '/login'
     | '/registro'
     | '/reset-password'
-    | '/_app/agents'
-    | '/_app/aulas'
-    | '/_app/baixar-extensao'
-    | '/_app/clientes'
-    | '/_app/creditos'
     | '/_app/dashboard'
-    | '/_app/ferramentas'
-    | '/_app/gestao'
-    | '/_app/licencas'
-    | '/_app/loja'
     | '/_app/minha-conta'
-    | '/_app/packs'
     | '/_app/perfil'
-    | '/_app/prompts'
-    | '/_app/quero-ser-revendedor'
     | '/_app/redefinir-senha'
-    | '/_app/revendedor'
     | '/admin/$resource'
-    | '/admin/ajustar-creditos'
-    | '/admin/animacoes'
-    | '/admin/api-dashboard'
-    | '/admin/backup'
-    | '/admin/clientes'
-    | '/admin/comunicacao'
-    | '/admin/configuracoes'
-    | '/admin/home'
-    | '/admin/licencas'
-    | '/admin/licencas-dashboard'
-    | '/admin/loja'
-    | '/admin/loja-produtos'
-    | '/admin/modulos'
-    | '/admin/pack-autorizacoes'
-    | '/admin/pagamentos'
-    | '/admin/personalizacao'
-    | '/admin/revendedores-gestao'
-    | '/admin/seguranca'
-    | '/admin/sons'
-    | '/admin/usuarios'
-    | '/admin/visualizacao'
     | '/admin/'
     | '/_app/packs/$slug'
     | '/admin/clientes/$id'
@@ -1031,74 +623,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app/agents': {
-      id: '/_app/agents'
-      path: '/agents'
-      fullPath: '/agents'
-      preLoaderRoute: typeof AppAgentsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/aulas': {
-      id: '/_app/aulas'
-      path: '/aulas'
-      fullPath: '/aulas'
-      preLoaderRoute: typeof AppAulasRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/baixar-extensao': {
-      id: '/_app/baixar-extensao'
-      path: '/baixar-extensao'
-      fullPath: '/baixar-extensao'
-      preLoaderRoute: typeof AppBaixarExtensaoRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/clientes': {
-      id: '/_app/clientes'
-      path: '/clientes'
-      fullPath: '/clientes'
-      preLoaderRoute: typeof AppClientesRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/creditos': {
-      id: '/_app/creditos'
-      path: '/creditos'
-      fullPath: '/creditos'
-      preLoaderRoute: typeof AppCreditosRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AppDashboardRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/ferramentas': {
-      id: '/_app/ferramentas'
-      path: '/ferramentas'
-      fullPath: '/ferramentas'
-      preLoaderRoute: typeof AppFerramentasRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/gestao': {
-      id: '/_app/gestao'
-      path: '/gestao'
-      fullPath: '/gestao'
-      preLoaderRoute: typeof AppGestaoRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/licencas': {
-      id: '/_app/licencas'
-      path: '/licencas'
-      fullPath: '/licencas'
-      preLoaderRoute: typeof AppLicencasRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/loja': {
-      id: '/_app/loja'
-      path: '/loja'
-      fullPath: '/loja'
-      preLoaderRoute: typeof AppLojaRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/minha-conta': {
@@ -1108,13 +637,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMinhaContaRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/packs': {
-      id: '/_app/packs'
-      path: '/packs'
-      fullPath: '/packs'
-      preLoaderRoute: typeof AppPacksRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/perfil': {
       id: '/_app/perfil'
       path: '/perfil'
@@ -1122,32 +644,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPerfilRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/prompts': {
-      id: '/_app/prompts'
-      path: '/prompts'
-      fullPath: '/prompts'
-      preLoaderRoute: typeof AppPromptsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/quero-ser-revendedor': {
-      id: '/_app/quero-ser-revendedor'
-      path: '/quero-ser-revendedor'
-      fullPath: '/quero-ser-revendedor'
-      preLoaderRoute: typeof AppQueroSerRevendedorRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/_app/redefinir-senha': {
       id: '/_app/redefinir-senha'
       path: '/redefinir-senha'
       fullPath: '/redefinir-senha'
       preLoaderRoute: typeof AppRedefinirSenhaRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/revendedor': {
-      id: '/_app/revendedor'
-      path: '/revendedor'
-      fullPath: '/revendedor'
-      preLoaderRoute: typeof AppRevendedorRouteImport
       parentRoute: typeof AppRoute
     }
     '/admin/': {
@@ -1164,166 +665,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminResourceRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/ajustar-creditos': {
-      id: '/admin/ajustar-creditos'
-      path: '/ajustar-creditos'
-      fullPath: '/admin/ajustar-creditos'
-      preLoaderRoute: typeof AdminAjustarCreditosRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/animacoes': {
-      id: '/admin/animacoes'
-      path: '/animacoes'
-      fullPath: '/admin/animacoes'
-      preLoaderRoute: typeof AdminAnimacoesRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/api-dashboard': {
-      id: '/admin/api-dashboard'
-      path: '/api-dashboard'
-      fullPath: '/admin/api-dashboard'
-      preLoaderRoute: typeof AdminApiDashboardRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/backup': {
-      id: '/admin/backup'
-      path: '/backup'
-      fullPath: '/admin/backup'
-      preLoaderRoute: typeof AdminBackupRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/clientes': {
-      id: '/admin/clientes'
-      path: '/clientes'
-      fullPath: '/admin/clientes'
-      preLoaderRoute: typeof AdminClientesRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/comunicacao': {
-      id: '/admin/comunicacao'
-      path: '/comunicacao'
-      fullPath: '/admin/comunicacao'
-      preLoaderRoute: typeof AdminComunicacaoRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/configuracoes': {
-      id: '/admin/configuracoes'
-      path: '/configuracoes'
-      fullPath: '/admin/configuracoes'
-      preLoaderRoute: typeof AdminConfiguracoesRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/home': {
-      id: '/admin/home'
-      path: '/home'
-      fullPath: '/admin/home'
-      preLoaderRoute: typeof AdminHomeRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/licencas': {
-      id: '/admin/licencas'
-      path: '/licencas'
-      fullPath: '/admin/licencas'
-      preLoaderRoute: typeof AdminLicencasRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/licencas-dashboard': {
-      id: '/admin/licencas-dashboard'
-      path: '/licencas-dashboard'
-      fullPath: '/admin/licencas-dashboard'
-      preLoaderRoute: typeof AdminLicencasDashboardRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/loja': {
-      id: '/admin/loja'
-      path: '/loja'
-      fullPath: '/admin/loja'
-      preLoaderRoute: typeof AdminLojaRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/loja-produtos': {
-      id: '/admin/loja-produtos'
-      path: '/loja-produtos'
-      fullPath: '/admin/loja-produtos'
-      preLoaderRoute: typeof AdminLojaProdutosRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/modulos': {
-      id: '/admin/modulos'
-      path: '/modulos'
-      fullPath: '/admin/modulos'
-      preLoaderRoute: typeof AdminModulosRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/pack-autorizacoes': {
-      id: '/admin/pack-autorizacoes'
-      path: '/pack-autorizacoes'
-      fullPath: '/admin/pack-autorizacoes'
-      preLoaderRoute: typeof AdminPackAutorizacoesRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/pagamentos': {
-      id: '/admin/pagamentos'
-      path: '/pagamentos'
-      fullPath: '/admin/pagamentos'
-      preLoaderRoute: typeof AdminPagamentosRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/personalizacao': {
-      id: '/admin/personalizacao'
-      path: '/personalizacao'
-      fullPath: '/admin/personalizacao'
-      preLoaderRoute: typeof AdminPersonalizacaoRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/revendedores-gestao': {
-      id: '/admin/revendedores-gestao'
-      path: '/revendedores-gestao'
-      fullPath: '/admin/revendedores-gestao'
-      preLoaderRoute: typeof AdminRevendedoresGestaoRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/seguranca': {
-      id: '/admin/seguranca'
-      path: '/seguranca'
-      fullPath: '/admin/seguranca'
-      preLoaderRoute: typeof AdminSegurancaRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/sons': {
-      id: '/admin/sons'
-      path: '/sons'
-      fullPath: '/admin/sons'
-      preLoaderRoute: typeof AdminSonsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/usuarios': {
-      id: '/admin/usuarios'
-      path: '/usuarios'
-      fullPath: '/admin/usuarios'
-      preLoaderRoute: typeof AdminUsuariosRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/visualizacao': {
-      id: '/admin/visualizacao'
-      path: '/visualizacao'
-      fullPath: '/admin/visualizacao'
-      preLoaderRoute: typeof AdminVisualizacaoRouteImport
-      parentRoute: typeof AdminRoute
-    }
     '/_app/packs/$slug': {
       id: '/_app/packs/$slug'
-      path: '/$slug'
+      path: '/packs/$slug'
       fullPath: '/packs/$slug'
       preLoaderRoute: typeof AppPacksSlugRouteImport
-      parentRoute: typeof AppPacksRoute
+      parentRoute: typeof AppRoute
     }
     '/admin/clientes/$id': {
       id: '/admin/clientes/$id'
-      path: '/$id'
+      path: '/clientes/$id'
       fullPath: '/admin/clientes/$id'
       preLoaderRoute: typeof AdminClientesIdRouteImport
-      parentRoute: typeof AdminClientesRoute
+      parentRoute: typeof AdminRoute
     }
     '/api/public/download-extensao': {
       id: '/api/public/download-extensao'
@@ -1503,122 +857,34 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface AppPacksRouteChildren {
+interface AppRouteChildren {
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppMinhaContaRoute: typeof AppMinhaContaRoute
+  AppPerfilRoute: typeof AppPerfilRoute
+  AppRedefinirSenhaRoute: typeof AppRedefinirSenhaRoute
   AppPacksSlugRoute: typeof AppPacksSlugRoute
 }
 
-const AppPacksRouteChildren: AppPacksRouteChildren = {
-  AppPacksSlugRoute: AppPacksSlugRoute,
-}
-
-const AppPacksRouteWithChildren = AppPacksRoute._addFileChildren(
-  AppPacksRouteChildren,
-)
-
-interface AppRouteChildren {
-  AppAgentsRoute: typeof AppAgentsRoute
-  AppAulasRoute: typeof AppAulasRoute
-  AppBaixarExtensaoRoute: typeof AppBaixarExtensaoRoute
-  AppClientesRoute: typeof AppClientesRoute
-  AppCreditosRoute: typeof AppCreditosRoute
-  AppDashboardRoute: typeof AppDashboardRoute
-  AppFerramentasRoute: typeof AppFerramentasRoute
-  AppGestaoRoute: typeof AppGestaoRoute
-  AppLicencasRoute: typeof AppLicencasRoute
-  AppLojaRoute: typeof AppLojaRoute
-  AppMinhaContaRoute: typeof AppMinhaContaRoute
-  AppPacksRoute: typeof AppPacksRouteWithChildren
-  AppPerfilRoute: typeof AppPerfilRoute
-  AppPromptsRoute: typeof AppPromptsRoute
-  AppQueroSerRevendedorRoute: typeof AppQueroSerRevendedorRoute
-  AppRedefinirSenhaRoute: typeof AppRedefinirSenhaRoute
-  AppRevendedorRoute: typeof AppRevendedorRoute
-}
-
 const AppRouteChildren: AppRouteChildren = {
-  AppAgentsRoute: AppAgentsRoute,
-  AppAulasRoute: AppAulasRoute,
-  AppBaixarExtensaoRoute: AppBaixarExtensaoRoute,
-  AppClientesRoute: AppClientesRoute,
-  AppCreditosRoute: AppCreditosRoute,
   AppDashboardRoute: AppDashboardRoute,
-  AppFerramentasRoute: AppFerramentasRoute,
-  AppGestaoRoute: AppGestaoRoute,
-  AppLicencasRoute: AppLicencasRoute,
-  AppLojaRoute: AppLojaRoute,
   AppMinhaContaRoute: AppMinhaContaRoute,
-  AppPacksRoute: AppPacksRouteWithChildren,
   AppPerfilRoute: AppPerfilRoute,
-  AppPromptsRoute: AppPromptsRoute,
-  AppQueroSerRevendedorRoute: AppQueroSerRevendedorRoute,
   AppRedefinirSenhaRoute: AppRedefinirSenhaRoute,
-  AppRevendedorRoute: AppRevendedorRoute,
+  AppPacksSlugRoute: AppPacksSlugRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
-interface AdminClientesRouteChildren {
-  AdminClientesIdRoute: typeof AdminClientesIdRoute
-}
-
-const AdminClientesRouteChildren: AdminClientesRouteChildren = {
-  AdminClientesIdRoute: AdminClientesIdRoute,
-}
-
-const AdminClientesRouteWithChildren = AdminClientesRoute._addFileChildren(
-  AdminClientesRouteChildren,
-)
-
 interface AdminRouteChildren {
   AdminResourceRoute: typeof AdminResourceRoute
-  AdminAjustarCreditosRoute: typeof AdminAjustarCreditosRoute
-  AdminAnimacoesRoute: typeof AdminAnimacoesRoute
-  AdminApiDashboardRoute: typeof AdminApiDashboardRoute
-  AdminBackupRoute: typeof AdminBackupRoute
-  AdminClientesRoute: typeof AdminClientesRouteWithChildren
-  AdminComunicacaoRoute: typeof AdminComunicacaoRoute
-  AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
-  AdminHomeRoute: typeof AdminHomeRoute
-  AdminLicencasRoute: typeof AdminLicencasRoute
-  AdminLicencasDashboardRoute: typeof AdminLicencasDashboardRoute
-  AdminLojaRoute: typeof AdminLojaRoute
-  AdminLojaProdutosRoute: typeof AdminLojaProdutosRoute
-  AdminModulosRoute: typeof AdminModulosRoute
-  AdminPackAutorizacoesRoute: typeof AdminPackAutorizacoesRoute
-  AdminPagamentosRoute: typeof AdminPagamentosRoute
-  AdminPersonalizacaoRoute: typeof AdminPersonalizacaoRoute
-  AdminRevendedoresGestaoRoute: typeof AdminRevendedoresGestaoRoute
-  AdminSegurancaRoute: typeof AdminSegurancaRoute
-  AdminSonsRoute: typeof AdminSonsRoute
-  AdminUsuariosRoute: typeof AdminUsuariosRoute
-  AdminVisualizacaoRoute: typeof AdminVisualizacaoRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminClientesIdRoute: typeof AdminClientesIdRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminResourceRoute: AdminResourceRoute,
-  AdminAjustarCreditosRoute: AdminAjustarCreditosRoute,
-  AdminAnimacoesRoute: AdminAnimacoesRoute,
-  AdminApiDashboardRoute: AdminApiDashboardRoute,
-  AdminBackupRoute: AdminBackupRoute,
-  AdminClientesRoute: AdminClientesRouteWithChildren,
-  AdminComunicacaoRoute: AdminComunicacaoRoute,
-  AdminConfiguracoesRoute: AdminConfiguracoesRoute,
-  AdminHomeRoute: AdminHomeRoute,
-  AdminLicencasRoute: AdminLicencasRoute,
-  AdminLicencasDashboardRoute: AdminLicencasDashboardRoute,
-  AdminLojaRoute: AdminLojaRoute,
-  AdminLojaProdutosRoute: AdminLojaProdutosRoute,
-  AdminModulosRoute: AdminModulosRoute,
-  AdminPackAutorizacoesRoute: AdminPackAutorizacoesRoute,
-  AdminPagamentosRoute: AdminPagamentosRoute,
-  AdminPersonalizacaoRoute: AdminPersonalizacaoRoute,
-  AdminRevendedoresGestaoRoute: AdminRevendedoresGestaoRoute,
-  AdminSegurancaRoute: AdminSegurancaRoute,
-  AdminSonsRoute: AdminSonsRoute,
-  AdminUsuariosRoute: AdminUsuariosRoute,
-  AdminVisualizacaoRoute: AdminVisualizacaoRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminClientesIdRoute: AdminClientesIdRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)

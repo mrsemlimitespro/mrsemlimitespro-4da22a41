@@ -134,26 +134,26 @@
   --sidebar-ring: oklch(0.7 0.2 285);
 
   /* Gradients — warm (default primary, sunset reference) + cool + per-channel */
-  --gradient-primary: linear-gradient(135deg, var(--brand-red-neon) 0%, var(--brand-orange-neon) 100%);
+  --gradient-primary: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-emerald) 100%);
   --gradient-primary-soft: linear-gradient(
     135deg,
-    color-mix(in oklab, var(--brand-magenta) 22%, transparent) 0%,
-    color-mix(in oklab, var(--brand-orange) 22%, transparent) 100%
+    color-mix(in oklab, var(--brand-blue) 22%, transparent) 0%,
+    color-mix(in oklab, var(--brand-emerald) 22%, transparent) 100%
   );
-  --gradient-warm: linear-gradient(135deg, var(--brand-magenta) 0%, var(--brand-orange) 100%);
+  --gradient-warm: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-cyan) 100%);
   --gradient-warm-soft: linear-gradient(
     135deg,
-    color-mix(in oklab, var(--brand-magenta) 22%, transparent) 0%,
-    color-mix(in oklab, var(--brand-orange) 22%, transparent) 100%
+    color-mix(in oklab, var(--brand-blue) 22%, transparent) 0%,
+    color-mix(in oklab, var(--brand-cyan) 22%, transparent) 100%
   );
-  --gradient-cool: linear-gradient(135deg, var(--brand-violet) 0%, var(--brand-blue) 100%);
+  --gradient-cool: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-cyan) 100%);
   --gradient-cyan: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-cyan) 100%);
   --gradient-emerald: linear-gradient(135deg, var(--brand-emerald) 0%, var(--brand-cyan) 100%);
-  --gradient-amber: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-amber) 100%);
+  --gradient-amber: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-emerald) 100%);
   --gradient-glow: radial-gradient(
     60% 60% at 50% 0%,
-    color-mix(in oklab, var(--primary) 45%, transparent) 0%,
-    transparent 70%
+    color-mix(in oklab, var(--primary) 35%, transparent) 0%,
+    transparent 75%
   );
   --gradient-surface: linear-gradient(
     180deg,
@@ -163,8 +163,8 @@
 
   /* Ambient glow bem discreto — no print o fundo é praticamente preto puro */
   --sunset-bg:
-    radial-gradient(50% 30% at 20% 0%, color-mix(in oklab, var(--brand-red-neon) 8%, transparent) 0%, transparent 70%),
-    radial-gradient(50% 30% at 80% 0%, color-mix(in oklab, var(--brand-orange-neon) 6%, transparent) 0%, transparent 70%);
+    radial-gradient(50% 30% at 20% 0%, color-mix(in oklab, var(--brand-blue) 8%, transparent) 0%, transparent 70%),
+    radial-gradient(50% 30% at 80% 0%, color-mix(in oklab, var(--brand-emerald) 6%, transparent) 0%, transparent 70%);
 
 
 
