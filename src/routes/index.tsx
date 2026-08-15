@@ -61,7 +61,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MR SEM LIMITES — Ecossistema Digital de Alta Performance" },
+      { title: "MR Sem Limite Pro — Ecossistema Digital de Alta Performance" },
       {
         name: "description",
         content:
