@@ -41,7 +41,8 @@ import {
   ChevronDown,
   ChevronRight,
   MessageCircle,
-  FolderTree
+  FolderTree,
+  LogOut
 } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { Link, useNavigate } from "@tanstack/react-router";
@@ -306,9 +307,13 @@ export default function Home() {
       toast.error("Digite um nome para a instância.");
       return;
     }
+    if (!selectedWorkspaceId) {
+      toast.error("Selecione um workspace primeiro.");
+      return;
+    }
     createInstanceMutation.mutate({
       instanceName: newInstanceName,
-      workspaceId: selectedWorkspaceId || undefined,
+      workspaceId: selectedWorkspaceId,
       apiUrl: evolutionApiUrl || undefined,
       apiKey: evolutionApiKey || undefined,
     });
@@ -316,8 +321,22 @@ export default function Home() {
   };
 
   const handleDeleteInstance = (id: number) => {
-    deleteInstanceMutation.mutate({ id });
+    if (confirm("Tem certeza que deseja remover esta instância?")) {
+      deleteInstanceMutation.mutate({ id });
+    }
   };
+
+  const handleLogoutInstance = (id: number) => {
+    logoutInstanceMutation.mutate({ id });
+  };
+
+  const logoutInstanceMutation = trpc.evolution.logoutInstance.useMutation({
+    onSuccess: () => {
+      utils.evolution.list.invalidate();
+      toast.success("Instância desconectada com sucesso.");
+    },
+    onError: (err) => toast.error("Erro ao desconectar: " + err.message)
+  });
 
   // Ações de Chaves de API
   const handleCreateApiKey = (e: React.FormEvent) => {
@@ -781,23 +800,31 @@ export default function Home() {
               </div>
 
               {isLoadingInstances ? (
-                <div className="text-center py-12 text-slate-400 text-xs">Carregando instâncias do servidor...</div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {[1, 2, 3].map(i => (
+                    <Card key={i} className="bg-[#090a10] border-[#1a223f] p-6 animate-pulse">
+                      <div className="h-6 w-32 bg-slate-800 rounded mb-4" />
+                      <div className="h-20 w-full bg-slate-800 rounded mb-4" />
+                      <div className="h-8 w-full bg-slate-800 rounded" />
+                    </Card>
+                  ))}
+                </div>
               ) : dbInstances.length === 0 ? (
                 <div className="bg-[#090a10] border border-[#1a223f] rounded-2xl p-8 text-center space-y-3">
                   <p className="text-sm text-slate-300 font-medium">Nenhuma instância cadastrada ainda.</p>
                   <p className="text-xs text-slate-500">Insira as credenciais da Evolution API acima e crie sua primeira instância para gerar o QR code real.</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {dbInstances.map((inst) => (
-                    <Card key={inst.id} className="bg-[#090a10] border-[#1a223f] rounded-2xl overflow-hidden">
+                    <Card key={inst.id} className="bg-[#090a10] border-[#1a223f] rounded-2xl overflow-hidden group hover:border-[#00f0ff]/50 transition-all">
                       <CardHeader className="flex flex-row items-center justify-between pb-3 border-b border-[#1a223f]">
                         <div>
                           <CardTitle className="text-base font-bold text-white">{inst.instanceName}</CardTitle>
                           <CardDescription className="text-xs text-cyan-400 font-mono">{inst.phone || "Aguardando pareamento"}</CardDescription>
                         </div>
-                        <Badge className={inst.status === "connected" || inst.status === "Conectado" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "bg-amber-500/20 text-amber-400 border border-amber-500/30"}>
-                          {inst.status}
+                        <Badge className={`${inst.status === 'open' || inst.status === 'connected' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : inst.status === 'awaiting_qr' ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' : 'bg-rose-500/20 text-rose-400 border-rose-500/30'}`}>
+                          {inst.status === 'open' || inst.status === 'connected' ? 'Conectado' : inst.status === 'awaiting_qr' ? 'Aguardando QR' : 'Desconectado'}
                         </Badge>
                       </CardHeader>
                       <CardContent className="pt-6 space-y-4">
@@ -805,37 +832,58 @@ export default function Home() {
                           <span>Bateria do Dispositivo:</span>
                           <span className="font-bold text-emerald-400">{inst.battery}</span>
                         </div>
-                        {inst.qrCode ? (
-                          <div className="p-4 bg-[#05070b] border border-slate-700/80 rounded-xl flex flex-col items-center justify-center space-y-3">
-                            <div className="rounded-none bg-white p-3 border-4 border-white shadow-none ring-0">
-                              <img
-                                src={`data:image/png;base64,${inst.qrCode}`}
-                                alt="QR Code real da Evolution API"
-                                className="block w-44 h-44 rounded-none bg-white p-0 shadow-none ring-0"
-                                style={{ imageRendering: "pixelated", filter: "none" }}
-                              />
-                            </div>
-                            <span className="text-[11px] text-slate-300 font-semibold">Escaneie o QR Code real emitido pela Evolution API</span>
+                        {inst.qrCode && (inst.status === 'awaiting_qr' || inst.status === 'disconnected') ? (
+                          <div className="p-4 bg-white rounded-xl flex flex-col items-center justify-center space-y-3">
+                            <img
+                              src={`data:image/png;base64,${inst.qrCode}`}
+                              alt="WhatsApp QR Code"
+                              className="w-44 h-44"
+                              style={{ imageRendering: "pixelated" }}
+                            />
+                            <span className="text-[11px] text-black font-bold">Escaneie com seu WhatsApp</span>
                           </div>
                         ) : (
-                          <div className="p-4 bg-[#030407] border border-[#1a223f] rounded-xl flex flex-col items-center justify-center space-y-2 text-center">
-                            <span className="text-xs text-cyan-400 font-semibold">Instância Sincronizada</span>
-                            <p className="text-[11px] text-slate-400">Pronta para pareamento com a Evolution API.</p>
+                          <div className="h-52 flex flex-col items-center justify-center bg-[#05070b] border border-[#1a223f] rounded-xl space-y-2 text-center">
+                            {inst.status === 'open' || inst.status === 'connected' ? (
+                              <>
+                                <Smartphone className="w-12 h-12 text-emerald-400" />
+                                <span className="text-xs text-emerald-400 font-bold">Dispositivo Conectado</span>
+                              </>
+                            ) : (
+                              <>
+                                <AlertCircle className="w-12 h-12 text-slate-600" />
+                                <p className="text-[11px] text-slate-400">Instância pronta.<br/>Clique em Status para gerar QR Code.</p>
+                              </>
+                            )}
                           </div>
                         )}
-                        <div className="flex gap-2 pt-2">
+                        <div className="grid grid-cols-2 gap-2 pt-2">
                           <Button 
                             variant="outline" 
                             onClick={() => refreshInstanceMutation.mutate({ id: inst.id })}
                             disabled={refreshInstanceMutation.isPending}
-                            className="flex-1 border-[#1a223f] bg-[#0f1220] text-slate-200 hover:text-white text-xs"
+                            className="border-[#1a223f] bg-[#0f1220] text-slate-200 hover:text-white text-xs"
                           >
                             <RefreshCw className={`w-3.5 h-3.5 mr-1.5 ${refreshInstanceMutation.isPending ? "animate-spin" : ""}`} /> 
-                            {refreshInstanceMutation.isPending ? "Atualizando..." : "Atualizar Status"}
+                            Status
                           </Button>
-                          <Button onClick={() => handleDeleteInstance(inst.id)} variant="destructive" className="bg-rose-500/20 text-rose-400 border border-rose-500/30 hover:bg-rose-500/30 text-xs">
-                            <Trash2 className="w-3.5 h-3.5 mr-1" /> Desconectar
-                          </Button>
+                          {inst.status === 'open' || inst.status === 'connected' ? (
+                            <Button 
+                              onClick={() => handleLogoutInstance(inst.id)} 
+                              variant="outline" 
+                              className="border-rose-500/30 text-rose-400 hover:bg-rose-500/10 text-xs"
+                            >
+                              <LogOut className="w-3.5 h-3.5 mr-1.5" /> Sair
+                            </Button>
+                          ) : (
+                            <Button 
+                              onClick={() => handleDeleteInstance(inst.id)} 
+                              variant="destructive" 
+                              className="bg-rose-500/20 text-rose-400 border border-rose-500/30 hover:bg-rose-500/30 text-xs"
+                            >
+                              <Trash2 className="w-3.5 h-3.5 mr-1.5" /> Remover
+                            </Button>
+                          )}
                         </div>
                       </CardContent>
                     </Card>
