@@ -23,13 +23,13 @@ export type InsertUser = typeof users.$inferInsert;
  */
 export const workspaces = mysqlTable("workspaces", {
   id: varchar("id", { length: 36 }).primaryKey(),
-  ownerId: varchar("ownerId", { length: 64 }).notNull(),
+  ownerId: varchar("owner_id", { length: 64 }).notNull(),
   name: varchar("name", { length: 128 }).notNull(),
   slug: varchar("slug", { length: 128 }).notNull().unique(),
-  type: mysqlEnum("type", ["personal", "business"]).default("personal").notNull(),
+  type: varchar("type", { length: 32 }).default("personal"),
   metadata: text("metadata"), 
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
 });
 
 export type Workspace = typeof workspaces.$inferSelect;
@@ -40,11 +40,11 @@ export type InsertWorkspace = typeof workspaces.$inferInsert;
  */
 export const workspaceMembers = mysqlTable("workspace_members", {
   id: varchar("id", { length: 36 }).primaryKey(),
-  workspaceId: varchar("workspaceId", { length: 36 }).notNull(),
-  userId: varchar("userId", { length: 64 }).notNull(),
-  role: mysqlEnum("role", ["owner", "admin", "member"]).default("member").notNull(),
-  status: mysqlEnum("status", ["active", "pending", "suspended"]).default("active").notNull(),
-  joinedAt: timestamp("joinedAt").defaultNow().notNull(),
+  workspaceId: varchar("workspace_id", { length: 36 }).notNull(),
+  userId: varchar("user_id", { length: 64 }).notNull(),
+  role: varchar("role", { length: 32 }).notNull(),
+  status: varchar("status", { length: 32 }).default("active"),
+  joinedAt: timestamp("joined_at").defaultNow().notNull(),
 });
 
 export type WorkspaceMember = typeof workspaceMembers.$inferSelect;
