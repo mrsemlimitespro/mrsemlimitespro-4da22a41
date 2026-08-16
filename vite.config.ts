@@ -12,12 +12,4 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
-  vite: {
-    resolve: {
-      alias: {
-        "@shared": "/shared",
-        "@server": "/server",
-      },
-    },
-  },
 });

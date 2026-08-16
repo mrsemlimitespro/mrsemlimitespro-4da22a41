@@ -3779,109 +3779,6 @@ export type Database = {
         }
         Relationships: []
       }
-      whatsapp_instances: {
-        Row: {
-          created_at: string
-          id: string
-          instance_key: string | null
-          name: string
-          status: string | null
-          workspace_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          instance_key?: string | null
-          name: string
-          status?: string | null
-          workspace_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          instance_key?: string | null
-          name?: string
-          status?: string | null
-          workspace_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "whatsapp_instances_workspace_id_fkey"
-            columns: ["workspace_id"]
-            isOneToOne: false
-            referencedRelation: "workspaces"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      workspace_members: {
-        Row: {
-          id: string
-          joined_at: string
-          role: string
-          status: string | null
-          user_id: string
-          workspace_id: string
-        }
-        Insert: {
-          id?: string
-          joined_at?: string
-          role: string
-          status?: string | null
-          user_id: string
-          workspace_id: string
-        }
-        Update: {
-          id?: string
-          joined_at?: string
-          role?: string
-          status?: string | null
-          user_id?: string
-          workspace_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "workspace_members_workspace_id_fkey"
-            columns: ["workspace_id"]
-            isOneToOne: false
-            referencedRelation: "workspaces"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      workspaces: {
-        Row: {
-          created_at: string
-          id: string
-          metadata: Json | null
-          name: string
-          owner_id: string
-          slug: string
-          type: string | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          metadata?: Json | null
-          name: string
-          owner_id: string
-          slug: string
-          type?: string | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          metadata?: Json | null
-          name?: string
-          owner_id?: string
-          slug?: string
-          type?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
     }
     Views: {
       v_dashboard_metricas: {
@@ -4290,12 +4187,6 @@ export type Database = {
           isOneToOne: false
           isSetofReturn: true
         }
-      }
-      get_user_workspaces: {
-        Args: { user_uuid: string }
-        Returns: {
-          workspace_id: string
-        }[]
       }
       has_role: {
         Args: {
