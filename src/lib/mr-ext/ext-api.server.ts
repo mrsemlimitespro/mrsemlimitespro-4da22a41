@@ -59,7 +59,7 @@ export async function validateLicense(licenseKey: string, hwid: string) {
   // Verificar sessões existentes para este HWID
   const { data: existingSession } = await supabaseAdmin
     .from('ext_sessions')
-    .select('id, session_id')
+    .select('id, session_id, last_seen')
     .eq('license_id', lic.id)
     .eq('hwid', hwid)
     .maybeSingle();
@@ -94,7 +94,7 @@ export async function validateLicense(licenseKey: string, hwid: string) {
       session_id: sessionId,
       last_seen: new Date().toISOString()
     })
-    .select()
+    .select('id, license_id, hwid, session_id, last_seen')
     .single();
 
   if (sessionErr) return { valid: false, error: 'session_creation_failed' };
