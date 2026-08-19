@@ -1888,6 +1888,7 @@ export type Database = {
           max_devices: number | null
           max_dispositivos: number
           metadata: Json
+          notes: string | null
           observacoes_admin: string | null
           plano: string | null
           produto_id: string | null
@@ -1922,6 +1923,7 @@ export type Database = {
           max_devices?: number | null
           max_dispositivos?: number
           metadata?: Json
+          notes?: string | null
           observacoes_admin?: string | null
           plano?: string | null
           produto_id?: string | null
@@ -1956,6 +1958,7 @@ export type Database = {
           max_devices?: number | null
           max_dispositivos?: number
           metadata?: Json
+          notes?: string | null
           observacoes_admin?: string | null
           plano?: string | null
           produto_id?: string | null
@@ -4272,6 +4275,7 @@ export type Database = {
           max_devices: number | null
           max_dispositivos: number
           metadata: Json
+          notes: string | null
           observacoes_admin: string | null
           plano: string | null
           produto_id: string | null
@@ -4324,6 +4328,7 @@ export type Database = {
           max_devices: number | null
           max_dispositivos: number
           metadata: Json
+          notes: string | null
           observacoes_admin: string | null
           plano: string | null
           produto_id: string | null
@@ -4368,6 +4373,7 @@ export type Database = {
           max_devices: number | null
           max_dispositivos: number
           metadata: Json
+          notes: string | null
           observacoes_admin: string | null
           plano: string | null
           produto_id: string | null
@@ -4447,6 +4453,7 @@ export type Database = {
           max_devices: number | null
           max_dispositivos: number
           metadata: Json
+          notes: string | null
           observacoes_admin: string | null
           plano: string | null
           produto_id: string | null
@@ -4529,6 +4536,7 @@ export type Database = {
           max_devices: number | null
           max_dispositivos: number
           metadata: Json
+          notes: string | null
           observacoes_admin: string | null
           plano: string | null
           produto_id: string | null
@@ -4573,6 +4581,7 @@ export type Database = {
           max_devices: number | null
           max_dispositivos: number
           metadata: Json
+          notes: string | null
           observacoes_admin: string | null
           plano: string | null
           produto_id: string | null
@@ -4616,6 +4625,7 @@ export type Database = {
           max_devices: number | null
           max_dispositivos: number
           metadata: Json
+          notes: string | null
           observacoes_admin: string | null
           plano: string | null
           produto_id: string | null
