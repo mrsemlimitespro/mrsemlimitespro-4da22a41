@@ -3,10 +3,10 @@
  * 
  * PACOTE V17 — DOWNLOAD DISPONÍVEL
  * O sistema foi validado e o backend para a extensão está pronto para implementação.
- * Link de Download: /__l5e/assets-v1/3656f6d2-ca48-4cee-998f-78a66a5b309d/mr-ext-v17-final-package.zip
+ * Link de Download: /__l5e/assets-v1/feeffbad-b185-4f4f-b7be-cbadfdb25a25/mr-ext-v17-final-backend.zip
  * 
  * Instruções:
- * 1. Baixe o arquivo mr-ext-v17-final-package.zip.
+ * 1. Baixe o arquivo mr-ext-v17-final-backend.zip.
  * 2. Encaminhe ao desenvolvedor (Manus) para integração na extensão.
  * 3. O banco de dados e as rotas de API já estão configurados para produção.
  */
