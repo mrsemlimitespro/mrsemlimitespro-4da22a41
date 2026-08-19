@@ -63,6 +63,7 @@ import { Route as ApiPublicDownloadExtensaoRouteImport } from './routes/api/publ
 import { Route as ApiPublicHomologCheckoutRouteImport } from './routes/api/public/homolog-checkout'
 import { Route as ApiPublicSetupCheckoutRouteImport } from './routes/api/public/setup-checkout'
 import { Route as ApiPublicValidarLicencaRouteImport } from './routes/api/public/validar-licenca'
+import { Route as ApiPublicExtSendCommandRouteImport } from './routes/api/public/ext/send-command'
 import { Route as ApiPublicExtSetupV17RouteImport } from './routes/api/public/ext/setup-v17'
 import { Route as ApiPublicHooksEmailWorkerRouteImport } from './routes/api/public/hooks/email-worker'
 import { Route as ApiPublicLicencaConfigRouteImport } from './routes/api/public/licenca/config'
@@ -347,6 +348,11 @@ const ApiPublicValidarLicencaRoute = ApiPublicValidarLicencaRouteImport.update({
   path: '/api/public/validar-licenca',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicExtSendCommandRoute = ApiPublicExtSendCommandRouteImport.update({
+  id: '/api/public/ext/send-command',
+  path: '/api/public/ext/send-command',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicExtSetupV17Route = ApiPublicExtSetupV17RouteImport.update({
   id: '/api/public/ext/setup-v17',
   path: '/api/public/ext/setup-v17',
@@ -468,6 +474,7 @@ export interface FileRoutesByFullPath {
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
+  '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/setup-v17': typeof ApiPublicExtSetupV17Route
   '/api/public/hooks/email-worker': typeof ApiPublicHooksEmailWorkerRoute
   '/api/public/licenca/config': typeof ApiPublicLicencaConfigRoute
@@ -534,6 +541,7 @@ export interface FileRoutesByTo {
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
+  '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/setup-v17': typeof ApiPublicExtSetupV17Route
   '/api/public/hooks/email-worker': typeof ApiPublicHooksEmailWorkerRoute
   '/api/public/licenca/config': typeof ApiPublicLicencaConfigRoute
@@ -603,6 +611,7 @@ export interface FileRoutesById {
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
+  '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/setup-v17': typeof ApiPublicExtSetupV17Route
   '/api/public/hooks/email-worker': typeof ApiPublicHooksEmailWorkerRoute
   '/api/public/licenca/config': typeof ApiPublicLicencaConfigRoute
@@ -672,6 +681,7 @@ export interface FileRouteTypes {
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
+    | '/api/public/ext/send-command'
     | '/api/public/ext/setup-v17'
     | '/api/public/hooks/email-worker'
     | '/api/public/licenca/config'
@@ -738,6 +748,7 @@ export interface FileRouteTypes {
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
+    | '/api/public/ext/send-command'
     | '/api/public/ext/setup-v17'
     | '/api/public/hooks/email-worker'
     | '/api/public/licenca/config'
@@ -806,6 +817,7 @@ export interface FileRouteTypes {
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
+    | '/api/public/ext/send-command'
     | '/api/public/ext/setup-v17'
     | '/api/public/hooks/email-worker'
     | '/api/public/licenca/config'
@@ -833,6 +845,7 @@ export interface RootRouteChildren {
   ApiPublicHomologCheckoutRoute: typeof ApiPublicHomologCheckoutRoute
   ApiPublicSetupCheckoutRoute: typeof ApiPublicSetupCheckoutRoute
   ApiPublicValidarLicencaRoute: typeof ApiPublicValidarLicencaRoute
+  ApiPublicExtSendCommandRoute: typeof ApiPublicExtSendCommandRoute
   ApiPublicExtSetupV17Route: typeof ApiPublicExtSetupV17Route
   ApiPublicHooksEmailWorkerRoute: typeof ApiPublicHooksEmailWorkerRoute
   ApiPublicLicencaConfigRoute: typeof ApiPublicLicencaConfigRoute
@@ -1227,6 +1240,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicValidarLicencaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/ext/send-command': {
+      id: '/api/public/ext/send-command'
+      path: '/api/public/ext/send-command'
+      fullPath: '/api/public/ext/send-command'
+      preLoaderRoute: typeof ApiPublicExtSendCommandRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/ext/setup-v17': {
       id: '/api/public/ext/setup-v17'
       path: '/api/public/ext/setup-v17'
@@ -1447,6 +1467,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicHomologCheckoutRoute: ApiPublicHomologCheckoutRoute,
   ApiPublicSetupCheckoutRoute: ApiPublicSetupCheckoutRoute,
   ApiPublicValidarLicencaRoute: ApiPublicValidarLicencaRoute,
+  ApiPublicExtSendCommandRoute: ApiPublicExtSendCommandRoute,
   ApiPublicExtSetupV17Route: ApiPublicExtSetupV17Route,
   ApiPublicHooksEmailWorkerRoute: ApiPublicHooksEmailWorkerRoute,
   ApiPublicLicencaConfigRoute: ApiPublicLicencaConfigRoute,
