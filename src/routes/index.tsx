@@ -1,15 +1,14 @@
 /**
- * MR CENTRAL — ECOSSISTEMA MULTI-PRODUTO E LICENCIAMENTO
+ * MR CENTRAL — ECOSSISTEMA DIGITAL DE ALTA PERFORMANCE
  * 
- * BACKEND EXTENSÃO V17 — PRONTO PARA INTEGRAÇÃO
- * Status: 🟢 VALIDADO E COMPILADO (mr-ext-v17-backend-ready.zip)
- * Auditoria completa realizada em Auditoria do pacote `mr-ext-v17-backend-full.zip`.
+ * PACOTE V17 — DOWNLOAD DISPONÍVEL
+ * O sistema foi validado e o backend para a extensão está pronto para implementação.
+ * Link de Download: /__l5e/assets-v1/4535508b-429e-4e7d-affc-61cd08905919/mr-ext-v17-backend-ready.zip
  * 
- * Regras:
- * 1. Independência Total: O sistema é autônomo e não depende de backend externo.
- * 2. Multi-perfil: Ultra Admin, Revendedor e Cliente Final.
- * 3. Multi-produto: Gestão centralizada de múltiplas extensões e softwares.
- * 4. Segurança: Licenciamento proprietário validado via Heartbeat e Anti-tamper.
+ * Instruções:
+ * 1. Baixe o arquivo mr-ext-v17-backend-ready.zip.
+ * 2. Encaminhe ao desenvolvedor (Manus) para integração na extensão.
+ * 3. O banco de dados e as rotas de API já estão configurados para produção.
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import React, { useEffect, useState } from "react";
