@@ -59,18 +59,14 @@ import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as AdminVisualizacaoRouteImport } from './routes/admin.visualizacao'
 import { Route as AppPacksSlugRouteImport } from './routes/_app.packs.$slug'
 import { Route as AdminClientesIdRouteImport } from './routes/admin.clientes.$id'
-import { Route as ApiExtFixStreamRouteImport } from './routes/api/ext/fix-stream'
-import { Route as ApiExtHeartbeatRouteImport } from './routes/api/ext/heartbeat'
-import { Route as ApiExtSendCommandRouteImport } from './routes/api/ext/send-command'
-import { Route as ApiExtTestBackendRouteImport } from './routes/api/ext/test-backend'
-import { Route as ApiExtUploadRouteImport } from './routes/api/ext/upload'
-import { Route as ApiExtValidateLicenseRouteImport } from './routes/api/ext/validate-license'
 import { Route as ApiPublicDownloadExtensaoRouteImport } from './routes/api/public/download-extensao'
 import { Route as ApiPublicHomologCheckoutRouteImport } from './routes/api/public/homolog-checkout'
 import { Route as ApiPublicSetupCheckoutRouteImport } from './routes/api/public/setup-checkout'
 import { Route as ApiPublicValidarLicencaRouteImport } from './routes/api/public/validar-licenca'
+import { Route as ApiPublicExtFixStreamRouteImport } from './routes/api/public/ext/fix-stream'
 import { Route as ApiPublicExtSendCommandRouteImport } from './routes/api/public/ext/send-command'
-import { Route as ApiPublicExtValidateLicenseRouteImport } from './routes/api/public/ext/validate-license'
+import { Route as ApiPublicExtSetupV17RouteImport } from './routes/api/public/ext/setup-v17'
+import { Route as ApiPublicExtUploadRouteImport } from './routes/api/public/ext/upload'
 import { Route as ApiPublicHooksEmailWorkerRouteImport } from './routes/api/public/hooks/email-worker'
 import { Route as ApiPublicLicencaConfigRouteImport } from './routes/api/public/licenca/config'
 import { Route as ApiPublicLicencaConsultaRouteImport } from './routes/api/public/licenca/consulta'
@@ -82,14 +78,6 @@ import { Route as ApiPublicPremiumCoverSplatRouteImport } from './routes/api/pub
 import { Route as ApiPublicWebhooksCaktoRouteImport } from './routes/api/public/webhooks/cakto'
 import { Route as ApiPublicWebhooksKiwifyRouteImport } from './routes/api/public/webhooks/kiwify'
 import { Route as ApiPublicWebhooksMercadopagoRouteImport } from './routes/api/public/webhooks/mercadopago'
-import { Route as ApiPublicExtFunctionsV1GetSupportInfoRouteImport } from './routes/api/public/ext/functions.v1.get-support-info'
-import { Route as ApiPublicExtFunctionsV1GetTemplatesRouteImport } from './routes/api/public/ext/functions.v1.get-templates'
-import { Route as ApiPublicExtFunctionsV1InjectConfigRouteImport } from './routes/api/public/ext/functions.v1.inject-config'
-import { Route as ApiPublicExtFunctionsV1Lov4RouteImport } from './routes/api/public/ext/functions.v1.lov4'
-import { Route as ApiPublicExtFunctionsV1ReportTamperRouteImport } from './routes/api/public/ext/functions.v1.report-tamper'
-import { Route as ApiPublicExtFunctionsV1ServeExtensionUiRouteImport } from './routes/api/public/ext/functions.v1.serve-extension-ui'
-import { Route as ApiPublicExtFunctionsV1ValidateLicenseV2RouteImport } from './routes/api/public/ext/functions.v1.validate-license-v2'
-import { Route as ApiPublicExtStorageV1ObjectSplatRouteImport } from './routes/api/public/ext/storage.v1.object.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -340,36 +328,6 @@ const AdminClientesIdRoute = AdminClientesIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => AdminClientesRoute,
 } as any)
-const ApiExtFixStreamRoute = ApiExtFixStreamRouteImport.update({
-  id: '/api/ext/fix-stream',
-  path: '/api/ext/fix-stream',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiExtHeartbeatRoute = ApiExtHeartbeatRouteImport.update({
-  id: '/api/ext/heartbeat',
-  path: '/api/ext/heartbeat',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiExtSendCommandRoute = ApiExtSendCommandRouteImport.update({
-  id: '/api/ext/send-command',
-  path: '/api/ext/send-command',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiExtTestBackendRoute = ApiExtTestBackendRouteImport.update({
-  id: '/api/ext/test-backend',
-  path: '/api/ext/test-backend',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiExtUploadRoute = ApiExtUploadRouteImport.update({
-  id: '/api/ext/upload',
-  path: '/api/ext/upload',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiExtValidateLicenseRoute = ApiExtValidateLicenseRouteImport.update({
-  id: '/api/ext/validate-license',
-  path: '/api/ext/validate-license',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicDownloadExtensaoRoute =
   ApiPublicDownloadExtensaoRouteImport.update({
     id: '/api/public/download-extensao',
@@ -392,17 +350,26 @@ const ApiPublicValidarLicencaRoute = ApiPublicValidarLicencaRouteImport.update({
   path: '/api/public/validar-licenca',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicExtFixStreamRoute = ApiPublicExtFixStreamRouteImport.update({
+  id: '/api/public/ext/fix-stream',
+  path: '/api/public/ext/fix-stream',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicExtSendCommandRoute = ApiPublicExtSendCommandRouteImport.update({
   id: '/api/public/ext/send-command',
   path: '/api/public/ext/send-command',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicExtValidateLicenseRoute =
-  ApiPublicExtValidateLicenseRouteImport.update({
-    id: '/api/public/ext/validate-license',
-    path: '/api/public/ext/validate-license',
-    getParentRoute: () => rootRouteImport,
-  } as any)
+const ApiPublicExtSetupV17Route = ApiPublicExtSetupV17RouteImport.update({
+  id: '/api/public/ext/setup-v17',
+  path: '/api/public/ext/setup-v17',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicExtUploadRoute = ApiPublicExtUploadRouteImport.update({
+  id: '/api/public/ext/upload',
+  path: '/api/public/ext/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicHooksEmailWorkerRoute =
   ApiPublicHooksEmailWorkerRouteImport.update({
     id: '/api/public/hooks/email-worker',
@@ -464,54 +431,6 @@ const ApiPublicWebhooksMercadopagoRoute =
     path: '/api/public/webhooks/mercadopago',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiPublicExtFunctionsV1GetSupportInfoRoute =
-  ApiPublicExtFunctionsV1GetSupportInfoRouteImport.update({
-    id: '/api/public/ext/functions/v1/get-support-info',
-    path: '/api/public/ext/functions/v1/get-support-info',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicExtFunctionsV1GetTemplatesRoute =
-  ApiPublicExtFunctionsV1GetTemplatesRouteImport.update({
-    id: '/api/public/ext/functions/v1/get-templates',
-    path: '/api/public/ext/functions/v1/get-templates',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicExtFunctionsV1InjectConfigRoute =
-  ApiPublicExtFunctionsV1InjectConfigRouteImport.update({
-    id: '/api/public/ext/functions/v1/inject-config',
-    path: '/api/public/ext/functions/v1/inject-config',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicExtFunctionsV1Lov4Route =
-  ApiPublicExtFunctionsV1Lov4RouteImport.update({
-    id: '/api/public/ext/functions/v1/lov4',
-    path: '/api/public/ext/functions/v1/lov4',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicExtFunctionsV1ReportTamperRoute =
-  ApiPublicExtFunctionsV1ReportTamperRouteImport.update({
-    id: '/api/public/ext/functions/v1/report-tamper',
-    path: '/api/public/ext/functions/v1/report-tamper',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicExtFunctionsV1ServeExtensionUiRoute =
-  ApiPublicExtFunctionsV1ServeExtensionUiRouteImport.update({
-    id: '/api/public/ext/functions/v1/serve-extension-ui',
-    path: '/api/public/ext/functions/v1/serve-extension-ui',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicExtFunctionsV1ValidateLicenseV2Route =
-  ApiPublicExtFunctionsV1ValidateLicenseV2RouteImport.update({
-    id: '/api/public/ext/functions/v1/validate-license-v2',
-    path: '/api/public/ext/functions/v1/validate-license-v2',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicExtStorageV1ObjectSplatRoute =
-  ApiPublicExtStorageV1ObjectSplatRouteImport.update({
-    id: '/api/public/ext/storage/v1/object/$',
-    path: '/api/public/ext/storage/v1/object/$',
-    getParentRoute: () => rootRouteImport,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -563,18 +482,14 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
-  '/api/ext/fix-stream': typeof ApiExtFixStreamRoute
-  '/api/ext/heartbeat': typeof ApiExtHeartbeatRoute
-  '/api/ext/send-command': typeof ApiExtSendCommandRoute
-  '/api/ext/test-backend': typeof ApiExtTestBackendRoute
-  '/api/ext/upload': typeof ApiExtUploadRoute
-  '/api/ext/validate-license': typeof ApiExtValidateLicenseRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
+  '/api/public/ext/fix-stream': typeof ApiPublicExtFixStreamRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
-  '/api/public/ext/validate-license': typeof ApiPublicExtValidateLicenseRoute
+  '/api/public/ext/setup-v17': typeof ApiPublicExtSetupV17Route
+  '/api/public/ext/upload': typeof ApiPublicExtUploadRoute
   '/api/public/hooks/email-worker': typeof ApiPublicHooksEmailWorkerRoute
   '/api/public/licenca/config': typeof ApiPublicLicencaConfigRoute
   '/api/public/licenca/consulta': typeof ApiPublicLicencaConsultaRoute
@@ -586,14 +501,6 @@ export interface FileRoutesByFullPath {
   '/api/public/webhooks/cakto': typeof ApiPublicWebhooksCaktoRoute
   '/api/public/webhooks/kiwify': typeof ApiPublicWebhooksKiwifyRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
-  '/api/public/ext/functions/v1/get-support-info': typeof ApiPublicExtFunctionsV1GetSupportInfoRoute
-  '/api/public/ext/functions/v1/get-templates': typeof ApiPublicExtFunctionsV1GetTemplatesRoute
-  '/api/public/ext/functions/v1/inject-config': typeof ApiPublicExtFunctionsV1InjectConfigRoute
-  '/api/public/ext/functions/v1/lov4': typeof ApiPublicExtFunctionsV1Lov4Route
-  '/api/public/ext/functions/v1/report-tamper': typeof ApiPublicExtFunctionsV1ReportTamperRoute
-  '/api/public/ext/functions/v1/serve-extension-ui': typeof ApiPublicExtFunctionsV1ServeExtensionUiRoute
-  '/api/public/ext/functions/v1/validate-license-v2': typeof ApiPublicExtFunctionsV1ValidateLicenseV2Route
-  '/api/public/ext/storage/v1/object/$': typeof ApiPublicExtStorageV1ObjectSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -644,18 +551,14 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
-  '/api/ext/fix-stream': typeof ApiExtFixStreamRoute
-  '/api/ext/heartbeat': typeof ApiExtHeartbeatRoute
-  '/api/ext/send-command': typeof ApiExtSendCommandRoute
-  '/api/ext/test-backend': typeof ApiExtTestBackendRoute
-  '/api/ext/upload': typeof ApiExtUploadRoute
-  '/api/ext/validate-license': typeof ApiExtValidateLicenseRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
+  '/api/public/ext/fix-stream': typeof ApiPublicExtFixStreamRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
-  '/api/public/ext/validate-license': typeof ApiPublicExtValidateLicenseRoute
+  '/api/public/ext/setup-v17': typeof ApiPublicExtSetupV17Route
+  '/api/public/ext/upload': typeof ApiPublicExtUploadRoute
   '/api/public/hooks/email-worker': typeof ApiPublicHooksEmailWorkerRoute
   '/api/public/licenca/config': typeof ApiPublicLicencaConfigRoute
   '/api/public/licenca/consulta': typeof ApiPublicLicencaConsultaRoute
@@ -667,14 +570,6 @@ export interface FileRoutesByTo {
   '/api/public/webhooks/cakto': typeof ApiPublicWebhooksCaktoRoute
   '/api/public/webhooks/kiwify': typeof ApiPublicWebhooksKiwifyRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
-  '/api/public/ext/functions/v1/get-support-info': typeof ApiPublicExtFunctionsV1GetSupportInfoRoute
-  '/api/public/ext/functions/v1/get-templates': typeof ApiPublicExtFunctionsV1GetTemplatesRoute
-  '/api/public/ext/functions/v1/inject-config': typeof ApiPublicExtFunctionsV1InjectConfigRoute
-  '/api/public/ext/functions/v1/lov4': typeof ApiPublicExtFunctionsV1Lov4Route
-  '/api/public/ext/functions/v1/report-tamper': typeof ApiPublicExtFunctionsV1ReportTamperRoute
-  '/api/public/ext/functions/v1/serve-extension-ui': typeof ApiPublicExtFunctionsV1ServeExtensionUiRoute
-  '/api/public/ext/functions/v1/validate-license-v2': typeof ApiPublicExtFunctionsV1ValidateLicenseV2Route
-  '/api/public/ext/storage/v1/object/$': typeof ApiPublicExtStorageV1ObjectSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -728,18 +623,14 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/_app/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
-  '/api/ext/fix-stream': typeof ApiExtFixStreamRoute
-  '/api/ext/heartbeat': typeof ApiExtHeartbeatRoute
-  '/api/ext/send-command': typeof ApiExtSendCommandRoute
-  '/api/ext/test-backend': typeof ApiExtTestBackendRoute
-  '/api/ext/upload': typeof ApiExtUploadRoute
-  '/api/ext/validate-license': typeof ApiExtValidateLicenseRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
+  '/api/public/ext/fix-stream': typeof ApiPublicExtFixStreamRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
-  '/api/public/ext/validate-license': typeof ApiPublicExtValidateLicenseRoute
+  '/api/public/ext/setup-v17': typeof ApiPublicExtSetupV17Route
+  '/api/public/ext/upload': typeof ApiPublicExtUploadRoute
   '/api/public/hooks/email-worker': typeof ApiPublicHooksEmailWorkerRoute
   '/api/public/licenca/config': typeof ApiPublicLicencaConfigRoute
   '/api/public/licenca/consulta': typeof ApiPublicLicencaConsultaRoute
@@ -751,14 +642,6 @@ export interface FileRoutesById {
   '/api/public/webhooks/cakto': typeof ApiPublicWebhooksCaktoRoute
   '/api/public/webhooks/kiwify': typeof ApiPublicWebhooksKiwifyRoute
   '/api/public/webhooks/mercadopago': typeof ApiPublicWebhooksMercadopagoRoute
-  '/api/public/ext/functions/v1/get-support-info': typeof ApiPublicExtFunctionsV1GetSupportInfoRoute
-  '/api/public/ext/functions/v1/get-templates': typeof ApiPublicExtFunctionsV1GetTemplatesRoute
-  '/api/public/ext/functions/v1/inject-config': typeof ApiPublicExtFunctionsV1InjectConfigRoute
-  '/api/public/ext/functions/v1/lov4': typeof ApiPublicExtFunctionsV1Lov4Route
-  '/api/public/ext/functions/v1/report-tamper': typeof ApiPublicExtFunctionsV1ReportTamperRoute
-  '/api/public/ext/functions/v1/serve-extension-ui': typeof ApiPublicExtFunctionsV1ServeExtensionUiRoute
-  '/api/public/ext/functions/v1/validate-license-v2': typeof ApiPublicExtFunctionsV1ValidateLicenseV2Route
-  '/api/public/ext/storage/v1/object/$': typeof ApiPublicExtStorageV1ObjectSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -812,18 +695,14 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/packs/$slug'
     | '/admin/clientes/$id'
-    | '/api/ext/fix-stream'
-    | '/api/ext/heartbeat'
-    | '/api/ext/send-command'
-    | '/api/ext/test-backend'
-    | '/api/ext/upload'
-    | '/api/ext/validate-license'
     | '/api/public/download-extensao'
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
+    | '/api/public/ext/fix-stream'
     | '/api/public/ext/send-command'
-    | '/api/public/ext/validate-license'
+    | '/api/public/ext/setup-v17'
+    | '/api/public/ext/upload'
     | '/api/public/hooks/email-worker'
     | '/api/public/licenca/config'
     | '/api/public/licenca/consulta'
@@ -835,14 +714,6 @@ export interface FileRouteTypes {
     | '/api/public/webhooks/cakto'
     | '/api/public/webhooks/kiwify'
     | '/api/public/webhooks/mercadopago'
-    | '/api/public/ext/functions/v1/get-support-info'
-    | '/api/public/ext/functions/v1/get-templates'
-    | '/api/public/ext/functions/v1/inject-config'
-    | '/api/public/ext/functions/v1/lov4'
-    | '/api/public/ext/functions/v1/report-tamper'
-    | '/api/public/ext/functions/v1/serve-extension-ui'
-    | '/api/public/ext/functions/v1/validate-license-v2'
-    | '/api/public/ext/storage/v1/object/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -893,18 +764,14 @@ export interface FileRouteTypes {
     | '/admin'
     | '/packs/$slug'
     | '/admin/clientes/$id'
-    | '/api/ext/fix-stream'
-    | '/api/ext/heartbeat'
-    | '/api/ext/send-command'
-    | '/api/ext/test-backend'
-    | '/api/ext/upload'
-    | '/api/ext/validate-license'
     | '/api/public/download-extensao'
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
+    | '/api/public/ext/fix-stream'
     | '/api/public/ext/send-command'
-    | '/api/public/ext/validate-license'
+    | '/api/public/ext/setup-v17'
+    | '/api/public/ext/upload'
     | '/api/public/hooks/email-worker'
     | '/api/public/licenca/config'
     | '/api/public/licenca/consulta'
@@ -916,14 +783,6 @@ export interface FileRouteTypes {
     | '/api/public/webhooks/cakto'
     | '/api/public/webhooks/kiwify'
     | '/api/public/webhooks/mercadopago'
-    | '/api/public/ext/functions/v1/get-support-info'
-    | '/api/public/ext/functions/v1/get-templates'
-    | '/api/public/ext/functions/v1/inject-config'
-    | '/api/public/ext/functions/v1/lov4'
-    | '/api/public/ext/functions/v1/report-tamper'
-    | '/api/public/ext/functions/v1/serve-extension-ui'
-    | '/api/public/ext/functions/v1/validate-license-v2'
-    | '/api/public/ext/storage/v1/object/$'
   id:
     | '__root__'
     | '/'
@@ -976,18 +835,14 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/_app/packs/$slug'
     | '/admin/clientes/$id'
-    | '/api/ext/fix-stream'
-    | '/api/ext/heartbeat'
-    | '/api/ext/send-command'
-    | '/api/ext/test-backend'
-    | '/api/ext/upload'
-    | '/api/ext/validate-license'
     | '/api/public/download-extensao'
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
+    | '/api/public/ext/fix-stream'
     | '/api/public/ext/send-command'
-    | '/api/public/ext/validate-license'
+    | '/api/public/ext/setup-v17'
+    | '/api/public/ext/upload'
     | '/api/public/hooks/email-worker'
     | '/api/public/licenca/config'
     | '/api/public/licenca/consulta'
@@ -999,14 +854,6 @@ export interface FileRouteTypes {
     | '/api/public/webhooks/cakto'
     | '/api/public/webhooks/kiwify'
     | '/api/public/webhooks/mercadopago'
-    | '/api/public/ext/functions/v1/get-support-info'
-    | '/api/public/ext/functions/v1/get-templates'
-    | '/api/public/ext/functions/v1/inject-config'
-    | '/api/public/ext/functions/v1/lov4'
-    | '/api/public/ext/functions/v1/report-tamper'
-    | '/api/public/ext/functions/v1/serve-extension-ui'
-    | '/api/public/ext/functions/v1/validate-license-v2'
-    | '/api/public/ext/storage/v1/object/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1018,18 +865,14 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegistroRoute: typeof RegistroRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
-  ApiExtFixStreamRoute: typeof ApiExtFixStreamRoute
-  ApiExtHeartbeatRoute: typeof ApiExtHeartbeatRoute
-  ApiExtSendCommandRoute: typeof ApiExtSendCommandRoute
-  ApiExtTestBackendRoute: typeof ApiExtTestBackendRoute
-  ApiExtUploadRoute: typeof ApiExtUploadRoute
-  ApiExtValidateLicenseRoute: typeof ApiExtValidateLicenseRoute
   ApiPublicDownloadExtensaoRoute: typeof ApiPublicDownloadExtensaoRoute
   ApiPublicHomologCheckoutRoute: typeof ApiPublicHomologCheckoutRoute
   ApiPublicSetupCheckoutRoute: typeof ApiPublicSetupCheckoutRoute
   ApiPublicValidarLicencaRoute: typeof ApiPublicValidarLicencaRoute
+  ApiPublicExtFixStreamRoute: typeof ApiPublicExtFixStreamRoute
   ApiPublicExtSendCommandRoute: typeof ApiPublicExtSendCommandRoute
-  ApiPublicExtValidateLicenseRoute: typeof ApiPublicExtValidateLicenseRoute
+  ApiPublicExtSetupV17Route: typeof ApiPublicExtSetupV17Route
+  ApiPublicExtUploadRoute: typeof ApiPublicExtUploadRoute
   ApiPublicHooksEmailWorkerRoute: typeof ApiPublicHooksEmailWorkerRoute
   ApiPublicLicencaConfigRoute: typeof ApiPublicLicencaConfigRoute
   ApiPublicLicencaConsultaRoute: typeof ApiPublicLicencaConsultaRoute
@@ -1041,14 +884,6 @@ export interface RootRouteChildren {
   ApiPublicWebhooksCaktoRoute: typeof ApiPublicWebhooksCaktoRoute
   ApiPublicWebhooksKiwifyRoute: typeof ApiPublicWebhooksKiwifyRoute
   ApiPublicWebhooksMercadopagoRoute: typeof ApiPublicWebhooksMercadopagoRoute
-  ApiPublicExtFunctionsV1GetSupportInfoRoute: typeof ApiPublicExtFunctionsV1GetSupportInfoRoute
-  ApiPublicExtFunctionsV1GetTemplatesRoute: typeof ApiPublicExtFunctionsV1GetTemplatesRoute
-  ApiPublicExtFunctionsV1InjectConfigRoute: typeof ApiPublicExtFunctionsV1InjectConfigRoute
-  ApiPublicExtFunctionsV1Lov4Route: typeof ApiPublicExtFunctionsV1Lov4Route
-  ApiPublicExtFunctionsV1ReportTamperRoute: typeof ApiPublicExtFunctionsV1ReportTamperRoute
-  ApiPublicExtFunctionsV1ServeExtensionUiRoute: typeof ApiPublicExtFunctionsV1ServeExtensionUiRoute
-  ApiPublicExtFunctionsV1ValidateLicenseV2Route: typeof ApiPublicExtFunctionsV1ValidateLicenseV2Route
-  ApiPublicExtStorageV1ObjectSplatRoute: typeof ApiPublicExtStorageV1ObjectSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1403,48 +1238,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminClientesIdRouteImport
       parentRoute: typeof AdminClientesRoute
     }
-    '/api/ext/fix-stream': {
-      id: '/api/ext/fix-stream'
-      path: '/api/ext/fix-stream'
-      fullPath: '/api/ext/fix-stream'
-      preLoaderRoute: typeof ApiExtFixStreamRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/ext/heartbeat': {
-      id: '/api/ext/heartbeat'
-      path: '/api/ext/heartbeat'
-      fullPath: '/api/ext/heartbeat'
-      preLoaderRoute: typeof ApiExtHeartbeatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/ext/send-command': {
-      id: '/api/ext/send-command'
-      path: '/api/ext/send-command'
-      fullPath: '/api/ext/send-command'
-      preLoaderRoute: typeof ApiExtSendCommandRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/ext/test-backend': {
-      id: '/api/ext/test-backend'
-      path: '/api/ext/test-backend'
-      fullPath: '/api/ext/test-backend'
-      preLoaderRoute: typeof ApiExtTestBackendRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/ext/upload': {
-      id: '/api/ext/upload'
-      path: '/api/ext/upload'
-      fullPath: '/api/ext/upload'
-      preLoaderRoute: typeof ApiExtUploadRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/ext/validate-license': {
-      id: '/api/ext/validate-license'
-      path: '/api/ext/validate-license'
-      fullPath: '/api/ext/validate-license'
-      preLoaderRoute: typeof ApiExtValidateLicenseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/download-extensao': {
       id: '/api/public/download-extensao'
       path: '/api/public/download-extensao'
@@ -1473,6 +1266,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicValidarLicencaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/ext/fix-stream': {
+      id: '/api/public/ext/fix-stream'
+      path: '/api/public/ext/fix-stream'
+      fullPath: '/api/public/ext/fix-stream'
+      preLoaderRoute: typeof ApiPublicExtFixStreamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/ext/send-command': {
       id: '/api/public/ext/send-command'
       path: '/api/public/ext/send-command'
@@ -1480,11 +1280,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicExtSendCommandRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/ext/validate-license': {
-      id: '/api/public/ext/validate-license'
-      path: '/api/public/ext/validate-license'
-      fullPath: '/api/public/ext/validate-license'
-      preLoaderRoute: typeof ApiPublicExtValidateLicenseRouteImport
+    '/api/public/ext/setup-v17': {
+      id: '/api/public/ext/setup-v17'
+      path: '/api/public/ext/setup-v17'
+      fullPath: '/api/public/ext/setup-v17'
+      preLoaderRoute: typeof ApiPublicExtSetupV17RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/ext/upload': {
+      id: '/api/public/ext/upload'
+      path: '/api/public/ext/upload'
+      fullPath: '/api/public/ext/upload'
+      preLoaderRoute: typeof ApiPublicExtUploadRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/hooks/email-worker': {
@@ -1562,62 +1369,6 @@ declare module '@tanstack/react-router' {
       path: '/api/public/webhooks/mercadopago'
       fullPath: '/api/public/webhooks/mercadopago'
       preLoaderRoute: typeof ApiPublicWebhooksMercadopagoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/ext/functions/v1/get-support-info': {
-      id: '/api/public/ext/functions/v1/get-support-info'
-      path: '/api/public/ext/functions/v1/get-support-info'
-      fullPath: '/api/public/ext/functions/v1/get-support-info'
-      preLoaderRoute: typeof ApiPublicExtFunctionsV1GetSupportInfoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/ext/functions/v1/get-templates': {
-      id: '/api/public/ext/functions/v1/get-templates'
-      path: '/api/public/ext/functions/v1/get-templates'
-      fullPath: '/api/public/ext/functions/v1/get-templates'
-      preLoaderRoute: typeof ApiPublicExtFunctionsV1GetTemplatesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/ext/functions/v1/inject-config': {
-      id: '/api/public/ext/functions/v1/inject-config'
-      path: '/api/public/ext/functions/v1/inject-config'
-      fullPath: '/api/public/ext/functions/v1/inject-config'
-      preLoaderRoute: typeof ApiPublicExtFunctionsV1InjectConfigRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/ext/functions/v1/lov4': {
-      id: '/api/public/ext/functions/v1/lov4'
-      path: '/api/public/ext/functions/v1/lov4'
-      fullPath: '/api/public/ext/functions/v1/lov4'
-      preLoaderRoute: typeof ApiPublicExtFunctionsV1Lov4RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/ext/functions/v1/report-tamper': {
-      id: '/api/public/ext/functions/v1/report-tamper'
-      path: '/api/public/ext/functions/v1/report-tamper'
-      fullPath: '/api/public/ext/functions/v1/report-tamper'
-      preLoaderRoute: typeof ApiPublicExtFunctionsV1ReportTamperRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/ext/functions/v1/serve-extension-ui': {
-      id: '/api/public/ext/functions/v1/serve-extension-ui'
-      path: '/api/public/ext/functions/v1/serve-extension-ui'
-      fullPath: '/api/public/ext/functions/v1/serve-extension-ui'
-      preLoaderRoute: typeof ApiPublicExtFunctionsV1ServeExtensionUiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/ext/functions/v1/validate-license-v2': {
-      id: '/api/public/ext/functions/v1/validate-license-v2'
-      path: '/api/public/ext/functions/v1/validate-license-v2'
-      fullPath: '/api/public/ext/functions/v1/validate-license-v2'
-      preLoaderRoute: typeof ApiPublicExtFunctionsV1ValidateLicenseV2RouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/ext/storage/v1/object/$': {
-      id: '/api/public/ext/storage/v1/object/$'
-      path: '/api/public/ext/storage/v1/object/$'
-      fullPath: '/api/public/ext/storage/v1/object/$'
-      preLoaderRoute: typeof ApiPublicExtStorageV1ObjectSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -1752,18 +1503,14 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegistroRoute: RegistroRoute,
   ResetPasswordRoute: ResetPasswordRoute,
-  ApiExtFixStreamRoute: ApiExtFixStreamRoute,
-  ApiExtHeartbeatRoute: ApiExtHeartbeatRoute,
-  ApiExtSendCommandRoute: ApiExtSendCommandRoute,
-  ApiExtTestBackendRoute: ApiExtTestBackendRoute,
-  ApiExtUploadRoute: ApiExtUploadRoute,
-  ApiExtValidateLicenseRoute: ApiExtValidateLicenseRoute,
   ApiPublicDownloadExtensaoRoute: ApiPublicDownloadExtensaoRoute,
   ApiPublicHomologCheckoutRoute: ApiPublicHomologCheckoutRoute,
   ApiPublicSetupCheckoutRoute: ApiPublicSetupCheckoutRoute,
   ApiPublicValidarLicencaRoute: ApiPublicValidarLicencaRoute,
+  ApiPublicExtFixStreamRoute: ApiPublicExtFixStreamRoute,
   ApiPublicExtSendCommandRoute: ApiPublicExtSendCommandRoute,
-  ApiPublicExtValidateLicenseRoute: ApiPublicExtValidateLicenseRoute,
+  ApiPublicExtSetupV17Route: ApiPublicExtSetupV17Route,
+  ApiPublicExtUploadRoute: ApiPublicExtUploadRoute,
   ApiPublicHooksEmailWorkerRoute: ApiPublicHooksEmailWorkerRoute,
   ApiPublicLicencaConfigRoute: ApiPublicLicencaConfigRoute,
   ApiPublicLicencaConsultaRoute: ApiPublicLicencaConsultaRoute,
@@ -1775,20 +1522,6 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicWebhooksCaktoRoute: ApiPublicWebhooksCaktoRoute,
   ApiPublicWebhooksKiwifyRoute: ApiPublicWebhooksKiwifyRoute,
   ApiPublicWebhooksMercadopagoRoute: ApiPublicWebhooksMercadopagoRoute,
-  ApiPublicExtFunctionsV1GetSupportInfoRoute:
-    ApiPublicExtFunctionsV1GetSupportInfoRoute,
-  ApiPublicExtFunctionsV1GetTemplatesRoute:
-    ApiPublicExtFunctionsV1GetTemplatesRoute,
-  ApiPublicExtFunctionsV1InjectConfigRoute:
-    ApiPublicExtFunctionsV1InjectConfigRoute,
-  ApiPublicExtFunctionsV1Lov4Route: ApiPublicExtFunctionsV1Lov4Route,
-  ApiPublicExtFunctionsV1ReportTamperRoute:
-    ApiPublicExtFunctionsV1ReportTamperRoute,
-  ApiPublicExtFunctionsV1ServeExtensionUiRoute:
-    ApiPublicExtFunctionsV1ServeExtensionUiRoute,
-  ApiPublicExtFunctionsV1ValidateLicenseV2Route:
-    ApiPublicExtFunctionsV1ValidateLicenseV2Route,
-  ApiPublicExtStorageV1ObjectSplatRoute: ApiPublicExtStorageV1ObjectSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

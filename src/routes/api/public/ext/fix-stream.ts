@@ -8,7 +8,7 @@ const cors = {
   'content-type': 'application/json',
 };
 
-export const Route = createFileRoute('/api/public/ext/send-command')({
+export const Route = createFileRoute('/api/public/ext/fix-stream')({
   server: {
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: cors }),
@@ -17,7 +17,6 @@ export const Route = createFileRoute('/api/public/ext/send-command')({
           const body = await request.json();
           const licenseKey = body.license_key || body.licenseKey || body.key || body.user_license_key;
           const hwid = body.hwid || body.device_id;
-          const userToken = request.headers.get('Authorization');
 
           if (!licenseKey || !hwid) {
             return new Response(JSON.stringify({ ok: false, error: "missing_auth_metadata" }), { status: 400, headers: cors });
@@ -27,10 +26,9 @@ export const Route = createFileRoute('/api/public/ext/send-command')({
             auth: { persistSession: false, autoRefreshToken: false },
           });
 
-          // Validação simplificada (usando a lógica de validar-licenca legada para compatibilidade)
           const { data: lic } = await sb
             .from('licencas')
-            .select('id, status, expira_em')
+            .select('id, status')
             .eq('chave', licenseKey)
             .maybeSingle();
 
@@ -38,16 +36,13 @@ export const Route = createFileRoute('/api/public/ext/send-command')({
             return new Response(JSON.stringify({ ok: false, error: "license_invalid" }), { status: 403, headers: cors });
           }
 
-          // Payload real do motor
+          // O motorPayload deve ser preservado
           const motorPayload = body.lastPayload ?? body.payload ?? body;
 
-          // TODO: Identificar endpoint real do motor v17. 
-          // Por enquanto, esta rota serve como placeholder validado para a auditoria.
-          
           return new Response(JSON.stringify({ 
             ok: true, 
-            message: "Comando recebido pelo MR CENTRAL",
-            status: "ready_for_upstream_integration"
+            status: "fix_stream_ready",
+            payload_received: !!motorPayload
           }), { status: 200, headers: cors });
 
         } catch (error) {

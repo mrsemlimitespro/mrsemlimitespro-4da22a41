@@ -1,13 +1,8 @@
 /**
  * Adaptador de Upload para a Extensão MR Sem Limites (v17)
+ * Este arquivo deve ser injetado na extensão.
  */
 export const UploadManager = {
-  /**
-   * Envia um arquivo para o backend do MR Central.
-   * @param {File} file Arquivo a ser enviado.
-   * @param {Object} options Opções contendo license_key e hwid.
-   * @param {Function} onProgress Callback para progresso do upload.
-   */
   uploadFile: function(file, options, onProgress) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -42,7 +37,8 @@ export const UploadManager = {
         }
       };
 
-      xhr.open('POST', 'https://mrsemlimites.lovable.app/api/ext/upload');
+      // URL base do MR CENTRAL publicado
+      xhr.open('POST', 'https://mrsemlimitespro.lovable.app/api/public/ext/upload');
       xhr.send(formData);
     });
   }
