@@ -189,9 +189,9 @@ function HeroSection({
             download="mr-ext-v17-final-package.zip"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex items-center gap-4 overflow-hidden rounded-full bg-brand-red-neon px-12 py-5 text-xl font-black text-white shadow-[0_0_30px_rgba(255,0,0,0.5)] transition-all hover:scale-105 hover:shadow-[0_0_50px_rgba(255,0,0,0.7)] active:scale-95"
+            className="group relative flex items-center gap-4 overflow-hidden rounded-full bg-brand-red-neon px-12 py-5 text-xl font-black text-white transition-all active:scale-95 animate-[pulse-glow_2s_infinite]"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
             <Package className="size-8 animate-bounce" />
             BAIXAR PACOTE V17 AGORA
           </a>
