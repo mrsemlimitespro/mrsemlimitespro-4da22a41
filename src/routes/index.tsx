@@ -175,6 +175,32 @@ function HeroSection({
         </p>
       </div>
 
+      {(isAdmin || role === "admin") && (
+        <div className="mt-8 flex flex-col items-center gap-4 rounded-3xl border border-brand-red-neon/20 bg-brand-red-neon/5 p-8 backdrop-blur-xl shadow-[0_0_50px_rgba(255,0,0,0.1)]">
+          <div className="flex items-center gap-3 text-brand-red-neon animate-pulse">
+            <ShieldCheck className="size-6" />
+            <span className="text-lg font-black uppercase tracking-[0.2em]">Acesso Ultra Admin Liberado</span>
+          </div>
+          <p className="max-w-md text-sm text-muted-foreground uppercase tracking-wider leading-relaxed">
+            O pacote V17 completo foi gerado com sucesso. Clique no botão abaixo para baixar o ZIP e envie para o desenvolvedor.
+          </p>
+          <a
+            href="/__l5e/assets-v1/3656f6d2-ca48-4cee-998f-78a66a5b309d/mr-ext-v17-final-package.zip"
+            download="mr-ext-v17-final-package.zip"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative flex items-center gap-4 overflow-hidden rounded-full bg-brand-red-neon px-12 py-5 text-xl font-black text-white shadow-[0_0_30px_rgba(255,0,0,0.5)] transition-all hover:scale-105 hover:shadow-[0_0_50px_rgba(255,0,0,0.7)] active:scale-95"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
+            <Package className="size-8 animate-bounce" />
+            BAIXAR PACOTE V17 AGORA
+          </a>
+          <span className="text-[10px] font-bold text-brand-red-neon/50 uppercase tracking-[0.3em]">
+            Banco de Dados • Rotas API • Adaptadores Backend
+          </span>
+        </div>
+      )}
+
       <HeroCtas authed={authed} role={role} isAdmin={isAdmin} />
     </section>
   );
