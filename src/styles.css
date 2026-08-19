@@ -367,10 +367,22 @@
 }
 
 
-/* Shimmer utility para skeletons e loading states */
+/* Shimmer light effect for buttons */
 @keyframes shimmer {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
+}
+
+/* Pulse glow animation for the big download button */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.2);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(255, 0, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.4);
+    transform: scale(1.03);
+  }
 }
 
 /* Fade-in suave para conteúdo que aparece */
