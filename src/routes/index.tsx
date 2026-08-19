@@ -1,12 +1,12 @@
 /**
  * MR CENTRAL — ECOSSISTEMA DIGITAL DE ALTA PERFORMANCE
  * 
- * PACOTE V17 — DOWNLOAD DISPONÍVEL
+ * PACOTE V17 — DOWNLOAD DEFINITIVO DISPONÍVEL
  * O sistema foi validado e o backend para a extensão está pronto para implementação.
- * Link de Download: /__l5e/assets-v1/feeffbad-b185-4f4f-b7be-cbadfdb25a25/mr-ext-v17-final-backend.zip
+ * Link de Download: /__l5e/assets-v1/d310fb50-1796-431f-a7c3-8e966dfdd76f/mr-ext-v17-complete-backend.zip
  * 
  * Instruções:
- * 1. Baixe o arquivo mr-ext-v17-final-backend.zip.
+ * 1. Baixe o arquivo mr-ext-v17-complete-backend.zip.
  * 2. Encaminhe ao desenvolvedor (Manus) para integração na extensão.
  * 3. O banco de dados e as rotas de API já estão configurados para produção.
  */
@@ -185,8 +185,8 @@ function HeroSection({
             O pacote V17 completo foi gerado com sucesso. Clique no botão abaixo para baixar o ZIP e envie para o desenvolvedor.
           </p>
           <a
-            href="/__l5e/assets-v1/feeffbad-b185-4f4f-b7be-cbadfdb25a25/mr-ext-v17-final-backend.zip"
-            download="mr-ext-v17-final-backend.zip"
+            href="/__l5e/assets-v1/d310fb50-1796-431f-a7c3-8e966dfdd76f/mr-ext-v17-complete-backend.zip"
+            download="mr-ext-v17-complete-backend.zip"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative flex items-center gap-4 overflow-hidden rounded-full bg-brand-red-neon px-12 py-5 text-xl font-black text-white transition-all active:scale-95 animate-[pulse-glow_2s_infinite]"
@@ -233,8 +233,8 @@ function HeroCtas({
     return (
       <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
         <a
-          href="/__l5e/assets-v1/feeffbad-b185-4f4f-b7be-cbadfdb25a25/mr-ext-v17-final-backend.zip"
-          download="mr-ext-v17-final-backend.zip"
+          href="/__l5e/assets-v1/d310fb50-1796-431f-a7c3-8e966dfdd76f/mr-ext-v17-complete-backend.zip"
+          download="mr-ext-v17-complete-backend.zip"
           target="_blank"
           rel="noopener noreferrer"
           className={cn(warmCls, "border-2 border-brand-red-neon shadow-[0_0_20px_rgba(255,0,0,0.3)]")}
