@@ -1284,6 +1284,150 @@ export type Database = {
           },
         ]
       }
+      ext_requests: {
+        Row: {
+          correlation_id: string | null
+          created_at: string | null
+          id: string
+          license_id: string | null
+          method: string
+          payload_sanitized: Json | null
+          route: string
+          status_code: number | null
+        }
+        Insert: {
+          correlation_id?: string | null
+          created_at?: string | null
+          id?: string
+          license_id?: string | null
+          method: string
+          payload_sanitized?: Json | null
+          route: string
+          status_code?: number | null
+        }
+        Update: {
+          correlation_id?: string | null
+          created_at?: string | null
+          id?: string
+          license_id?: string | null
+          method?: string
+          payload_sanitized?: Json | null
+          route?: string
+          status_code?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ext_requests_license_id_fkey"
+            columns: ["license_id"]
+            isOneToOne: false
+            referencedRelation: "licencas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ext_requests_license_id_fkey"
+            columns: ["license_id"]
+            isOneToOne: false
+            referencedRelation: "v_licenca_estado"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ext_sessions: {
+        Row: {
+          created_at: string | null
+          hwid: string
+          id: string
+          ip: string | null
+          last_seen: string | null
+          license_id: string
+          session_id: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          hwid: string
+          id?: string
+          ip?: string | null
+          last_seen?: string | null
+          license_id: string
+          session_id?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          hwid?: string
+          id?: string
+          ip?: string | null
+          last_seen?: string | null
+          license_id?: string
+          session_id?: string | null
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ext_sessions_license_id_fkey"
+            columns: ["license_id"]
+            isOneToOne: false
+            referencedRelation: "licencas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ext_sessions_license_id_fkey"
+            columns: ["license_id"]
+            isOneToOne: false
+            referencedRelation: "v_licenca_estado"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ext_uploads: {
+        Row: {
+          created_at: string | null
+          id: string
+          license_id: string
+          mime_type: string | null
+          original_name: string | null
+          size_bytes: number | null
+          storage_key: string
+          url: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          license_id: string
+          mime_type?: string | null
+          original_name?: string | null
+          size_bytes?: number | null
+          storage_key: string
+          url?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          license_id?: string
+          mime_type?: string | null
+          original_name?: string | null
+          size_bytes?: number | null
+          storage_key?: string
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ext_uploads_license_id_fkey"
+            columns: ["license_id"]
+            isOneToOne: false
+            referencedRelation: "licencas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ext_uploads_license_id_fkey"
+            columns: ["license_id"]
+            isOneToOne: false
+            referencedRelation: "v_licenca_estado"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       extensao_configs: {
         Row: {
           created_at: string
@@ -1736,9 +1880,12 @@ export type Database = {
           duracao_dias: number
           email: string | null
           expira_em: string | null
+          expires_at: string | null
           fornecedor_config: Json
           fornecedor_slug: string | null
           id: string
+          license_key: string | null
+          max_devices: number | null
           max_dispositivos: number
           metadata: Json
           observacoes_admin: string | null
@@ -1747,12 +1894,14 @@ export type Database = {
           reset_hwid_motivo: string | null
           reset_hwid_solicitado_em: string | null
           revendedor_id: string | null
+          revoked_at: string | null
           status: string
           tipo: string
           trial_duracao_minutos: number | null
           trial_iniciado_em: string | null
           ultimo_acesso: string | null
           updated_at: string
+          user_name: string | null
           versao_min: string | null
         }
         Insert: {
@@ -1765,9 +1914,12 @@ export type Database = {
           duracao_dias?: number
           email?: string | null
           expira_em?: string | null
+          expires_at?: string | null
           fornecedor_config?: Json
           fornecedor_slug?: string | null
           id?: string
+          license_key?: string | null
+          max_devices?: number | null
           max_dispositivos?: number
           metadata?: Json
           observacoes_admin?: string | null
@@ -1776,12 +1928,14 @@ export type Database = {
           reset_hwid_motivo?: string | null
           reset_hwid_solicitado_em?: string | null
           revendedor_id?: string | null
+          revoked_at?: string | null
           status?: string
           tipo?: string
           trial_duracao_minutos?: number | null
           trial_iniciado_em?: string | null
           ultimo_acesso?: string | null
           updated_at?: string
+          user_name?: string | null
           versao_min?: string | null
         }
         Update: {
@@ -1794,9 +1948,12 @@ export type Database = {
           duracao_dias?: number
           email?: string | null
           expira_em?: string | null
+          expires_at?: string | null
           fornecedor_config?: Json
           fornecedor_slug?: string | null
           id?: string
+          license_key?: string | null
+          max_devices?: number | null
           max_dispositivos?: number
           metadata?: Json
           observacoes_admin?: string | null
@@ -1805,12 +1962,14 @@ export type Database = {
           reset_hwid_motivo?: string | null
           reset_hwid_solicitado_em?: string | null
           revendedor_id?: string | null
+          revoked_at?: string | null
           status?: string
           tipo?: string
           trial_duracao_minutos?: number | null
           trial_iniciado_em?: string | null
           ultimo_acesso?: string | null
           updated_at?: string
+          user_name?: string | null
           versao_min?: string | null
         }
         Relationships: [
@@ -4105,9 +4264,12 @@ export type Database = {
           duracao_dias: number
           email: string | null
           expira_em: string | null
+          expires_at: string | null
           fornecedor_config: Json
           fornecedor_slug: string | null
           id: string
+          license_key: string | null
+          max_devices: number | null
           max_dispositivos: number
           metadata: Json
           observacoes_admin: string | null
@@ -4116,12 +4278,14 @@ export type Database = {
           reset_hwid_motivo: string | null
           reset_hwid_solicitado_em: string | null
           revendedor_id: string | null
+          revoked_at: string | null
           status: string
           tipo: string
           trial_duracao_minutos: number | null
           trial_iniciado_em: string | null
           ultimo_acesso: string | null
           updated_at: string
+          user_name: string | null
           versao_min: string | null
         }
         SetofOptions: {
@@ -4152,9 +4316,12 @@ export type Database = {
           duracao_dias: number
           email: string | null
           expira_em: string | null
+          expires_at: string | null
           fornecedor_config: Json
           fornecedor_slug: string | null
           id: string
+          license_key: string | null
+          max_devices: number | null
           max_dispositivos: number
           metadata: Json
           observacoes_admin: string | null
@@ -4163,12 +4330,14 @@ export type Database = {
           reset_hwid_motivo: string | null
           reset_hwid_solicitado_em: string | null
           revendedor_id: string | null
+          revoked_at: string | null
           status: string
           tipo: string
           trial_duracao_minutos: number | null
           trial_iniciado_em: string | null
           ultimo_acesso: string | null
           updated_at: string
+          user_name: string | null
           versao_min: string | null
         }
         SetofOptions: {
@@ -4191,9 +4360,12 @@ export type Database = {
           duracao_dias: number
           email: string | null
           expira_em: string | null
+          expires_at: string | null
           fornecedor_config: Json
           fornecedor_slug: string | null
           id: string
+          license_key: string | null
+          max_devices: number | null
           max_dispositivos: number
           metadata: Json
           observacoes_admin: string | null
@@ -4202,12 +4374,14 @@ export type Database = {
           reset_hwid_motivo: string | null
           reset_hwid_solicitado_em: string | null
           revendedor_id: string | null
+          revoked_at: string | null
           status: string
           tipo: string
           trial_duracao_minutos: number | null
           trial_iniciado_em: string | null
           ultimo_acesso: string | null
           updated_at: string
+          user_name: string | null
           versao_min: string | null
         }
         SetofOptions: {
@@ -4265,9 +4439,12 @@ export type Database = {
           duracao_dias: number
           email: string | null
           expira_em: string | null
+          expires_at: string | null
           fornecedor_config: Json
           fornecedor_slug: string | null
           id: string
+          license_key: string | null
+          max_devices: number | null
           max_dispositivos: number
           metadata: Json
           observacoes_admin: string | null
@@ -4276,12 +4453,14 @@ export type Database = {
           reset_hwid_motivo: string | null
           reset_hwid_solicitado_em: string | null
           revendedor_id: string | null
+          revoked_at: string | null
           status: string
           tipo: string
           trial_duracao_minutos: number | null
           trial_iniciado_em: string | null
           ultimo_acesso: string | null
           updated_at: string
+          user_name: string | null
           versao_min: string | null
         }[]
         SetofOptions: {
@@ -4342,9 +4521,12 @@ export type Database = {
           duracao_dias: number
           email: string | null
           expira_em: string | null
+          expires_at: string | null
           fornecedor_config: Json
           fornecedor_slug: string | null
           id: string
+          license_key: string | null
+          max_devices: number | null
           max_dispositivos: number
           metadata: Json
           observacoes_admin: string | null
@@ -4353,12 +4535,14 @@ export type Database = {
           reset_hwid_motivo: string | null
           reset_hwid_solicitado_em: string | null
           revendedor_id: string | null
+          revoked_at: string | null
           status: string
           tipo: string
           trial_duracao_minutos: number | null
           trial_iniciado_em: string | null
           ultimo_acesso: string | null
           updated_at: string
+          user_name: string | null
           versao_min: string | null
         }
         SetofOptions: {
@@ -4381,9 +4565,12 @@ export type Database = {
           duracao_dias: number
           email: string | null
           expira_em: string | null
+          expires_at: string | null
           fornecedor_config: Json
           fornecedor_slug: string | null
           id: string
+          license_key: string | null
+          max_devices: number | null
           max_dispositivos: number
           metadata: Json
           observacoes_admin: string | null
@@ -4392,12 +4579,14 @@ export type Database = {
           reset_hwid_motivo: string | null
           reset_hwid_solicitado_em: string | null
           revendedor_id: string | null
+          revoked_at: string | null
           status: string
           tipo: string
           trial_duracao_minutos: number | null
           trial_iniciado_em: string | null
           ultimo_acesso: string | null
           updated_at: string
+          user_name: string | null
           versao_min: string | null
         }
         SetofOptions: {
@@ -4419,9 +4608,12 @@ export type Database = {
           duracao_dias: number
           email: string | null
           expira_em: string | null
+          expires_at: string | null
           fornecedor_config: Json
           fornecedor_slug: string | null
           id: string
+          license_key: string | null
+          max_devices: number | null
           max_dispositivos: number
           metadata: Json
           observacoes_admin: string | null
@@ -4430,12 +4622,14 @@ export type Database = {
           reset_hwid_motivo: string | null
           reset_hwid_solicitado_em: string | null
           revendedor_id: string | null
+          revoked_at: string | null
           status: string
           tipo: string
           trial_duracao_minutos: number | null
           trial_iniciado_em: string | null
           ultimo_acesso: string | null
           updated_at: string
+          user_name: string | null
           versao_min: string | null
         }
         SetofOptions: {
