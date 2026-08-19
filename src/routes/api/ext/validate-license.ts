@@ -6,7 +6,7 @@ const getCorsHeaders = (request: Request) => {
   const allowedOrigin = process.env.MR_EXTENSION_ORIGIN || 'http://localhost:8080';
   
   // Em produção, restringir ao ID da extensão oficial se configurado
-  const isAllowed = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' || origin === allowedOrigin;
+  const isAllowed = process.env.NODE_ENV === 'development' || origin === allowedOrigin;
   
   return {
     'Access-Control-Allow-Origin': isAllowed ? (origin || '*') : allowedOrigin,
