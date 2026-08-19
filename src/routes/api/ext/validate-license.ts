@@ -19,7 +19,7 @@ const getCorsHeaders = (request: Request) => {
 export const Route = createFileRoute('/api/ext/validate-license')({
   server: {
     handlers: {
-      OPTIONS: async ({ request }) => new Response(null, { status: 240, headers: getCorsHeaders(request) }),
+      OPTIONS: async ({ request }) => new Response(null, { status: 204, headers: getCorsHeaders(request) }),
       POST: async ({ request }) => {
         const cors = getCorsHeaders(request);
         let body: any;

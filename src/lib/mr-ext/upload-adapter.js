@@ -30,7 +30,8 @@ export const UploadManager = {
         if (xhr.readyState === 4) {
           if (xhr.status >= 200 && xhr.status < 300) {
             try {
-              resolve(JSON.parse(xhr.responseText));
+              const response = JSON.parse(xhr.responseText);
+              resolve(response.url || response);
             } catch (e) {
               resolve({ ok: true, raw: xhr.responseText });
             }
@@ -44,8 +45,8 @@ export const UploadManager = {
         }
       };
 
-      // Endpoint canônico V17
-      xhr.open('POST', 'https://mrsemlimitespro.lovable.app/api/ext/upload');
+      // Endpoint canônico V17 corrigido
+      xhr.open('POST', 'https://mrsemlimites.lovable.app/api/ext/upload');
       xhr.send(formData);
     });
   }
