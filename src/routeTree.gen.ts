@@ -65,6 +65,7 @@ import { Route as ApiExtSendCommandRouteImport } from './routes/api/ext/send-com
 import { Route as ApiExtUploadRouteImport } from './routes/api/ext/upload'
 import { Route as ApiExtValidateLicenseRouteImport } from './routes/api/ext/validate-license'
 import { Route as ApiPublicDownloadExtensaoRouteImport } from './routes/api/public/download-extensao'
+import { Route as ApiPublicDownloadV17RouteImport } from './routes/api/public/download-v17'
 import { Route as ApiPublicHomologCheckoutRouteImport } from './routes/api/public/homolog-checkout'
 import { Route as ApiPublicSetupCheckoutRouteImport } from './routes/api/public/setup-checkout'
 import { Route as ApiPublicValidarLicencaRouteImport } from './routes/api/public/validar-licenca'
@@ -364,6 +365,11 @@ const ApiPublicDownloadExtensaoRoute =
     path: '/api/public/download-extensao',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicDownloadV17Route = ApiPublicDownloadV17RouteImport.update({
+  id: '/api/public/download-v17',
+  path: '/api/public/download-v17',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicHomologCheckoutRoute =
   ApiPublicHomologCheckoutRouteImport.update({
     id: '/api/public/homolog-checkout',
@@ -518,6 +524,7 @@ export interface FileRoutesByFullPath {
   '/api/ext/upload': typeof ApiExtUploadRoute
   '/api/ext/validate-license': typeof ApiExtValidateLicenseRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
+  '/api/public/download-v17': typeof ApiPublicDownloadV17Route
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
@@ -592,6 +599,7 @@ export interface FileRoutesByTo {
   '/api/ext/upload': typeof ApiExtUploadRoute
   '/api/ext/validate-license': typeof ApiExtValidateLicenseRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
+  '/api/public/download-v17': typeof ApiPublicDownloadV17Route
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
@@ -669,6 +677,7 @@ export interface FileRoutesById {
   '/api/ext/upload': typeof ApiExtUploadRoute
   '/api/ext/validate-license': typeof ApiExtValidateLicenseRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
+  '/api/public/download-v17': typeof ApiPublicDownloadV17Route
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
@@ -746,6 +755,7 @@ export interface FileRouteTypes {
     | '/api/ext/upload'
     | '/api/ext/validate-license'
     | '/api/public/download-extensao'
+    | '/api/public/download-v17'
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
@@ -820,6 +830,7 @@ export interface FileRouteTypes {
     | '/api/ext/upload'
     | '/api/ext/validate-license'
     | '/api/public/download-extensao'
+    | '/api/public/download-v17'
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
@@ -896,6 +907,7 @@ export interface FileRouteTypes {
     | '/api/ext/upload'
     | '/api/ext/validate-license'
     | '/api/public/download-extensao'
+    | '/api/public/download-v17'
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
@@ -931,6 +943,7 @@ export interface RootRouteChildren {
   ApiExtUploadRoute: typeof ApiExtUploadRoute
   ApiExtValidateLicenseRoute: typeof ApiExtValidateLicenseRoute
   ApiPublicDownloadExtensaoRoute: typeof ApiPublicDownloadExtensaoRoute
+  ApiPublicDownloadV17Route: typeof ApiPublicDownloadV17Route
   ApiPublicHomologCheckoutRoute: typeof ApiPublicHomologCheckoutRoute
   ApiPublicSetupCheckoutRoute: typeof ApiPublicSetupCheckoutRoute
   ApiPublicValidarLicencaRoute: typeof ApiPublicValidarLicencaRoute
@@ -1345,6 +1358,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicDownloadExtensaoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/download-v17': {
+      id: '/api/public/download-v17'
+      path: '/api/public/download-v17'
+      fullPath: '/api/public/download-v17'
+      preLoaderRoute: typeof ApiPublicDownloadV17RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/homolog-checkout': {
       id: '/api/public/homolog-checkout'
       path: '/api/public/homolog-checkout'
@@ -1609,6 +1629,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiExtUploadRoute: ApiExtUploadRoute,
   ApiExtValidateLicenseRoute: ApiExtValidateLicenseRoute,
   ApiPublicDownloadExtensaoRoute: ApiPublicDownloadExtensaoRoute,
+  ApiPublicDownloadV17Route: ApiPublicDownloadV17Route,
   ApiPublicHomologCheckoutRoute: ApiPublicHomologCheckoutRoute,
   ApiPublicSetupCheckoutRoute: ApiPublicSetupCheckoutRoute,
   ApiPublicValidarLicencaRoute: ApiPublicValidarLicencaRoute,
