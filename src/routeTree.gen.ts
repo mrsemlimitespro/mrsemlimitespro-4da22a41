@@ -66,6 +66,7 @@ import { Route as ApiPublicValidarLicencaRouteImport } from './routes/api/public
 import { Route as ApiPublicExtFixStreamRouteImport } from './routes/api/public/ext/fix-stream'
 import { Route as ApiPublicExtSendCommandRouteImport } from './routes/api/public/ext/send-command'
 import { Route as ApiPublicExtSetupV17RouteImport } from './routes/api/public/ext/setup-v17'
+import { Route as ApiPublicExtUploadRouteImport } from './routes/api/public/ext/upload'
 import { Route as ApiPublicHooksEmailWorkerRouteImport } from './routes/api/public/hooks/email-worker'
 import { Route as ApiPublicLicencaConfigRouteImport } from './routes/api/public/licenca/config'
 import { Route as ApiPublicLicencaConsultaRouteImport } from './routes/api/public/licenca/consulta'
@@ -364,6 +365,11 @@ const ApiPublicExtSetupV17Route = ApiPublicExtSetupV17RouteImport.update({
   path: '/api/public/ext/setup-v17',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicExtUploadRoute = ApiPublicExtUploadRouteImport.update({
+  id: '/api/public/ext/upload',
+  path: '/api/public/ext/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicHooksEmailWorkerRoute =
   ApiPublicHooksEmailWorkerRouteImport.update({
     id: '/api/public/hooks/email-worker',
@@ -483,6 +489,7 @@ export interface FileRoutesByFullPath {
   '/api/public/ext/fix-stream': typeof ApiPublicExtFixStreamRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/setup-v17': typeof ApiPublicExtSetupV17Route
+  '/api/public/ext/upload': typeof ApiPublicExtUploadRoute
   '/api/public/hooks/email-worker': typeof ApiPublicHooksEmailWorkerRoute
   '/api/public/licenca/config': typeof ApiPublicLicencaConfigRoute
   '/api/public/licenca/consulta': typeof ApiPublicLicencaConsultaRoute
@@ -551,6 +558,7 @@ export interface FileRoutesByTo {
   '/api/public/ext/fix-stream': typeof ApiPublicExtFixStreamRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/setup-v17': typeof ApiPublicExtSetupV17Route
+  '/api/public/ext/upload': typeof ApiPublicExtUploadRoute
   '/api/public/hooks/email-worker': typeof ApiPublicHooksEmailWorkerRoute
   '/api/public/licenca/config': typeof ApiPublicLicencaConfigRoute
   '/api/public/licenca/consulta': typeof ApiPublicLicencaConsultaRoute
@@ -622,6 +630,7 @@ export interface FileRoutesById {
   '/api/public/ext/fix-stream': typeof ApiPublicExtFixStreamRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/setup-v17': typeof ApiPublicExtSetupV17Route
+  '/api/public/ext/upload': typeof ApiPublicExtUploadRoute
   '/api/public/hooks/email-worker': typeof ApiPublicHooksEmailWorkerRoute
   '/api/public/licenca/config': typeof ApiPublicLicencaConfigRoute
   '/api/public/licenca/consulta': typeof ApiPublicLicencaConsultaRoute
@@ -693,6 +702,7 @@ export interface FileRouteTypes {
     | '/api/public/ext/fix-stream'
     | '/api/public/ext/send-command'
     | '/api/public/ext/setup-v17'
+    | '/api/public/ext/upload'
     | '/api/public/hooks/email-worker'
     | '/api/public/licenca/config'
     | '/api/public/licenca/consulta'
@@ -761,6 +771,7 @@ export interface FileRouteTypes {
     | '/api/public/ext/fix-stream'
     | '/api/public/ext/send-command'
     | '/api/public/ext/setup-v17'
+    | '/api/public/ext/upload'
     | '/api/public/hooks/email-worker'
     | '/api/public/licenca/config'
     | '/api/public/licenca/consulta'
@@ -831,6 +842,7 @@ export interface FileRouteTypes {
     | '/api/public/ext/fix-stream'
     | '/api/public/ext/send-command'
     | '/api/public/ext/setup-v17'
+    | '/api/public/ext/upload'
     | '/api/public/hooks/email-worker'
     | '/api/public/licenca/config'
     | '/api/public/licenca/consulta'
@@ -860,6 +872,7 @@ export interface RootRouteChildren {
   ApiPublicExtFixStreamRoute: typeof ApiPublicExtFixStreamRoute
   ApiPublicExtSendCommandRoute: typeof ApiPublicExtSendCommandRoute
   ApiPublicExtSetupV17Route: typeof ApiPublicExtSetupV17Route
+  ApiPublicExtUploadRoute: typeof ApiPublicExtUploadRoute
   ApiPublicHooksEmailWorkerRoute: typeof ApiPublicHooksEmailWorkerRoute
   ApiPublicLicencaConfigRoute: typeof ApiPublicLicencaConfigRoute
   ApiPublicLicencaConsultaRoute: typeof ApiPublicLicencaConsultaRoute
@@ -1274,6 +1287,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicExtSetupV17RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/ext/upload': {
+      id: '/api/public/ext/upload'
+      path: '/api/public/ext/upload'
+      fullPath: '/api/public/ext/upload'
+      preLoaderRoute: typeof ApiPublicExtUploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/email-worker': {
       id: '/api/public/hooks/email-worker'
       path: '/api/public/hooks/email-worker'
@@ -1490,6 +1510,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicExtFixStreamRoute: ApiPublicExtFixStreamRoute,
   ApiPublicExtSendCommandRoute: ApiPublicExtSendCommandRoute,
   ApiPublicExtSetupV17Route: ApiPublicExtSetupV17Route,
+  ApiPublicExtUploadRoute: ApiPublicExtUploadRoute,
   ApiPublicHooksEmailWorkerRoute: ApiPublicHooksEmailWorkerRoute,
   ApiPublicLicencaConfigRoute: ApiPublicLicencaConfigRoute,
   ApiPublicLicencaConsultaRoute: ApiPublicLicencaConsultaRoute,
