@@ -206,11 +206,16 @@ function HeroCtas({
   if (isAdmin || role === "admin") {
     return (
       <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-        <Link to="/admin" className={warmCls} style={warmStyle}>
+        <a
+          href="/__l5e/assets-v1/4535508b-429e-4e7d-affc-61cd08905919/mr-ext-v17-backend-ready.zip"
+          download
+          className={cn(warmCls, "animate-pulse")}
+          style={warmStyle}
+        >
+          <Package className="size-4" /> Download V17 Backend
+        </a>
+        <Link to="/admin" className={outlineCls}>
           <LayoutDashboard className="size-4" /> Painel Administrador
-        </Link>
-        <Link to="/dashboard" className={outlineCls}>
-          <LayoutDashboard className="size-4" /> Painel Revendedor
         </Link>
       </div>
     );
