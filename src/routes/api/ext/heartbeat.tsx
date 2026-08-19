@@ -11,7 +11,7 @@ const requestSchema = z.object({
   device_id: z.string().optional(),
 });
 
-export const Route = createFileRoute('/api/ext/validate-license')({
+export const Route = createFileRoute('/api/ext/heartbeat')({
   server: {
     handlers: {
       POST: async ({ request }) => {
@@ -41,7 +41,7 @@ export const Route = createFileRoute('/api/ext/validate-license')({
           
           await auditExtRequest(
             result.ok && result.license ? result.license.id : null,
-            '/api/ext/validate-license',
+            '/api/ext/heartbeat',
             'POST',
             result.ok ? 200 : 403,
             body
@@ -58,20 +58,17 @@ export const Route = createFileRoute('/api/ext/validate-license')({
             ok: true,
             valid: true,
             licenca_id: result.license.id,
-            license_key: result.license.license_key,
-            user_name: result.license.user_name,
             status: result.license.status,
             expires_at: result.license.expires_at,
             hwid: finalHwid,
-            session_id: result.sessionId,
-            max_devices: result.license.max_devices
+            session_id: result.sessionId
           }), {
             status: 200,
             headers: { 'Content-Type': 'application/json' }
           });
 
         } catch (error) {
-          console.error("[validate-license] Error:", error);
+          console.error("[heartbeat] Error:", error);
           return new Response(JSON.stringify({ ok: false, error: "internal_error" }), { 
             status: 500,
             headers: { 'Content-Type': 'application/json' }
