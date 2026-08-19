@@ -10,6 +10,7 @@ export const Route = createFileRoute('/api/ext/test-backend')({
           const testKey = `MR-${randomHex()}-${randomHex()}-${randomHex()}`;
           
           const insertResult = await supabaseAdmin.from("licencas").insert({
+            chave: testKey, // Antigo campo not-null
             license_key: testKey,
             user_name: "Homologador E2E",
             status: "active",
