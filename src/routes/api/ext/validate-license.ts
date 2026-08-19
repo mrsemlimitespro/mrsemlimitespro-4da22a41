@@ -53,17 +53,20 @@ export const Route = createFileRoute('/api/ext/validate-license')({
           return new Response(JSON.stringify({ ok: false, error: result.error }), { status: 403, headers: cors });
         }
 
+        const lic = result.license!;
+        const sess = result.session!;
+
         return new Response(JSON.stringify({
           ok: true,
           valid: true,
-          licenca_id: result.license.id,
-          license_key: result.license.license_key,
-          user_name: result.license.user_name,
-          status: result.license.status,
-          expires_at: result.license.expires_at,
+          licenca_id: lic.id,
+          license_key: lic.license_key,
+          user_name: lic.user_name,
+          status: lic.status,
+          expires_at: lic.expires_at,
           hwid: hwid,
-          session_id: result.session.session_id,
-          max_devices: result.license.max_devices
+          session_id: sess.session_id,
+          max_devices: lic.max_devices
         }), { status: 200, headers: cors });
       }
     }

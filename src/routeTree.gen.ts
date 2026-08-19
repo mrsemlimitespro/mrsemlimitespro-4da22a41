@@ -59,6 +59,7 @@ import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
 import { Route as AdminVisualizacaoRouteImport } from './routes/admin.visualizacao'
 import { Route as AppPacksSlugRouteImport } from './routes/_app.packs.$slug'
 import { Route as AdminClientesIdRouteImport } from './routes/admin.clientes.$id'
+import { Route as ApiExtValidateLicenseRouteImport } from './routes/api/ext/validate-license'
 import { Route as ApiPublicDownloadExtensaoRouteImport } from './routes/api/public/download-extensao'
 import { Route as ApiPublicHomologCheckoutRouteImport } from './routes/api/public/homolog-checkout'
 import { Route as ApiPublicSetupCheckoutRouteImport } from './routes/api/public/setup-checkout'
@@ -328,6 +329,11 @@ const AdminClientesIdRoute = AdminClientesIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => AdminClientesRoute,
 } as any)
+const ApiExtValidateLicenseRoute = ApiExtValidateLicenseRouteImport.update({
+  id: '/api/ext/validate-license',
+  path: '/api/ext/validate-license',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicDownloadExtensaoRoute =
   ApiPublicDownloadExtensaoRouteImport.update({
     id: '/api/public/download-extensao',
@@ -482,6 +488,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
+  '/api/ext/validate-license': typeof ApiExtValidateLicenseRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
@@ -551,6 +558,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
+  '/api/ext/validate-license': typeof ApiExtValidateLicenseRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
@@ -623,6 +631,7 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/_app/packs/$slug': typeof AppPacksSlugRoute
   '/admin/clientes/$id': typeof AdminClientesIdRoute
+  '/api/ext/validate-license': typeof ApiExtValidateLicenseRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
   '/api/public/homolog-checkout': typeof ApiPublicHomologCheckoutRoute
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
@@ -695,6 +704,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/packs/$slug'
     | '/admin/clientes/$id'
+    | '/api/ext/validate-license'
     | '/api/public/download-extensao'
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
@@ -764,6 +774,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/packs/$slug'
     | '/admin/clientes/$id'
+    | '/api/ext/validate-license'
     | '/api/public/download-extensao'
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
@@ -835,6 +846,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/_app/packs/$slug'
     | '/admin/clientes/$id'
+    | '/api/ext/validate-license'
     | '/api/public/download-extensao'
     | '/api/public/homolog-checkout'
     | '/api/public/setup-checkout'
@@ -865,6 +877,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegistroRoute: typeof RegistroRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiExtValidateLicenseRoute: typeof ApiExtValidateLicenseRoute
   ApiPublicDownloadExtensaoRoute: typeof ApiPublicDownloadExtensaoRoute
   ApiPublicHomologCheckoutRoute: typeof ApiPublicHomologCheckoutRoute
   ApiPublicSetupCheckoutRoute: typeof ApiPublicSetupCheckoutRoute
@@ -1238,6 +1251,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminClientesIdRouteImport
       parentRoute: typeof AdminClientesRoute
     }
+    '/api/ext/validate-license': {
+      id: '/api/ext/validate-license'
+      path: '/api/ext/validate-license'
+      fullPath: '/api/ext/validate-license'
+      preLoaderRoute: typeof ApiExtValidateLicenseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/download-extensao': {
       id: '/api/public/download-extensao'
       path: '/api/public/download-extensao'
@@ -1503,6 +1523,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegistroRoute: RegistroRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiExtValidateLicenseRoute: ApiExtValidateLicenseRoute,
   ApiPublicDownloadExtensaoRoute: ApiPublicDownloadExtensaoRoute,
   ApiPublicHomologCheckoutRoute: ApiPublicHomologCheckoutRoute,
   ApiPublicSetupCheckoutRoute: ApiPublicSetupCheckoutRoute,
