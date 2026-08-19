@@ -48,8 +48,12 @@ export async function runHomologation() {
     await supabaseAdmin.from("licencas").delete().eq("id", license.id);
     
     return { tests, allOk: tests.every(t => t.ok) };
-  } catch (err) {
+  } catch (err: any) {
     console.error("Erro na homologação:", err);
-    return { error: String(err), tests };
+    return { 
+      error: err instanceof Error ? err.message : String(err),
+      stack: err instanceof Error ? err.stack : undefined,
+      tests 
+    };
   }
 }
