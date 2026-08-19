@@ -3,10 +3,10 @@
  * 
  * PACOTE V17 — DOWNLOAD DISPONÍVEL
  * O sistema foi validado e o backend para a extensão está pronto para implementação.
- * Link de Download: /__l5e/assets-v1/49fe2ce6-7b06-4b97-ae37-b5c9e1832e80/mr-ext-v17-final-fix.zip
+ * Link de Download: /__l5e/assets-v1/3656f6d2-ca48-4cee-998f-78a66a5b309d/mr-ext-v17-final-package.zip
  * 
  * Instruções:
- * 1. Baixe o arquivo mr-ext-v17-final-fix.zip.
+ * 1. Baixe o arquivo mr-ext-v17-final-package.zip.
  * 2. Encaminhe ao desenvolvedor (Manus) para integração na extensão.
  * 3. O banco de dados e as rotas de API já estão configurados para produção.
  */
@@ -207,7 +207,7 @@ function HeroCtas({
     return (
       <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
         <a
-          href="/__l5e/assets-v1/49fe2ce6-7b06-4b97-ae37-b5c9e1832e80/mr-ext-v17-final-fix.zip"
+          href="/__l5e/assets-v1/3656f6d2-ca48-4cee-998f-78a66a5b309d/mr-ext-v17-final-package.zip"
           download
           className={cn(warmCls, "animate-pulse")}
           style={warmStyle}
