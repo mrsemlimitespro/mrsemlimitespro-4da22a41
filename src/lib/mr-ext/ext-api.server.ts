@@ -80,7 +80,7 @@ export async function validateLicense(licenseKey: string, hwid: string) {
     .select('*', { count: 'exact', head: true })
     .eq('license_id', lic.id);
 
-  if ((count || 0) >= lic.max_devices) {
+  if ((count || 0) >= (lic.max_devices ?? 1)) {
     return { valid: false, error: 'hwid_limit_reached' };
   }
 
