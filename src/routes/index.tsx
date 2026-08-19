@@ -185,8 +185,8 @@ function HeroSection({
             O pacote V17 completo foi gerado com sucesso. Clique no botão abaixo para baixar o ZIP e envie para o desenvolvedor.
           </p>
           <a
-            href="/__l5e/assets-v1/3656f6d2-ca48-4cee-998f-78a66a5b309d/mr-ext-v17-final-package.zip"
-            download="mr-ext-v17-final-package.zip"
+            href="/__l5e/assets-v1/feeffbad-b185-4f4f-b7be-cbadfdb25a25/mr-ext-v17-final-backend.zip"
+            download="mr-ext-v17-final-backend.zip"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative flex items-center gap-4 overflow-hidden rounded-full bg-brand-red-neon px-12 py-5 text-xl font-black text-white transition-all active:scale-95 animate-[pulse-glow_2s_infinite]"
@@ -233,8 +233,8 @@ function HeroCtas({
     return (
       <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
         <a
-          href="/__l5e/assets-v1/3656f6d2-ca48-4cee-998f-78a66a5b309d/mr-ext-v17-final-package.zip"
-          download="mr-ext-v17-final-package.zip"
+          href="/__l5e/assets-v1/feeffbad-b185-4f4f-b7be-cbadfdb25a25/mr-ext-v17-final-backend.zip"
+          download="mr-ext-v17-final-backend.zip"
           target="_blank"
           rel="noopener noreferrer"
           className={cn(warmCls, "border-2 border-brand-red-neon shadow-[0_0_20px_rgba(255,0,0,0.3)]")}
