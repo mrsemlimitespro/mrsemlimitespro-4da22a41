@@ -1,37 +1,59 @@
-# AUDITORIA FINAL — FASE MR CENTRAL
+# AUDITORIA TÉCNICA MR CENTRAL — BACKEND V17
 
-## 1. ULTRA ADMIN & SEGURANÇA
-- **Usuário:** mariocftv@gmail.com
-- **Auth ID:** ac6534ec-becf-4568-8b4e-eb8de86eabd2
-- **Status:** Atribuído como `admin` na tabela `user_roles`.
-- **Validação:** RLS ativo e privilégios administrativos confirmados para acesso ao painel.
+## 1. Ambiente Real (Inventário)
+- **URL Publicada:** `https://mrsemlimites.lovable.app`
+- **GitHub Commit:** \`f6d8cb40f930e4e36e0cef8a0fee7724b44e80e6\` (Wed Aug 19 22:11:11 2026)
+- **Status do Build:** 🟢 CONCLUÍDO (pnpm build com sucesso).
+- **Status dos Testes:** 🟢 3/3 PASSOU (ext-api.test.ts).
 
-## 2. MODELAGEM MR CENTRAL (SCHEMA)
-- **Tabelas Adaptadas:**
-  - `public.produtos`: Adicionada coluna `slug` (Unique). Produto 'MR Sem Limites' inicializado.
-  - `public.licencas`: Adicionada coluna `product_id` (FK para `produtos`).
-- **Novas Tabelas (Estrutura Central):**
-  - `public.product_versions`: Controle de releases por produto (Mandatory, Download URL, Changelog).
-  - `public.license_features`: Controle granular de recursos por licença.
-- **RLS & Permissions:** Aplicado em todas as novas tabelas com GRANTs para `authenticated` e `service_role`.
+### Supabase e Banco de Dados
+- **Tabelas Encontradas:**
+  - \`licencas\`: OK (Estrutura V17 confirmada via metadados de requests).
+  - \`ext_sessions\`: OK.
+  - \`ext_requests\`: OK (Contém registros reais de auditoria sanitizada).
+  - \`ext_uploads\`: OK.
+- **Migrations Aplicadas:** A última migration \`20260819160432\` está registrada mas o bucket de storage não foi detectado no runtime via API.
+- **RLS:** Tabelas protegidas com ENABLE RLS e GRANT service_role.
+- **Storage:** Bucket \`mr-ext-uploads\` **NÃO ENCONTRADO** via inspeção de runtime (necessário recriar via migration definitiva).
 
-## 3. API & ENDPOINTS
-- **Retrocompatibilidade:** `/api/public/ext/functions.v1.validate-license-v2` e `/api/public/licenca/heartbeat` mantidos intactos.
-- **Preparação:** Schema pronto para receber `/api/public/license/*` multi-produto.
+### Rotas e Arquivos
+| Rota | Arquivo Implementador | Status |
+| --- | --- | --- |
+| \`/api/ext/validate-license\` | \`src/routes/api/ext/validate-license.ts\` | 🟢 Operacional |
+| \`/api/ext/heartbeat\` | \`src/routes/api/ext/heartbeat.ts\` | 🟢 Operacional |
+| \`/api/ext/send-command\` | \`src/routes/api/ext/send-command.ts\` | 🟢 Proxy SSE Real |
+| \`/api/ext/fix-stream\` | \`src/routes/api/ext/fix-stream.ts\` | 🟢 Proxy SSE Real |
+| \`/api/ext/upload\` | \`src/routes/api/ext/upload.ts\` | 🟡 Backend pronto, falta bucket |
 
-## 4. PAINEL ADMINISTRATIVO
-- **Reorganização:** Sidebar atualizado com foco no grupo **MR CENTRAL**.
-- **Módulos Ativos:** Dashboard, Produtos, Licenças, Clientes, API & Conectividade.
-- **Limpeza:** Módulos redundantes foram ocultados ou reagrupados para simplificar a gestão centralizada.
+## 2. Contratos Funcionais (Avaliação)
 
-## 5. STORAGE & MARCA
-- **Status:** Auditoria de assets concluída. Referências ao Supabase antigo em `brand.tsx` devem ser atualizadas conforme novas logos forem enviadas.
-- **Identidade:** A logo premium "Neon MR Sem Limites" está integrada e preservada.
+### Licenças e Sessões
+- **Formato:** Suporta \`MR-XXXX-XXXX-XXXX\` via regex \`validateKeyFormat\`.
+- **Status:** Implementado \`active\`, \`revoked\`, \`trial\` no Helper Server.
+- **Retorno API:** Entrega \`licenca_id\`, \`user_name\`, \`status\`, \`expires_at\`, \`hwid\`, \`session_id\` e \`max_devices\`.
+- **HWID:** Bloqueia múltiplos dispositivos corretamente.
 
-## PRÓXIMOS PASSOS
-1. Configurar versões das extensões na nova tabela `product_versions`.
-2. Testar o fluxo de validação da extensão com o novo banco central.
-3. Iniciar o cadastro de novos produtos (ex: MR Social Growth) quando necessário.
+### Proxy de Comando (Upstream)
+- **Call Upstream:** Faz exatamente 1 chamada para \`https://api.lovable.dev/projects/{projectId}/chat\`.
+- **Payload:** Preserva \`lastPayload ?? payload ?? body\`.
+- **Segurança:** Não armazena token de usuário; exige \`Authorization: Bearer\` vindo da extensão.
+
+### Stream e Erros
+- **SSE:** Repassa o stream bruto do upstream Lovable.
+- **Erros:** Retorna o status real do erro upstream (404, 401, etc), sem sucessos fictícios.
+
+### CORS e Segurança
+- **CORS:** Restrito ao \`MR_EXTENSION_ORIGIN\` em produção.
+- **Sanitização:** Remove campos sensíveis (token, key, password) antes de gravar auditoria em \`ext_requests\`.
+
+## 3. Achados de Auditoria (Pontos Críticos)
+1. **Storage Bucket:** O bucket \`mr-ext-uploads\` não foi criado automaticamente ou as permissões de \`service_role\` estão incompletas para listagem.
+2. **Migration Incompleta:** Falta a criação programática do bucket nas migrations anteriores.
+3. **CORS Preflight:** As rotas respondem \`204\` em \`OPTIONS\`, o que é correto para a extensão.
 
 ---
-**Fase MR CENTRAL concluída com sucesso.**
+
+# PLANO DE CORREÇÃO IMEDIATA (ETAPA 3)
+1. **Migration V18 Final:** Criar bucket e políticas de storage via SQL.
+2. **Limpeza:** Garantir árvore única em \`src/routes/api/ext\` e \`src/lib/mr-ext\`.
+3. **ZIP Final:** Gerar pacote consolidado com todos os componentes validados.
