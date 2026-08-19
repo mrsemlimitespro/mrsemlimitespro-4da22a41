@@ -10,12 +10,14 @@ export const Route = createFileRoute('/api/ext/test-backend')({
           const testKey = `MR-${randomHex()}-${randomHex()}-${randomHex()}`;
           
           const insertResult = await supabaseAdmin.from("licencas").insert({
-            chave: testKey, // Antigo campo not-null
+            chave: testKey,
             license_key: testKey,
             user_name: "Homologador E2E",
             status: "active",
             max_devices: 1,
-            expires_at: new Date(Date.now() + 86400000).toISOString()
+            expires_at: new Date(Date.now() + 86400000).toISOString(),
+            tipo: "premium",
+            max_dispositivos: 1
           } as any).select().single();
 
           if (insertResult.error) {
