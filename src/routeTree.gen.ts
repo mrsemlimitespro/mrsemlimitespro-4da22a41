@@ -62,6 +62,7 @@ import { Route as AdminClientesIdRouteImport } from './routes/admin.clientes.$id
 import { Route as ApiExtFixStreamRouteImport } from './routes/api/ext/fix-stream'
 import { Route as ApiExtHeartbeatRouteImport } from './routes/api/ext/heartbeat'
 import { Route as ApiExtSendCommandRouteImport } from './routes/api/ext/send-command'
+import { Route as ApiExtTestBackendRouteImport } from './routes/api/ext/test-backend'
 import { Route as ApiExtUploadRouteImport } from './routes/api/ext/upload'
 import { Route as ApiExtValidateLicenseRouteImport } from './routes/api/ext/validate-license'
 import { Route as ApiPublicDownloadExtensaoRouteImport } from './routes/api/public/download-extensao'
@@ -354,6 +355,11 @@ const ApiExtSendCommandRoute = ApiExtSendCommandRouteImport.update({
   path: '/api/ext/send-command',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiExtTestBackendRoute = ApiExtTestBackendRouteImport.update({
+  id: '/api/ext/test-backend',
+  path: '/api/ext/test-backend',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiExtUploadRoute = ApiExtUploadRouteImport.update({
   id: '/api/ext/upload',
   path: '/api/ext/upload',
@@ -560,6 +566,7 @@ export interface FileRoutesByFullPath {
   '/api/ext/fix-stream': typeof ApiExtFixStreamRoute
   '/api/ext/heartbeat': typeof ApiExtHeartbeatRoute
   '/api/ext/send-command': typeof ApiExtSendCommandRoute
+  '/api/ext/test-backend': typeof ApiExtTestBackendRoute
   '/api/ext/upload': typeof ApiExtUploadRoute
   '/api/ext/validate-license': typeof ApiExtValidateLicenseRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
@@ -640,6 +647,7 @@ export interface FileRoutesByTo {
   '/api/ext/fix-stream': typeof ApiExtFixStreamRoute
   '/api/ext/heartbeat': typeof ApiExtHeartbeatRoute
   '/api/ext/send-command': typeof ApiExtSendCommandRoute
+  '/api/ext/test-backend': typeof ApiExtTestBackendRoute
   '/api/ext/upload': typeof ApiExtUploadRoute
   '/api/ext/validate-license': typeof ApiExtValidateLicenseRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
@@ -723,6 +731,7 @@ export interface FileRoutesById {
   '/api/ext/fix-stream': typeof ApiExtFixStreamRoute
   '/api/ext/heartbeat': typeof ApiExtHeartbeatRoute
   '/api/ext/send-command': typeof ApiExtSendCommandRoute
+  '/api/ext/test-backend': typeof ApiExtTestBackendRoute
   '/api/ext/upload': typeof ApiExtUploadRoute
   '/api/ext/validate-license': typeof ApiExtValidateLicenseRoute
   '/api/public/download-extensao': typeof ApiPublicDownloadExtensaoRoute
@@ -806,6 +815,7 @@ export interface FileRouteTypes {
     | '/api/ext/fix-stream'
     | '/api/ext/heartbeat'
     | '/api/ext/send-command'
+    | '/api/ext/test-backend'
     | '/api/ext/upload'
     | '/api/ext/validate-license'
     | '/api/public/download-extensao'
@@ -886,6 +896,7 @@ export interface FileRouteTypes {
     | '/api/ext/fix-stream'
     | '/api/ext/heartbeat'
     | '/api/ext/send-command'
+    | '/api/ext/test-backend'
     | '/api/ext/upload'
     | '/api/ext/validate-license'
     | '/api/public/download-extensao'
@@ -968,6 +979,7 @@ export interface FileRouteTypes {
     | '/api/ext/fix-stream'
     | '/api/ext/heartbeat'
     | '/api/ext/send-command'
+    | '/api/ext/test-backend'
     | '/api/ext/upload'
     | '/api/ext/validate-license'
     | '/api/public/download-extensao'
@@ -1009,6 +1021,7 @@ export interface RootRouteChildren {
   ApiExtFixStreamRoute: typeof ApiExtFixStreamRoute
   ApiExtHeartbeatRoute: typeof ApiExtHeartbeatRoute
   ApiExtSendCommandRoute: typeof ApiExtSendCommandRoute
+  ApiExtTestBackendRoute: typeof ApiExtTestBackendRoute
   ApiExtUploadRoute: typeof ApiExtUploadRoute
   ApiExtValidateLicenseRoute: typeof ApiExtValidateLicenseRoute
   ApiPublicDownloadExtensaoRoute: typeof ApiPublicDownloadExtensaoRoute
@@ -1411,6 +1424,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiExtSendCommandRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ext/test-backend': {
+      id: '/api/ext/test-backend'
+      path: '/api/ext/test-backend'
+      fullPath: '/api/ext/test-backend'
+      preLoaderRoute: typeof ApiExtTestBackendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/ext/upload': {
       id: '/api/ext/upload'
       path: '/api/ext/upload'
@@ -1735,6 +1755,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiExtFixStreamRoute: ApiExtFixStreamRoute,
   ApiExtHeartbeatRoute: ApiExtHeartbeatRoute,
   ApiExtSendCommandRoute: ApiExtSendCommandRoute,
+  ApiExtTestBackendRoute: ApiExtTestBackendRoute,
   ApiExtUploadRoute: ApiExtUploadRoute,
   ApiExtValidateLicenseRoute: ApiExtValidateLicenseRoute,
   ApiPublicDownloadExtensaoRoute: ApiPublicDownloadExtensaoRoute,
