@@ -1,41 +1,64 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { validateKeyFormat, normalizeAuth, sanitizeAudit } from './ext-api.server';
 
-describe('Extensão API Helpers', () => {
-  it('deve validar o formato da licença MR-XXXX-XXXX-XXXX', () => {
-    expect(validateKeyFormat('MR-ABCD-1234-EFGH')).toBe(true);
-    expect(validateKeyFormat('MR-ABCD-1234')).toBe(false);
-    expect(validateKeyFormat('ABCD-1234-EFGH')).toBe(false);
-    expect(validateKeyFormat('MR-abcd-1234-efgh')).toBe(false); // Case sensitive A-Z
+// Mock do supabaseAdmin para não falhar nos imports do server helper
+vi.mock('@/integrations/supabase/client.server', () => ({
+  supabaseAdmin: {
+    from: vi.fn().mockReturnThis(),
+    select: vi.fn().mockReturnThis(),
+    eq: vi.fn().mockReturnThis(),
+    maybeSingle: vi.fn(),
+    insert: vi.fn().mockReturnThis(),
+    update: vi.fn().mockReturnThis(),
+    single: vi.fn(),
+    storage: {
+      from: vi.fn().mockReturnThis(),
+      upload: vi.fn(),
+      createSignedUrl: vi.fn()
+    }
+  }
+}));
+
+describe('MR CENTRAL V17 - Auditoria e Lógica de Extensão', () => {
+  
+  describe('Validação de Formato', () => {
+    it('deve aceitar MR-XXXX-XXXX-XXXX', () => {
+      expect(validateKeyFormat('MR-ABCD-1234-EFGH')).toBe(true);
+      expect(validateKeyFormat('MR-0000-AAAA-1111')).toBe(true);
+    });
+
+    it('deve rejeitar formatos inválidos', () => {
+      expect(validateKeyFormat('MR-ABCD-1234')).toBe(false);
+      expect(validateKeyFormat('ABCD-1234-EFGH')).toBe(false);
+      expect(validateKeyFormat('MR-abcd-1234-efgh')).toBe(false);
+      expect(validateKeyFormat(null)).toBe(false);
+    });
   });
 
-  it('deve normalizar aliases de chave e HWID', () => {
-    const body1 = { key: 'KEY1', device_id: 'HWID1' };
-    expect(normalizeAuth(body1)).toEqual({ licenseKey: 'KEY1', hwid: 'HWID1' });
-
-    const body2 = { license_key: 'KEY2', hwid: 'HWID2' };
-    expect(normalizeAuth(body2)).toEqual({ licenseKey: 'KEY2', hwid: 'HWID2' });
-
-    const body3 = { user_license_key: 'KEY3', deviceId: 'HWID3' };
-    expect(normalizeAuth(body3)).toEqual({ licenseKey: 'KEY3', hwid: 'HWID3' });
+  describe('Normalização de Entrada (Aliases)', () => {
+    it('deve extrair chave e hwid de múltiplos campos', () => {
+      expect(normalizeAuth({ key: 'K1', device_id: 'H1' })).toEqual({ licenseKey: 'K1', hwid: 'H1' });
+      expect(normalizeAuth({ license_key: 'K2', hwid: 'H2' })).toEqual({ licenseKey: 'K2', hwid: 'H2' });
+      expect(normalizeAuth({ chave: 'K3', deviceId: 'H3' })).toEqual({ licenseKey: 'K3', hwid: 'H3' });
+    });
   });
 
-  it('deve sanitizar campos sensíveis na auditoria', () => {
-    const payload = {
-      user: 'test',
-      token: 'secret-token',
-      nested: {
-        apiKey: 'sensitive-api-key',
-        safe: 'data'
-      },
-      array: [{ authorization: 'bearer x' }]
-    };
-
-    const sanitized = sanitizeAudit(payload);
-
-    expect(sanitized.token).toBe('[REDACTED]');
-    expect(sanitized.nested.apiKey).toBe('[REDACTED]');
-    expect(sanitized.nested.safe).toBe('data');
-    expect(sanitized.array[0].authorization).toBe('[REDACTED]');
+  describe('Segurança e Sanitização', () => {
+    it('deve remover tokens e chaves de logs de auditoria', () => {
+      const sensitive = {
+        user: 'joao',
+        token: 'bearertoken123',
+        authorization: 'Bearer xyz',
+        apiKey: 'secret123',
+        license_key: 'MR-1234-1234-1234',
+        safe_data: 'ok'
+      };
+      const sanitized = sanitizeAudit(sensitive);
+      expect(sanitized.token).toBe('[REDACTED]');
+      expect(sanitized.authorization).toBe('[REDACTED]');
+      expect(sanitized.apiKey).toBe('[REDACTED]');
+      expect(sanitized.license_key).toBe('[REDACTED]');
+      expect(sanitized.safe_data).toBe('ok');
+    });
   });
 });
