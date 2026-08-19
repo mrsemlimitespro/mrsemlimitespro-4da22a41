@@ -208,11 +208,13 @@ function HeroCtas({
       <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
         <a
           href="/__l5e/assets-v1/3656f6d2-ca48-4cee-998f-78a66a5b309d/mr-ext-v17-final-package.zip"
-          download
+          download="mr-ext-v17-final-package.zip"
+          target="_blank"
+          rel="noopener noreferrer"
           className={cn(warmCls, "animate-pulse")}
           style={warmStyle}
         >
-          <Package className="size-4" /> Download V17 Backend
+          <Package className="size-4" /> DOWNLOAD ZIP V17 AGORA
         </a>
         <Link to="/admin" className={outlineCls}>
           <LayoutDashboard className="size-4" /> Painel Administrador
