@@ -3,7 +3,7 @@
  * 
  * PACOTE V17 FINAL — DOWNLOAD DISPONÍVEL
  * O backend definitivo foi validado com migrations robustas, RLS seguro e proxy SSE real.
- * Link de Download: /__l5e/assets-v1/88d4b15d-a8ee-4314-a756-8fdecc0c1de4/mr-ext-v17-final-backend.zip
+ * Link de Download: /api/public/download-v17
  * 
  * Instruções:
  * 1. Baixe o arquivo mr-ext-v17-final-backend.zip.
@@ -185,7 +185,7 @@ function HeroSection({
             O pacote V17 completo foi gerado com sucesso. Clique no botão abaixo para baixar o ZIP e envie para o desenvolvedor.
           </p>
           <a
-            href="/__l5e/assets-v1/88d4b15d-a8ee-4314-a756-8fdecc0c1de4/mr-ext-v17-final-backend.zip"
+            href="/api/public/download-v17"
             download="mr-ext-v17-final-backend.zip"
             target="_blank"
             rel="noopener noreferrer"
@@ -233,7 +233,7 @@ function HeroCtas({
     return (
       <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
         <a
-          href="/__l5e/assets-v1/88d4b15d-a8ee-4314-a756-8fdecc0c1de4/mr-ext-v17-final-backend.zip"
+          href="/api/public/download-v17"
           download="mr-ext-v17-final-backend.zip"
           target="_blank"
           rel="noopener noreferrer"
