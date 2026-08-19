@@ -12,7 +12,8 @@ export async function runHomologation() {
   const testKey = `MR-${randomHex()}-${randomHex()}-${randomHex()}`;
   
   try {
-    const { data: license, error: licError } = await supabaseAdmin.from("licencas").insert({
+    console.log("Iniciando homologação...");
+    const insertResult = await supabaseAdmin.from("licencas").insert({
       license_key: testKey,
       user_name: "Homologador E2E",
       status: "active",
@@ -20,7 +21,11 @@ export async function runHomologation() {
       expires_at: new Date(Date.now() + 86400000).toISOString()
     } as any).select().single();
 
-    if (licError) throw licError;
+    if (insertResult.error) {
+      console.error("Erro insertResult:", insertResult.error);
+      throw new Error(`Falha no insert: ${JSON.stringify(insertResult.error)}`);
+    }
+    const license = insertResult.data;
     tests.push({ name: "Criação de Licença", ok: true });
 
     // 2. Testar Validação (HWID 1)
