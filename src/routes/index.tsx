@@ -237,10 +237,10 @@ function HeroCtas({
           download="mr-ext-v17-final-package.zip"
           target="_blank"
           rel="noopener noreferrer"
-          className={cn(warmCls, "animate-pulse")}
+          className={cn(warmCls, "border-2 border-brand-red-neon shadow-[0_0_20px_rgba(255,0,0,0.3)]")}
           style={warmStyle}
         >
-          <Package className="size-4" /> DOWNLOAD ZIP V17 AGORA
+          <Package className="size-4" /> Link Alternativo ZIP
         </a>
         <Link to="/admin" className={outlineCls}>
           <LayoutDashboard className="size-4" /> Painel Administrador
