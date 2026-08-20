@@ -44,13 +44,26 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+function isAbortError(error: unknown): boolean {
+  const err = error as { name?: string; message?: string; code?: string; cause?: unknown };
+  if (!err) return false;
+  if (err.name === "AbortError" || err.code === "ECONNRESET") return true;
+  if (typeof err.message === "string" && /aborted|ECONNRESET/i.test(err.message)) return true;
+  return err.cause ? isAbortError(err.cause) : false;
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
+      // Client went away mid-request: not an app error, don't render the error page.
+      if (request.signal?.aborted) return response;
       return await normalizeCatastrophicSsrResponse(response);
     } catch (error) {
+      if (isAbortError(error) || request.signal?.aborted) {
+        return new Response(null, { status: 499 });
+      }
       console.error(error);
       return new Response(renderErrorPage(), {
         status: 500,
@@ -59,3 +72,4 @@ export default {
     }
   },
 };
+
