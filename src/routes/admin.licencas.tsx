@@ -369,13 +369,19 @@ function LicencasAdmin() {
             <table className="w-full min-w-[900px] text-sm">
               <thead className="text-left text-[11px] uppercase tracking-wider text-muted-foreground">
                 <tr className="border-b border-white/5">
+                  <th className="px-4 py-3 font-medium w-10">
+                    <Checkbox 
+                      checked={selectedIds.length === filtradas.length && filtradas.length > 0} 
+                      onCheckedChange={handleSelectAll}
+                    />
+                  </th>
                   <th className="px-4 py-3 font-medium">Chave</th>
                   <th className="px-4 py-3 font-medium">Nível</th>
                   <th className="px-4 py-3 font-medium">Tipo</th>
                   <th className="px-4 py-3 font-medium">Status</th>
                   <th className="px-4 py-3 font-medium">E-mail</th>
                   <th className="px-4 py-3 font-medium">Device</th>
-                  <th className="px-4 py-3 font-medium">Expira</th>
+                  <th className="px-4 py-3 font-medium text-center">Expira</th>
                   <th className="px-4 py-3 font-medium text-right">Ações</th>
                 </tr>
               </thead>
