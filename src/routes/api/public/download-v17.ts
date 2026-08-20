@@ -6,11 +6,14 @@ export const Route = createFileRoute('/api/public/download-v17')({
       GET: async () => {
         // Redireciona para o pacote final v17 consolidado
         const assetUrl = '/__l5e/assets-v1/mr-central-v17-complete-final.zip';
+        
         return new Response(null, {
           status: 302,
           headers: {
             'Location': assetUrl,
-            'Cache-Control': 'no-cache'
+            'Cache-Control': 'no-cache',
+            'Content-Disposition': 'attachment; filename="mr-central-v17-complete-final.zip"',
+            'Content-Type': 'application/zip'
           }
         });
       }

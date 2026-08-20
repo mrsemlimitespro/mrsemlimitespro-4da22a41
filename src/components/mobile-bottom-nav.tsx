@@ -39,9 +39,9 @@ const items: TabItem[] = [
   {
     id: "gestao",
     title: "Gestão",
-    to: "/gestao",
+    to: "/licencas",
     icon: LayoutGrid,
-    matches: ["/gestao", "/clientes", "/licencas", "/admin/revendedores-gestao", "/revendedor"],
+    matches: ["/clientes", "/licencas", "/revendedor"],
   },
   {
     id: "perfil",
