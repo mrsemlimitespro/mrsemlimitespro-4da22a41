@@ -1,7 +1,7 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { validateKeyFormat, normalizeAuth, sanitizeAudit } from './ext-api.server';
 
-// Mock do supabaseAdmin para não falhar nos imports do server helper
+// Mock do supabaseAdmin
 vi.mock('@/integrations/supabase/client.server', () => ({
   supabaseAdmin: {
     from: vi.fn().mockReturnThis(),
@@ -25,6 +25,11 @@ describe('MR CENTRAL V17 - Auditoria e Lógica de Extensão', () => {
     it('deve aceitar MR-XXXX-XXXX-XXXX', () => {
       expect(validateKeyFormat('MR-ABCD-1234-EFGH')).toBe(true);
       expect(validateKeyFormat('MR-0000-AAAA-1111')).toBe(true);
+    });
+
+    it('deve aceitar formato longo SIGLA-MR-XXXX-XXXX-XXXX-XXXX', () => {
+      expect(validateKeyFormat('UX-MR-ABCD-1234-EFGH-5678')).toBe(true);
+      expect(validateKeyFormat('BR-MR-0000-AAAA-1111-CCCC')).toBe(true);
     });
 
     it('deve rejeitar formatos inválidos', () => {
