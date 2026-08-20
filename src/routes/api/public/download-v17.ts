@@ -1,44 +1,28 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { readFileSync, existsSync } from 'fs';
-import { join } from 'path';
+import zipAsset from '../../../../mr-central-v17-complete-final.zip.asset.json';
 
+/**
+ * Download do pacote completo MR Central v17.
+ * O arquivo vive no CDN de assets (não no filesystem do worker),
+ * então redirecionamos para a URL pública do asset.
+ */
 export const Route = createFileRoute('/api/public/download-v17')({
   server: {
     handlers: {
-      GET: async () => {
-        try {
-          // Servir o arquivo ZIP local gerado nesta sessão
-          const filePath = join(process.cwd(), 'mr-central-v17-complete-final.zip');
-          
-          if (!existsSync(filePath)) {
-            return new Response(JSON.stringify({ 
-              error: 'not_found', 
-              message: 'O arquivo mr-central-v17-complete-final.zip nao foi encontrado no servidor. Por favor, tente novamente.' 
-            }), { 
-              status: 404,
-              headers: { 'Content-Type': 'application/json' }
-            });
-          }
+      GET: async ({ request }) => {
+        const origin = new URL(request.url).origin;
+        const target = zipAsset.url.startsWith('http')
+          ? zipAsset.url
+          : `${origin}${zipAsset.url}`;
 
-          const fileBuffer = readFileSync(filePath);
-          
-          return new Response(fileBuffer, {
-            status: 200,
-            headers: {
-              'Content-Type': 'application/zip',
-              'Content-Disposition': 'attachment; filename="mr-central-v17-complete-final.zip"',
-              'Content-Length': fileBuffer.length.toString(),
-              'Cache-Control': 'no-cache'
-            }
-          });
-        } catch (error) {
-          console.error('[download-v17] Error:', error);
-          return new Response(JSON.stringify({ error: 'internal_error' }), { 
-            status: 500,
-            headers: { 'Content-Type': 'application/json' }
-          });
-        }
-      }
-    }
-  }
+        return new Response(null, {
+          status: 302,
+          headers: {
+            Location: target,
+            'Cache-Control': 'no-store',
+          },
+        });
+      },
+    },
+  },
 });
