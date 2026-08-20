@@ -170,7 +170,7 @@ function LicencasAdmin() {
 
   // Mutations
   const createMutation = useMutation({
-    mutationFn: createFn,
+    mutationFn: (vars: any) => createFn(vars),
     onSuccess: () => {
       toast.success("Licença(s) criada(s) com sucesso.");
       setCreateOpen(false);
@@ -180,7 +180,7 @@ function LicencasAdmin() {
   });
 
   const deleteBulkMutation = useMutation({
-    mutationFn: (ids: string[]) => deleteFn({ licenseIds: ids }),
+    mutationFn: (ids: string[]) => deleteFn({ data: { licenseIds: ids } } as any),
     onSuccess: () => {
       toast.success("Licenças excluídas.");
       setSelectedIds([]);
