@@ -1,25 +1,30 @@
 import { describe, it, expect, vi } from 'vitest';
 import { validateLicense } from './ext-api.server';
 
-// Mock robusto para garantir que .eq() retorne algo que tenha .maybeSingle()
+// O Vitest eleva o vi.mock, então não podemos usar variáveis de escopo externo nele diretamente
+// Mas podemos usar objetos retornados pela factory
 vi.mock('@/integrations/supabase/client.server', () => {
-  const chain: any = {};
-  
-  chain.from = vi.fn().mockReturnValue(chain);
-  chain.select = vi.fn().mockReturnValue(chain);
-  chain.eq = vi.fn().mockReturnValue(chain);
-  chain.maybeSingle = vi.fn().mockReturnValue(chain);
-  chain.insert = vi.fn().mockReturnValue(chain);
-  chain.update = vi.fn().mockReturnValue(chain);
-  chain.single = vi.fn().mockReturnValue(chain);
-  chain.storage = {
-    from: vi.fn().mockReturnThis(),
-    upload: vi.fn(),
-    createSignedUrl: vi.fn()
+  const chain: any = {
+    from: vi.fn(),
+    select: vi.fn(),
+    eq: vi.fn(),
+    maybeSingle: vi.fn(),
+    insert: vi.fn(),
+    update: vi.fn(),
+    single: vi.fn(),
+    storage: {
+      from: vi.fn(),
+      upload: vi.fn(),
+      createSignedUrl: vi.fn()
+    }
   };
 
-  // Precisamos que a chain se comporte como uma Promise quando for o final do encadeamento
-  chain.then = (onFullfilled: any) => Promise.resolve().then(onFullfilled);
+  chain.from.mockReturnValue(chain);
+  chain.select.mockReturnValue(chain);
+  chain.eq.mockReturnValue(chain);
+  chain.insert.mockReturnValue(chain);
+  chain.update.mockReturnValue(chain);
+  chain.storage.from.mockReturnValue(chain.storage);
 
   return { supabaseAdmin: chain };
 });
@@ -28,8 +33,7 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
   describe('validateLicense', () => {
     it('deve retornar erro se licença não for encontrada', async () => {
       const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
-      const admin = supabaseAdmin as any;
-      admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
+      (supabaseAdmin.maybeSingle as any).mockResolvedValueOnce({ data: null, error: null });
 
       const result = await validateLicense('MR-1111-2222-3333', 'hwid-1');
       expect(result.valid).toBe(false);
@@ -53,15 +57,12 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
       admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
       
       // 3. Count de sessões
-      // Aqui o .eq() deve retornar o resultado do count
-      admin.eq.mockImplementation((key: string, val: any) => {
-        if (key === 'license_id') {
-           return Promise.resolve({ count: 0, error: null });
-        }
-        return admin;
-      });
+      // Precisamos que depois de eq() no count retorne a promisse
+      admin.eq.mockReturnValueOnce(Promise.resolve({ count: 0, error: null }));
 
       // 4. Criação de sessão
+      admin.insert.mockReturnValue(admin);
+      admin.select.mockReturnValue(admin);
       admin.single.mockResolvedValueOnce({ 
         data: { id: 'sess-1', session_id: 'sess-uuid', last_seen: new Date().toISOString() }, 
         error: null 
