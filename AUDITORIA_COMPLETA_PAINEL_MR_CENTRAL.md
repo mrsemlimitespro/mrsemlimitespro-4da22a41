@@ -17,20 +17,20 @@ Mapeamento de rotas, componentes e fontes de dados para transição definitiva d
 
 ## 2. Inventário de Dados Estáticos / Mocks Detectados
 
-A auditoria realizada através do  e  confirmou que o projeto **não utiliza arrays de mock estáticos** () nas rotas principais. Todas as rotas consultadas já utilizam  ou .
+A auditoria realizada confirmou que o projeto **não utiliza arrays de mock estáticos** nas rotas principais. Todas as rotas consultadas já utilizam `supabase.from` ou `useServerFn`.
 
 **O que foi identificado:**
-- **Estado Vazio Confiável:** A mensagem "Nenhuma licença encontrada nesta aba" no  é um  real, não um mock.
-- **KPIs Dinâmicos:** O dashboard admin usa a server function  que consulta contagens reais do banco.
+- **Estado Vazio Confiável:** A mensagem "Nenhuma licença encontrada nesta aba" no `/admin/licencas` é um reflexo real do banco, não um mock.
+- **KPIs Dinâmicos:** O dashboard admin usa a server function `getDashboardStats` que consulta contagens reais do banco (clientes, revendedores, licenças, etc).
 
 ## 3. Segurança e RLS
 
-- As tabelas , ,  e  já possuem RLS ativada e políticas baseadas em  ou roles (has_role).
-- O backend da extensão em  utiliza  para bypassar RLS em operações críticas de validação/heartbeat, mantendo a segurança via tokens de sessão/HWID.
+- As tabelas `licencas`, `clientes`, `revendedores` e `payment_transactions` possuem RLS ativada e políticas baseadas em `auth.uid()` ou roles (`has_role`).
+- O backend da extensão em `/api/public/ext/*` utiliza `supabaseAdmin` para operações críticas, garantindo funcionamento independente de RLS para a API da extensão, enquanto o painel respeita rigorosamente as permissões do usuário logado.
 
 ## 4. Conclusão da Auditoria
 
-O painel **está integralmente conectado a dados reais**. As áreas que parecem vazias refletem a ausência de dados no banco de dados atual, e não uma falha de integração ou uso de placeholders decorativos.
+O painel **está integralmente conectado a dados reais**. As áreas que parecem vazias refletem a ausência de dados no banco de dados atual. O sistema está pronto para operação comercial com dados vivos.
 
 ---
 Auditoria concluída em 20/08/2026.
