@@ -5,7 +5,7 @@ export const Route = createFileRoute('/api/public/download-v17')({
     handlers: {
       GET: async () => {
         // Redireciona para o asset permanente usando o ID correto
-        const assetUrl = '/__l5e/assets-v1/7f0e175e-2ea8-45e5-8347-cf2eca44c200/mr-central-v17-complete-github.zip';
+        const assetUrl = '/__l5e/assets-v1/5eaf0eae-2b4b-4538-a300-6ecbee9e0ba4/mr-central-v17-complete-github.zip';
         return new Response(null, {
           status: 302,
           headers: {

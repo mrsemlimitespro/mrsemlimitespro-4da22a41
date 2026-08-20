@@ -1,10 +1,10 @@
 /**
- * # MR CENTRAL V17 — BACKEND CONSOLIDADO E VERIFICADO [RE-UPLOAD]
+ * # MR CENTRAL V17 — BACKEND CONSOLIDADO E VERIFICADO [RE-UPLOAD FINAL]
  * 
- * ATENÇÃO: O asset de download foi regenerado para garantir disponibilidade imediata.
+ * ATENÇÃO: O asset de download foi regenerado com o ID 5eaf0eae para garantir disponibilidade.
  * 
  * Verificação E2E Concluída:
- * 1. Download V17: Rota /api/public/download-v17 (ID: 7f0e175e) configurada.
+ * 1. Download V17: Rota /api/public/download-v17 apontando para o novo asset estável.
  * 2. API Extensão: Todas as rotas (/validate-license, /heartbeat, etc) migradas para /api/public/ext/*.
  * 3. Deploy: O routeTree.gen.ts inclui as rotas públicas necessárias.
  * 
