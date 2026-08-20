@@ -458,7 +458,13 @@ function LicencaRow({
   const encerrada = l.status === "expirada" || l.status === "cancelada" || l.status === "bloqueada" || l.status === "revogada";
 
   return (
-    <tr className="border-b border-white/5 last:border-b-0 hover:bg-white/[0.02]">
+    <tr className={cn(
+      "border-b border-white/5 last:border-b-0 hover:bg-white/[0.02] transition-colors",
+      isSelected && "bg-blue-500/5 border-blue-500/20"
+    )}>
+      <td className="px-4 py-3">
+        <Checkbox checked={isSelected} onCheckedChange={onToggleSelect} />
+      </td>
       <td className="px-4 py-3 font-mono text-xs">
         <div className="flex items-center gap-2">
           <span>{l.chave}</span>
