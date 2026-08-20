@@ -1,0 +1,17 @@
+{
+  "integration_version": "v17",
+  "base_url": "https://mrsemlimitespro.lovable.app",
+  "routes": {
+    "validate_license": "/api/public/ext/validate-license",
+    "heartbeat": "/api/public/ext/heartbeat",
+    "send_command": "/api/public/ext/send-command",
+    "fix_stream": "/api/public/ext/fix-stream",
+    "upload": "/api/public/ext/upload"
+  },
+  "license_format": "MR-XXXX-XXXX-XXXX",
+  "upload_bucket": "mr-ext-uploads",
+  "max_upload_bytes": 52428800,
+  "cors_origin_configured": true,
+  "published_at": "2026-08-20T08:50:00Z",
+  "git_commit": "v17-final-delivery"
+}
