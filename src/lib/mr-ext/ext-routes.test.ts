@@ -1,9 +1,9 @@
 import { describe, it, expect, vi } from 'vitest';
-import { normalizeAuth, validateKeyFormat, validateLicense, auditRequest } from '@/lib/mr-ext/ext-api.server';
+import { normalizeAuth, validateKeyFormat, validateLicense, auditRequest } from './ext-api.server';
 
-// Mock do supabaseAdmin para evitar chamadas reais durante o teste
-vi.mock('@/integrations/supabase/client.server', () => ({
-  supabaseAdmin: {
+// Mock do supabaseAdmin com casting para evitar erros de tipo no Vitest
+vi.mock('@/integrations/supabase/client.server', () => {
+  const mockClient = {
     from: vi.fn().mockReturnThis(),
     select: vi.fn().mockReturnThis(),
     eq: vi.fn().mockReturnThis(),
@@ -16,15 +16,17 @@ vi.mock('@/integrations/supabase/client.server', () => ({
       upload: vi.fn(),
       createSignedUrl: vi.fn()
     }
-  }
-}));
+  };
+  return { supabaseAdmin: mockClient };
+});
 
 describe('MR CENTRAL V17 - Integration Tests', () => {
 
   describe('validateLicense', () => {
     it('deve retornar erro se licença não for encontrada', async () => {
       const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
-      (supabaseAdmin.maybeSingle as any).mockResolvedValueOnce({ data: null, error: null });
+      const admin = supabaseAdmin as any;
+      admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
 
       const result = await validateLicense('MR-1111-2222-3333', 'hwid-1');
       expect(result.valid).toBe(false);
@@ -33,7 +35,8 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
 
     it('deve retornar erro se licença estiver revogada', async () => {
       const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
-      (supabaseAdmin.maybeSingle as any).mockResolvedValueOnce({ 
+      const admin = supabaseAdmin as any;
+      admin.maybeSingle.mockResolvedValueOnce({ 
         data: { status: 'revoked' }, 
         error: null 
       });
@@ -45,18 +48,19 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
 
     it('deve validar com sucesso licença ativa', async () => {
       const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
+      const admin = supabaseAdmin as any;
       const mockLic = { id: 'lic-1', status: 'active', license_key: 'MR-1111-2222-3333', max_devices: 1 };
       
-      // Mock da busca de licença
-      (supabaseAdmin.maybeSingle as any).mockResolvedValueOnce({ data: mockLic, error: null });
-      // Mock da busca de sessão existente (não encontra)
-      (supabaseAdmin.maybeSingle as any).mockResolvedValueOnce({ data: null, error: null });
-      // Mock do count de sessões
-      (supabaseAdmin.select as any).mockReturnValueOnce({ 
+      // 1. Mock da busca de licença
+      admin.maybeSingle.mockResolvedValueOnce({ data: mockLic, error: null });
+      // 2. Mock da busca de sessão existente (não encontra)
+      admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
+      // 3. Mock do count de sessões
+      admin.select.mockReturnValueOnce({ 
         eq: vi.fn().mockResolvedValueOnce({ count: 0, error: null }) 
       });
-      // Mock da criação de sessão
-      (supabaseAdmin.single as any).mockResolvedValueOnce({ 
+      // 4. Mock da criação de sessão
+      admin.single.mockResolvedValueOnce({ 
         data: { session_id: 'sess-1' }, 
         error: null 
       });
@@ -70,7 +74,8 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
   describe('auditRequest', () => {
     it('deve chamar insert com dados sanitizados', async () => {
       const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
-      const insertSpy = vi.spyOn(supabaseAdmin, 'insert');
+      const admin = supabaseAdmin as any;
+      const insertSpy = vi.spyOn(admin, 'insert');
       
       await auditRequest('lic-1', '/api/test', 'POST', 200, { key: 'secret' });
       
