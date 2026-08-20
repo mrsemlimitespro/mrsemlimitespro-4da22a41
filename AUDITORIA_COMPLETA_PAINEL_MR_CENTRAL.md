@@ -20,14 +20,14 @@ Mapeamento de rotas, componentes e fontes de dados para transição definitiva d
 
 - **src/routes/_app.licencas.tsx**: Possui filtros e estados que podem estar usando mocks locais.
 - **src/routes/_app.clientes.tsx**: Referenciado como tendo "cards e contagens" que podem ser decorativos.
-- **Métricas no Dashboard**: KPIs calculados em  precisam ser validados contra o banco real.
+- **Métricas no Dashboard**: KPIs calculados em `src/lib/admin/dashboard.functions.ts` precisam ser validados contra o banco real.
 
 ## 3. Plano de Ação Imediata
 
-1.  **Auditoria de Schema**: Validar se , ,  e  estão com RLS ativas e GRANTs corretos.
-2.  **Remoção de Mocks**: Substituir arrays  por chamadas ao Supabase usando  ou .
-3.  **Implementação de RLS**: Garantir que  veja apenas seus clientes e licenças.
-4.  **Validação de Endpoints da Extensão**: Testar  com dados reais do banco.
+1.  **Auditoria de Schema**: Validar se tabelas estão com RLS ativas e GRANTs corretos.
+2.  **Remoção de Mocks**: Substituir arrays de dados fictícios por chamadas ao Supabase.
+3.  **Implementação de RLS**: Garantir que revendedor veja apenas seus clientes e licenças.
+4.  **Validação de Endpoints da Extensão**: Testar endpoints com dados reais do banco.
 
 ---
 Auditoria iniciada em 20/08/2026.
