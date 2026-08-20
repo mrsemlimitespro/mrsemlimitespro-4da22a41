@@ -169,11 +169,30 @@ function LicencasAdmin() {
   }, [licencas, tab, busca]);
 
   // Mutations
+  const createMutation = useMutation({
+    mutationFn: createFn,
+    onSuccess: () => {
+      toast.success("Licença(s) criada(s) com sucesso.");
+      setCreateOpen(false);
+      qc.invalidateQueries({ queryKey: ["admin-licencas"] });
+    },
+    onError: (e: any) => toast.error(e.message || "Erro ao criar licenças"),
+  });
+
+  const deleteBulkMutation = useMutation({
+    mutationFn: (ids: string[]) => deleteFn({ licenseIds: ids }),
+    onSuccess: () => {
+      toast.success("Licenças excluídas.");
+      setSelectedIds([]);
+      qc.invalidateQueries({ queryKey: ["admin-licencas"] });
+    },
+    onError: (e: any) => toast.error(e.message || "Erro ao excluir"),
+  });
+
   const resetDevice = useMutation({
     mutationFn: async ({ id, motivo }: { id: string; motivo: string }) => {
       const { error } = await (supabase as any).rpc("resetar_device_licenca", { _licenca_id: id });
       if (error) throw error;
-      // grava motivo em observacoes_admin como registro simples (não altera schema base)
       await supabase
         .from("licencas")
         .update({
@@ -183,7 +202,7 @@ function LicencasAdmin() {
         .eq("id", id);
     },
     onSuccess: () => {
-      toast.success("Dispositivo restaurado. Cliente pode ativar em outro aparelho.");
+      toast.success("Dispositivo restaurado.");
       setResetTarget(null);
       qc.invalidateQueries({ queryKey: ["admin-licencas"] });
     },
@@ -192,8 +211,7 @@ function LicencasAdmin() {
 
   const renovar = useMutation({
     mutationFn: async ({ id, dias }: { id: string; dias: number }) => {
-      const { error } = await (supabase as any).rpc("renovar_licenca", { _licenca_id: id, _dias: dias });
-      if (error) throw error;
+      return adjustTimeFn({ licenseId: id, days: dias });
     },
     onSuccess: () => {
       toast.success("Licença renovada.");
@@ -238,6 +256,20 @@ function LicencasAdmin() {
     onSuccess: () => toast.success("Email de licença enfileirado."),
     onError: (e: Error) => toast.error(e.message || "Falha ao reenviar"),
   });
+
+  const handleSelectAll = () => {
+    if (selectedIds.length === filtradas.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(filtradas.map(l => l.id));
+    }
+  };
+
+  const toggleSelect = (id: string) => {
+    setSelectedIds(prev => 
+      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+    );
+  };
 
   return (
     <div className="mx-auto max-w-7xl space-y-6">
