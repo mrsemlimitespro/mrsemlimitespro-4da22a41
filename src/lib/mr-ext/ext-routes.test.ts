@@ -1,28 +1,36 @@
 import { describe, it, expect, vi } from 'vitest';
 import { normalizeAuth, validateKeyFormat, validateLicense, auditRequest } from './ext-api.server';
 
-// Mock do supabaseAdmin com encadeamento manual robusto para Vitest
+// Mock do supabaseAdmin com encadeamento robusto
 vi.mock('@/integrations/supabase/client.server', () => {
   const createMockChain = () => {
-    const chain = {
-      from: vi.fn().mockReturnThis(),
-      select: vi.fn().mockReturnThis(),
-      eq: vi.fn().mockReturnThis(),
+    const chain: any = {
+      from: vi.fn(),
+      select: vi.fn(),
+      eq: vi.fn(),
       maybeSingle: vi.fn(),
-      insert: vi.fn().mockReturnThis(),
-      update: vi.fn().mockReturnThis(),
+      insert: vi.fn(),
+      update: vi.fn(),
       single: vi.fn(),
+      storage: {
+        from: vi.fn(),
+        upload: vi.fn(),
+        createSignedUrl: vi.fn()
+      }
     };
-    // Redireciona chamadas encadeadas para si mesmo
+    
+    // Configura o encadeamento
     chain.from.mockReturnValue(chain);
     chain.select.mockReturnValue(chain);
     chain.eq.mockReturnValue(chain);
     chain.insert.mockReturnValue(chain);
     chain.update.mockReturnValue(chain);
-    return chain;
+    chain.storage.from.mockReturnValue(chain.storage);
+    
+    return { supabaseAdmin: chain };
   };
   
-  return { supabaseAdmin: createMockChain() };
+  return createMockChain();
 });
 
 describe('MR CENTRAL V17 - Integration Tests', () => {
@@ -55,26 +63,28 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
       const admin = supabaseAdmin as any;
       const mockLic = { id: 'lic-1', status: 'active', license_key: 'MR-1111-2222-3333', max_devices: 1 };
       
-      // Reset mocks para evitar estados de testes anteriores
       admin.maybeSingle.mockReset();
       admin.select.mockClear();
       admin.single.mockReset();
+      admin.eq.mockClear();
 
-      // 1. Mock da busca de licença
+      // 1. Busca de licença
       admin.maybeSingle.mockResolvedValueOnce({ data: mockLic, error: null });
-      // 2. Mock da busca de sessão existente (não encontra)
+      // 2. Busca de sessão existente
       admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
-      // 3. Mock do count de sessões (o select encadeia o count)
+      // 3. Count de sessões
       admin.eq.mockReturnValueOnce({ 
         mockResolvedValueOnce: vi.fn().mockResolvedValue({ count: 0, error: null })
       });
-      // Fallback para count: exact via select
-      admin.select.mockReturnValueOnce({ 
-        eq: vi.fn().mockResolvedValueOnce({ count: 0, error: null }) 
-      });
-      // 4. Mock da criação de sessão
+      // Fallback para count head: true
+      admin.select.mockReturnValueOnce(admin);
+      admin.eq.mockResolvedValueOnce({ count: 0, error: null });
+
+      // 4. Criação de sessão
+      admin.insert.mockReturnValueOnce(admin);
+      admin.select.mockReturnValueOnce(admin);
       admin.single.mockResolvedValueOnce({ 
-        data: { session_id: 'sess-1', last_seen: new Date().toISOString() }, 
+        data: { id: 'sess-1', session_id: 'sess-uuid', last_seen: new Date().toISOString() }, 
         error: null 
       });
 
