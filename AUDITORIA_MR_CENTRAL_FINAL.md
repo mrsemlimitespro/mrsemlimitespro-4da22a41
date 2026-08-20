@@ -1,26 +1,44 @@
-# AUDITORIA MR CENTRAL FINAL - V17
+---
+name: Auditoria MR Central V17 Final
+description: Relatório de conformidade e status do backend consolidado para extensão v17.
+type: feature
+---
 
-## Status do Sistema
-- **Build**: 🟢 PASSANDO (`pnpm build` validado)
-- **Testes**: 🟢 100% PASSANDO (`vitest` em logic helpers e rota mockup)
-- **Migrações**: 🟢 CONSOLIDADO (`20260820000000_v17_consolidated_final.sql`)
-- **Segurança**: 🟢 RLS ATIVO | CORS RESTRITO | AUDITORIA SANITIZADA
+# AUDITORIA MR CENTRAL FINAL — V17
 
-## Arquivos Modificados/Criados
-- `src/integrations/supabase/client.server.ts`: Helper admin isolado.
-- `src/lib/mr-ext/`: Lógica centralizada e adaptador V17.
-- `src/routes/api/ext/`: Rotas definitivas (Heartbeat, Command, Upload, Stream).
-- `supabase/migrations/`: Migração unificada para ambiente limpo/existente.
+## 🟢 Status Geral: PRONTO PARA PRODUÇÃO
 
-## Resultados de Testes
-```text
-✓ src/lib/mr-ext/ext-api.test.ts (5 tests)
-✓ tests/api-ext/routes.test.ts (1 test)
-```
+O backend do MR Central foi totalmente auditado e consolidado. Todas as rotas API requeridas pela extensão V17 estão operacionais e seguem padrões rigorosos de segurança.
 
-## Configurações de Produção
+### 1. Ambiente e Configurações
 - **Domínio**: `https://mrsemlimites.lovable.app`
-- **CORS**: Configurado via `MR_EXTENSION_ORIGIN`.
-- **Storage**: Bucket privado `mr-ext-uploads` com limite de 50MB.
+- **Helper Admin**: `src/integrations/supabase/client.server.ts` isolado com `supabaseAdmin`.
+- **CORS**: Restrito para `MR_EXTENSION_ORIGIN` em produção.
 
-**Assinado**: MR CENTRAL MOTOR V17
+### 2. Rotas API Consolidadas (`/api/ext/*`)
+| Rota | Status | Segurança | Lógica |
+| :--- | :--- | :--- | :--- |
+| `validate-license` | 🟢 OK | RLS + Auditoria | Validação HWID e Sessão |
+| `heartbeat` | 🟢 OK | RLS + Auditoria | Update `last_seen` sem duplicar |
+| `send-command` | 🟢 OK | Proxy Real | Preserva `lastPayload`, chamada única upstream |
+| `fix-stream` | 🟢 OK | SSE Proxy | Repasse de erros real (404/401/etc) |
+| `upload` | 🟢 OK | Storage Privado | Limite 50MB, MIME check, Signed URL |
+
+### 3. Banco de Dados e Migrations
+- **Tabela `licencas`**: Esquema completo com suporte a trial e expiração.
+- **Tabela `ext_sessions`**: Controle de HWID e concorrência de dispositivos.
+- **Tabela `ext_requests`**: Auditoria sanitizada (segredos mascarados).
+- **Storage**: Bucket `mr-ext-uploads` privado com políticas de acesso restritas.
+
+### 4. Verificação de Build e Testes
+- **Build**: `pnpm build` validado sem erros de importação ou alias.
+- **Testes Unitários**: Suite `vitest` em `src/lib/mr-ext/*.test.ts` cobrindo lógica de chave e segurança.
+
+### 5. Arquivos Modificados/Criados
+- `src/integrations/supabase/client.server.ts`
+- `src/lib/mr-ext/ext-api.server.ts`
+- `src/routes/api/ext/*.ts`
+- `supabase/migrations/20260819224500_v17_storage_fix.sql`
+- `AUDITORIA_MR_CENTRAL_FINAL.md`
+
+Este pacote representa a versão executável definitiva do projeto conectado ao GitHub.
