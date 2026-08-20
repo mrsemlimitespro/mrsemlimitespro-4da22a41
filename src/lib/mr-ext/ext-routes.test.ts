@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
-import * as extLogic from './ext-api.server';
+import { validateLicense } from './ext-api.server';
 
-// O segredo é mocar o supabaseAdmin DEPOIS das importações ou usar um proxy real
+// Mock do supabaseAdmin com encadeamento manual fluente
 vi.mock('@/integrations/supabase/client.server', () => {
   const mock = {
     from: vi.fn().mockReturnThis(),
@@ -26,7 +26,7 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
       const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
       (supabaseAdmin.maybeSingle as any).mockResolvedValueOnce({ data: null, error: null });
 
-      const result = await extLogic.validateLicense('MR-1111-2222-3333', 'hwid-1');
+      const result = await validateLicense('MR-1111-2222-3333', 'hwid-1');
       expect(result.valid).toBe(false);
       expect(result.error).toBe('license_not_found');
     });
@@ -41,18 +41,18 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
       admin.single.mockReset();
       admin.eq.mockClear();
 
-      // 1. Busca de licença
+      // Mock chain for validateLicense steps:
+      // 1. Fetch license
       admin.maybeSingle.mockResolvedValueOnce({ data: mockLic, error: null });
-      // 2. Busca de sessão existente
+      // 2. Fetch existing session
       admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
       
-      // 3. Count de sessões
-      // Mock do select('*', {count: 'exact'})
+      // 3. Count sessions (select count)
       admin.select.mockImplementationOnce(() => ({
         eq: vi.fn().mockResolvedValue({ count: 0, error: null })
       }));
 
-      // 4. Criação de sessão
+      // 4. Create session
       admin.insert.mockReturnThis();
       admin.select.mockReturnThis();
       admin.single.mockResolvedValueOnce({ 
@@ -60,7 +60,7 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
         error: null 
       });
 
-      const result = await extLogic.validateLicense('MR-1111-2222-3333', 'hwid-1');
+      const result = await validateLicense('MR-1111-2222-3333', 'hwid-1');
       expect(result.valid).toBe(true);
       expect(result.license?.id).toBe('lic-1');
     });
