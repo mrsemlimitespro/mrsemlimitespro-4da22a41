@@ -390,11 +390,18 @@ function LicencasAdmin() {
                   <LicencaRow
                     key={l.id}
                     l={l}
+                    isSelected={selectedIds.includes(l.id)}
+                    onToggleSelect={() => toggleSelect(l.id)}
                     onReset={() => setResetTarget(l)}
                     onRenovar={() => setRenovTarget(l)}
                     onCancelar={() => cancelar.mutate(l.id)}
                     onReativar={() => reativar.mutate(l.id)}
                     onReenviar={() => reenviar.mutate(l.id)}
+                    onDelete={() => {
+                      if(confirm("Excluir esta licença?")) {
+                        deleteBulkMutation.mutate([l.id]);
+                      }
+                    }}
                   />
                 ))}
               </tbody>
