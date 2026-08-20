@@ -1,8 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { validateLicense } from './ext-api.server';
 
-// O Vitest eleva o vi.mock, então não podemos usar variáveis de escopo externo nele diretamente
-// Mas podemos usar objetos retornados pela factory
 vi.mock('@/integrations/supabase/client.server', () => {
   const chain: any = {
     from: vi.fn(),
@@ -19,12 +17,15 @@ vi.mock('@/integrations/supabase/client.server', () => {
     }
   };
 
-  chain.from.mockReturnValue(chain);
-  chain.select.mockReturnValue(chain);
-  chain.eq.mockReturnValue(chain);
-  chain.insert.mockReturnValue(chain);
-  chain.update.mockReturnValue(chain);
-  chain.storage.from.mockReturnValue(chain.storage);
+  // Funções que retornam a chain
+  const returnsChain = () => chain;
+  chain.from.mockImplementation(returnsChain);
+  chain.select.mockImplementation(returnsChain);
+  chain.eq.mockImplementation(returnsChain);
+  chain.insert.mockImplementation(returnsChain);
+  chain.update.mockImplementation(returnsChain);
+  chain.maybeSingle.mockImplementation(returnsChain);
+  chain.storage.from.mockImplementation(() => chain.storage);
 
   return { supabaseAdmin: chain };
 });
@@ -49,20 +50,25 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
       admin.select.mockClear();
       admin.single.mockReset();
       admin.eq.mockClear();
+      admin.insert.mockClear();
 
-      // Configuração para validateLicense:
+      // Mocks para o fluxo de validateLicense:
       // 1. Busca licença
       admin.maybeSingle.mockResolvedValueOnce({ data: mockLic, error: null });
       // 2. Busca sessão existente
       admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
       
-      // 3. Count de sessões
-      // Precisamos que depois de eq() no count retorne a promisse
-      admin.eq.mockReturnValueOnce(Promise.resolve({ count: 0, error: null }));
+      // 3. Count de sessões (select count)
+      // O eq final do count precisa retornar o objeto count
+      admin.eq.mockImplementation((key: string, val: any) => {
+        // Se for a chamada de count (license_id no final)
+        if (key === 'license_id') {
+           return Promise.resolve({ count: 0, error: null });
+        }
+        return admin;
+      });
 
       // 4. Criação de sessão
-      admin.insert.mockReturnValue(admin);
-      admin.select.mockReturnValue(admin);
       admin.single.mockResolvedValueOnce({ 
         data: { id: 'sess-1', session_id: 'sess-uuid', last_seen: new Date().toISOString() }, 
         error: null 
