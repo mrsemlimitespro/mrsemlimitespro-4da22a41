@@ -121,7 +121,9 @@ const GROUP_ORDER = [
 const specialLinks: SpecialLink[] = [
   // 🏠 Dashboard
   { key: "dashboard", to: "/admin", label: "Dashboard Central", icon: LayoutDashboard, exact: true, group: "Ultra Admin" },
+  { key: "perfil", to: "/admin/perfil", label: "Minha Segurança", icon: ShieldCheck, group: "Ultra Admin" },
   { key: "home", to: "/admin/home", label: "Vitrine Home", icon: HomeIcon, group: "Ultra Admin" },
+
 
   // 📦 MR CENTRAL
   { key: "extensoes", to: "/admin/$resource", params: { resource: "extensoes" }, label: "Extensões", icon: Blocks, group: "MR CENTRAL" },
