@@ -170,7 +170,7 @@ function LicencasAdmin() {
 
   // Mutations
   const createMutation = useMutation({
-    mutationFn: (vars: any) => createFn(vars),
+    mutationFn: (vars: any) => createFn({ data: vars } as any),
     onSuccess: () => {
       toast.success("Licença(s) criada(s) com sucesso.");
       setCreateOpen(false);
