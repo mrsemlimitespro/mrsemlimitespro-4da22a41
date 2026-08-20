@@ -1,34 +1,32 @@
-# RELATÓRIO DE ENTREGA TÉCNICA - MR CENTRAL V17
+# RELATÓRIO DE ENTREGA TÉCNICA - MR CENTRAL V17 (REVISÃO FINAL)
 
 ## Status de Validação
+- **Gerenciador Oficial:** Bun (v1.3.3)
+- **Lockfile:** `bun.lock` (Sincronizado e validado)
 - **Build:** 🟢 SUCESSO (Vite/TanStack Start v1)
-- **Testes de Integração:** 🟢 SUCESSO (2/2 testes passando)
-- **Segurança RLS:** 🟢 IMPLEMENTADO (Políticas de isolamento ativas)
-- **Rotas Públicas:** 🟢 OPERACIONAIS (Sem barreiras de middleware)
+- **Testes de Integração:** 🟢 SUCESSO (Vitest)
+- **Segurança:** 🟢 `.env` removido, CORS restrito, RLS ativo.
 
-## Matriz de Rotas (Produção)
+## Matriz de Rotas (Verificação HTTP)
 Domínio: `https://mrsemlimitespro.lovable.app`
 
-| Rota | Método | Função |
+| Rota | OPTIONS (Preflight) | POST (Sem campos) |
 | --- | --- | --- |
-| `/api/public/ext/validate-license` | POST | Validação e criação de sessão |
-| `/api/public/ext/heartbeat` | POST | Atualização de presença |
-| `/api/public/ext/send-command` | POST | Proxy SSE para Lovable AI |
-| `/api/public/ext/fix-stream` | POST | Repasse de fluxo original |
-| `/api/public/ext/upload` | POST | Upload privado com URL assinada |
+| `/api/public/ext/validate-license` | 204 No Content | 400 JSON |
+| `/api/public/ext/heartbeat` | 204 No Content | 400 JSON |
+| `/api/public/ext/send-command` | 204 No Content | 400 JSON |
+| `/api/public/ext/fix-stream` | 204 No Content | 400 JSON |
+| `/api/public/ext/upload` | 204 No Content | 400 JSON |
 
-## Banco de Dados
-O schema V17 está consolidado nas migrations sob `supabase/migrations/`.
-- Tabela `licencas`: Gestão central de acesso.
-- Tabela `ext_sessions`: Controle de dispositivos (HWID) e limite de 1:1.
-- Tabela `ext_requests`: Log de auditoria sanitizado (sem tokens/chaves).
-- Tabela `ext_uploads`: Registro de arquivos em bucket privado.
+## Ajustes de Infraestrutura
+1. **CORS:** Padronizado para responder HTTP 204 em preflights via `getCorsHeaders` centralizado em `ext-api.server.ts`.
+2. **Dependências:** `package-lock.json` removido em favor do `bun.lock` para garantir build reproduzível.
+3. **Segredos:** `.env` removido do repositório. Variáveis de ambiente devem ser configuradas via painel Lovable/Supabase.
+4. **Origem:** Configuração `MR_EXTENSION_ORIGIN` documentada no `.env.example`.
 
-## Observações para o Integrador
-1. O `upload-adapter.js` já está configurado para o domínio de produção.
-2. Todas as rotas de API possuem suporte a CORS para o ID da extensão e localhost.
-3. O proxy de comandos preserva integralmente o payload SSE do motor original.
+## Entrega
+O ZIP gerado contém a raiz completa do repositório GitHub, pronto para ser clonado e executado em qualquer ambiente com Bun instalado.
 
 ---
-*Gerado em: 2026-08-20T14:28:00Z*
-*Assinatura: MR CENTRAL CORE V17*
+*Gerado em: 2026-08-20T15:10:00Z*
+*Assinatura: MR CENTRAL CORE V17 FINAL*
