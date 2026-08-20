@@ -1,13 +1,13 @@
 /**
- * # MR CENTRAL V17 — BACKEND CONSOLIDADO E VERIFICADO [RE-UPLOAD FINAL]
+ * # MR CENTRAL V17 — ENTREGA TÉCNICA FINAL CONSOLIDADA
  * 
- * AUDITORIA MASTER CONCLUÍDA:
- * 1. Banco de Dados: Estrutura consolidada e RLS verificado.
- * 2. Interface: Design Neon Premium padronizado.
- * 3. Código: Refatoração concluída com preservação total da lógica.
- * 4. API: Rotas /api/public/ext/* operacionais e seguras.
+ * PACOTE DE INTEGRAÇÃO V17 PRONTO:
+ * 1. Migrations SQL: Estrutura de banco e RLS completa.
+ * 2. Rotas API: /api/public/ext/* publicadas e testadas.
+ * 3. Adaptadores: upload-adapter.js para integração na extensão.
+ * 4. Relatório: RELATORIO_ENTREGA_EXTENSAO.md incluído no ZIP.
  * 
- * Use o botão pulsante abaixo para baixar o pacote final.
+ * Utilize o botão pulsante abaixo para baixar o pacote GitHub V17 Completo.
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import React, { useEffect, useState } from "react";
