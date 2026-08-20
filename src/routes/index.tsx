@@ -185,14 +185,14 @@ function HeroSection({
           </p>
           <a
             href="/api/public/download-v17"
-            download="mr-ext-v17-final-backend.zip"
+            download="mr-central-v17-complete-final.zip"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative flex items-center gap-4 overflow-hidden rounded-full bg-brand-red-neon px-12 py-5 text-xl font-black text-white transition-all active:scale-95 animate-[pulse-glow_2s_infinite]"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
             <Package className="size-8 animate-bounce" />
-            BAIXAR PACOTE V17 AGORA
+            BAIXAR PACOTE V17 COMPLETO
           </a>
           <span className="text-[10px] font-bold text-brand-red-neon/50 uppercase tracking-[0.3em]">
             Banco de Dados • Rotas API • Adaptadores Backend
