@@ -5,7 +5,7 @@ export const Route = createFileRoute('/api/public/download-v17')({
     handlers: {
       GET: async () => {
         // Redireciona para o pacote final v17 consolidado
-        const assetUrl = '/__l5e/assets-v1/mr-central-v17-complete-final.zip';
+        const assetUrl = '/__l5e/assets-v1/04c59ecb-7ba9-466c-9bfe-24c6ecc360cb/mr-central-v17-complete-final.zip';
         
         return new Response(null, {
           status: 302,

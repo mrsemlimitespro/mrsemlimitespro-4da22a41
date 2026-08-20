@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import logoAsset from "@/assets/mr-sem-limites-logo.png.asset.json";
 import { useEffect, useState } from "react";
 
-export const BRAND_NAME = "MR sem limites";
+export const BRAND_NAME = "MR CENTRAL";
 export const BRAND_TAGLINE = "PREMIUM";
 export const BRAND_LOGO_URL = logoAsset.url;
 

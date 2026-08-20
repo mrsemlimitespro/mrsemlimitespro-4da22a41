@@ -46,7 +46,7 @@ export const UploadManager = {
       };
 
       // Endpoint canônico V17 corrigido
-      xhr.open('POST', 'https://mrsemlimites.lovable.app/api/ext/upload');
+      xhr.open('POST', 'https://mrsemlimitespro.lovable.app/api/public/ext/upload');
       xhr.send(formData);
     });
   }
