@@ -16,6 +16,11 @@ import {
   Pencil,
   RefreshCw,
   Send,
+  Plus,
+  Trash2,
+  Clock,
+  Calendar,
+  CheckCircle2,
 } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -32,6 +37,10 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { createLicenses, adjustLicenseTime, deleteLicenses } from "@/lib/licencas.functions";
+import { useServerFn } from "@tanstack/react-start";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const Route = createFileRoute("/admin/licencas")({
   head: () => ({ meta: [{ title: "Licenças — Admin" }, { name: "robots", content: "noindex" }] }),
