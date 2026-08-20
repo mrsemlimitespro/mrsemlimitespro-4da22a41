@@ -13,9 +13,9 @@ type PillItem = {
 };
 
 const items: PillItem[] = [
-  { label: "Loja", icon: Store, to: "/" },
-  { label: "Prompts", icon: MessageSquare, to: "/prompts" },
-  { label: "Agents", icon: Bot, to: "/agents" },
+  { label: "Catálogo", icon: Store, to: "/extensoes" },
+  { label: "IA Prompts", icon: MessageSquare, to: "/prompts" },
+  { label: "IA Agentes", icon: Bot, to: "/agents" },
   { label: "Packs", icon: Package, to: "/packs" },
 ];
 

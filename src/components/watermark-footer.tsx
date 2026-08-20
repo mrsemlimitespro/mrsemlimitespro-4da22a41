@@ -1,4 +1,4 @@
-const TEXT = "◆ MR SEM LIMITES · PREMIUM ACCESS ◆";
+const TEXT = "◆ MR CENTRAL · PREMIUM ACCESS ◆";
 
 export function WatermarkFooter() {
   return (

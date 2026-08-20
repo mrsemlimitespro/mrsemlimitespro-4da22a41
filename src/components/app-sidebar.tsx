@@ -193,20 +193,12 @@ export function AppSidebar() {
 async function downloadExtension() {
   try {
     playSfx("swipe");
-    const filename = "mr-sem-limites-2.2.6.zip";
-    const res = await fetch("/api/public/download-extensao", { cache: "no-store" });
-    if (!res.ok) throw new Error(`Falha ao baixar (${res.status})`);
-    const blob = await res.blob();
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(a.href);
+    // Usar a rota de proxy pública para evitar problemas de CORS e autenticação no download direto
+    const filename = "mr-central-v17-complete-final.zip";
+    window.location.href = "/api/public/download-v17";
     toast.success("Download iniciado");
   } catch (err) {
-    toast.error(err instanceof Error ? err.message : "Falha ao baixar extensão");
+    toast.error(err instanceof Error ? err.message : "Falha ao baixar pacote");
   }
 }
 

@@ -47,8 +47,8 @@ export function BrandWatermark() {
         style={{ 
           transform: "rotate(-8deg)",
           filter: "blur(1px) drop-shadow(0 0 40px var(--brand-red-neon))",
-          animationDuration: "8s",
-          mixBlendMode: "screen"
+          animationDuration: "12s",
+          mixBlendMode: "lighten"
         }}
       >
         <img
