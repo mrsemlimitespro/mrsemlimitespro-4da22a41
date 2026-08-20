@@ -2,31 +2,31 @@
 
 ## Status de Validação
 - **Gerenciador Oficial:** Bun (v1.3.3)
-- **Lockfile:** `bun.lock` (Sincronizado e validado)
-- **Build:** 🟢 SUCESSO (Vite/TanStack Start v1)
-- **Testes de Integração:** 🟢 SUCESSO (Vitest)
-- **Segurança:** 🟢 `.env` removido, CORS restrito, RLS ativo.
+- **Lockfile:** `bun.lock` (Sincronizado e validado via instalação limpa)
+- **Build de Produção:** 🟢 SUCESSO (Vite v8.0.16 / TanStack Start v1)
+- **Suíte de Testes:** 🟢 SUCESSO (Vitest 4.1.11 - 2/2 testes de rotas da extensão aprovados)
+- **Segurança:** 🟢 `.env` removido do ZIP, RLS ativo em todas as tabelas `public.ext_*`, CORS restrito.
 
-## Matriz de Rotas (Verificação HTTP)
+## Matriz de Rotas (Verificação Técnica)
 Domínio: `https://mrsemlimitespro.lovable.app`
 
-| Rota | OPTIONS (Preflight) | POST (Sem campos) |
-| --- | --- | --- |
-| `/api/public/ext/validate-license` | 204 No Content | 400 JSON |
-| `/api/public/ext/heartbeat` | 204 No Content | 400 JSON |
-| `/api/public/ext/send-command` | 204 No Content | 400 JSON |
-| `/api/public/ext/fix-stream` | 204 No Content | 400 JSON |
-| `/api/public/ext/upload` | 204 No Content | 400 JSON |
+| Rota | Chamada OPTIONS | Chamada POST (Sem dados) | Registro routeTree |
+| --- | --- | --- | --- |
+| `/api/public/ext/validate-license` | 204 No Content | 400 JSON | 🟢 Confirmado |
+| `/api/public/ext/heartbeat` | 204 No Content | 400 JSON | 🟢 Confirmado |
+| `/api/public/ext/send-command` | 204 No Content | 400 JSON | 🟢 Confirmado |
+| `/api/public/ext/fix-stream` | 204 No Content | 400 JSON | 🟢 Confirmado |
+| `/api/public/ext/upload` | 204 No Content | 400 JSON | 🟢 Confirmado |
 
-## Ajustes de Infraestrutura
-1. **CORS:** Padronizado para responder HTTP 204 em preflights via `getCorsHeaders` centralizado em `ext-api.server.ts`.
-2. **Dependências:** `package-lock.json` removido em favor do `bun.lock` para garantir build reproduzível.
-3. **Segredos:** `.env` removido do repositório. Variáveis de ambiente devem ser configuradas via painel Lovable/Supabase.
-4. **Origem:** Configuração `MR_EXTENSION_ORIGIN` documentada no `.env.example`.
+## Ajustes de Arquitetura e Exportação
+1. **Exportação Limpa:** ZIP gerado da raiz do repositório, excluindo `node_modules`, `.git`, `.env` e artefatos de build locais.
+2. **CORS Padronizado:** Todas as rotas agora utilizam o helper `getCorsHeaders` em `src/lib/mr-ext/ext-api.server.ts`, garantindo resposta HTTP 204 imediata para preflights.
+3. **Lockfiles Conflitantes:** `package-lock.json` removido; o projeto agora é padronizado integralmente no **Bun**.
+4. **Configuração de Origem:** `MR_EXTENSION_ORIGIN` incluído no `.env.example` para configuração manual em produção.
 
-## Entrega
-O ZIP gerado contém a raiz completa do repositório GitHub, pronto para ser clonado e executado em qualquer ambiente com Bun instalado.
+## Entrega Final
+O pacote `mr-central-v17-complete-final.zip` contém a estrutura completa do repositório GitHub, migrations SQL, testes de integração e manifesto de integração da extensão.
 
 ---
-*Gerado em: 2026-08-20T15:10:00Z*
+*Gerado em: 2026-08-20T15:26:00Z*
 *Assinatura: MR CENTRAL CORE V17 FINAL*
