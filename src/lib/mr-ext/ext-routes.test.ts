@@ -3,21 +3,21 @@ import { validateLicense } from './ext-api.server';
 
 // Mock do supabaseAdmin com encadeamento manual fluente
 vi.mock('@/integrations/supabase/client.server', () => {
-  const mock = {
+  const chain = {
     from: vi.fn().mockReturnThis(),
     select: vi.fn().mockReturnThis(),
     eq: vi.fn().mockReturnThis(),
-    maybeSingle: vi.fn(),
+    maybeSingle: vi.fn().mockReturnThis(), // GARANTE QUE RETORNA A CHAIN
     insert: vi.fn().mockReturnThis(),
     update: vi.fn().mockReturnThis(),
-    single: vi.fn(),
+    single: vi.fn().mockReturnThis(),
     storage: {
       from: vi.fn().mockReturnThis(),
       upload: vi.fn(),
       createSignedUrl: vi.fn()
     }
   };
-  return { supabaseAdmin: mock };
+  return { supabaseAdmin: chain };
 });
 
 describe('MR CENTRAL V17 - Integration Tests', () => {
@@ -41,18 +41,17 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
       admin.single.mockReset();
       admin.eq.mockClear();
 
-      // Mock chain for validateLicense steps:
-      // 1. Fetch license
-      admin.maybeSingle.mockResolvedValueOnce({ data: mockLic, error: null });
-      // 2. Fetch existing session
-      admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
-      
-      // 3. Count sessions (select count)
+      // Configura os mocks para as chamadas consecutivas de maybeSingle
+      admin.maybeSingle
+        .mockResolvedValueOnce({ data: mockLic, error: null }) // 1. Busca licença
+        .mockResolvedValueOnce({ data: null, error: null });   // 2. Busca sessão
+
+      // Count de sessões
       admin.select.mockImplementationOnce(() => ({
         eq: vi.fn().mockResolvedValue({ count: 0, error: null })
       }));
 
-      // 4. Create session
+      // Criação de sessão
       admin.insert.mockReturnThis();
       admin.select.mockReturnThis();
       admin.single.mockResolvedValueOnce({ 
