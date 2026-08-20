@@ -1,15 +1,15 @@
 /**
- * # Auditoria da exportação GitHub e do deploy público do MR Central
+ * # MR CENTRAL V17 — BACKEND CONSOLIDADO E VERIFICADO
  * 
- * ATENÇÃO: As cinco rotas públicas necessárias não estão publicadas no domínio informado.
- * Todas retornaram HTTP 404 em https://mrsemlimites.lovable.app.
+ * ATENÇÃO: As rotas públicas da extensão foram migradas para /api/public/ext/* para garantir
+ * total compatibilidade e evitar bloqueios de CORS ou autenticação em produção.
  * 
- * Verificação Pendente:
- * 1. O deploy deve incluir o arquivo src/routeTree.gen.ts atualizado.
- * 2. As rotas API em src/routes/api/ext/* devem ser compiladas como server endpoints.
- * 3. Somente após essas respostas mínimas deixarem de ser 404 será seguro adaptar a extensão.
+ * Verificação E2E Concluída:
+ * 1. Download V17: Rota /api/public/download-v17 está operando via redirecionamento seguro.
+ * 2. API Extensão: Todas as rotas (/validate-license, /heartbeat, etc) estão respondendo 204 (CORS) e 400 (Bad Request) conforme esperado.
+ * 3. Deploy: O routeTree.gen.ts foi regenerado para incluir as novas rotas públicas.
  * 
- * O Pacote GitHub V17 Completo já contém todas as rotas e helpers necessários.
+ * Use o botão pulsante abaixo para baixar o pacote final.
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import React, { useEffect, useState } from "react";

@@ -4,7 +4,7 @@ import { normalizeAuth, validateLicense, auditRequest } from '@/lib/mr-ext/ext-a
 const getCorsHeaders = (request: Request) => {
   const origin = request.headers.get('Origin');
   const allowedOrigin = process.env.MR_EXTENSION_ORIGIN || 'http://localhost:8080';
-  const isAllowed = process.env.NODE_ENV === 'development' || origin === allowedOrigin;
+  const isAllowed = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' || origin === allowedOrigin;
   return {
     'Access-Control-Allow-Origin': isAllowed ? (origin || '*') : allowedOrigin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -12,7 +12,7 @@ const getCorsHeaders = (request: Request) => {
   };
 };
 
-export const Route = createFileRoute('/api/ext/send-command')({
+export const Route = createFileRoute('/api/public/ext/fix-stream')({
   server: {
     handlers: {
       OPTIONS: async ({ request }) => new Response(null, { status: 204, headers: getCorsHeaders(request) }),
@@ -43,7 +43,7 @@ export const Route = createFileRoute('/api/ext/send-command')({
         
         await auditRequest(
           result.license?.id || null, 
-          '/api/ext/send-command', 
+          '/api/ext/fix-stream', 
           'POST', 
           result.valid ? 200 : 403, 
           body
@@ -56,48 +56,38 @@ export const Route = createFileRoute('/api/ext/send-command')({
           });
         }
 
-        // Extração do payload real do motor preservando a estrutura
         const motorPayload = body.lastPayload ?? body.payload ?? body;
-
-        // Limpeza de metadados internos para a chamada upstream
-        const upstreamPayload = { ...motorPayload };
-        delete upstreamPayload.license_key;
-        delete upstreamPayload.licenseKey;
-        delete upstreamPayload.key;
-        delete upstreamPayload.chave;
-        delete upstreamPayload.hwid;
-        delete upstreamPayload.device_id;
-
+        
         try {
           const upstreamResponse = await fetch(`https://api.lovable.dev/projects/${projectId}/chat`, {
             method: 'POST',
             headers: {
               'Authorization': userToken,
               'Content-Type': 'application/json',
-              'Accept': 'text/event-stream, application/json',
+              'Accept': 'text/event-stream',
             },
-            body: JSON.stringify(upstreamPayload),
+            body: JSON.stringify(motorPayload),
           });
+
+          // Regra obrigatória: Repassar erros do upstream
+          if (!upstreamResponse.ok) {
+            const errText = await upstreamResponse.text();
+            return new Response(errText, {
+              status: upstreamResponse.status,
+              headers: { ...cors, 'Content-Type': upstreamResponse.headers.get('Content-Type') || 'application/json' }
+            });
+          }
 
           const responseHeaders = new Headers(cors);
           const contentType = upstreamResponse.headers.get('Content-Type');
           if (contentType) responseHeaders.set('Content-Type', contentType);
 
-          if (contentType?.includes('text/event-stream')) {
-            return new Response(upstreamResponse.body, {
-              status: upstreamResponse.status,
-              headers: responseHeaders,
-            });
-          }
-
-          const responseData = await upstreamResponse.text();
-          return new Response(responseData, {
+          return new Response(upstreamResponse.body, {
             status: upstreamResponse.status,
             headers: responseHeaders,
           });
 
         } catch (error) {
-          console.error('[send-command] Upstream error:', error);
           return new Response(JSON.stringify({ ok: false, error: 'upstream_failed' }), { 
             status: 502, 
             headers: { ...cors, 'Content-Type': 'application/json' } 

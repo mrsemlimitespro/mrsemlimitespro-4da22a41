@@ -4,7 +4,7 @@ import { normalizeAuth, validateLicense, auditRequest } from '@/lib/mr-ext/ext-a
 const getCorsHeaders = (request: Request) => {
   const origin = request.headers.get('Origin');
   const allowedOrigin = process.env.MR_EXTENSION_ORIGIN || 'http://localhost:8080';
-  const isAllowed = process.env.NODE_ENV === 'development' || origin === allowedOrigin;
+  const isAllowed = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' || origin === allowedOrigin;
   return {
     'Access-Control-Allow-Origin': isAllowed ? (origin || '*') : allowedOrigin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -13,7 +13,7 @@ const getCorsHeaders = (request: Request) => {
   };
 };
 
-export const Route = createFileRoute('/api/ext/heartbeat')({
+export const Route = createFileRoute('/api/public/ext/heartbeat')({
   server: {
     handlers: {
       OPTIONS: async ({ request }) => new Response(null, { status: 204, headers: getCorsHeaders(request) }),
