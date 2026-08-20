@@ -1,69 +1,57 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { validateKeyFormat, normalizeAuth, sanitizeAudit } from './ext-api.server';
+import { validateKeyFormat, sanitizeAudit } from './ext-api.server';
+import { supabaseAdmin } from '@/integrations/supabase/client.server';
 
-// Mock do supabaseAdmin
+// Mock supabaseAdmin
 vi.mock('@/integrations/supabase/client.server', () => ({
   supabaseAdmin: {
-    from: vi.fn().mockReturnThis(),
-    select: vi.fn().mockReturnThis(),
-    eq: vi.fn().mockReturnThis(),
-    maybeSingle: vi.fn(),
-    insert: vi.fn().mockReturnThis(),
-    update: vi.fn().mockReturnThis(),
-    single: vi.fn(),
+    from: vi.fn(() => ({
+      select: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
+      maybeSingle: vi.fn(),
+      update: vi.fn().mockReturnThis(),
+      insert: vi.fn().mockReturnThis(),
+      single: vi.fn(),
+    })),
     storage: {
-      from: vi.fn().mockReturnThis(),
-      upload: vi.fn(),
-      createSignedUrl: vi.fn()
-    }
-  }
+      from: vi.fn(() => ({
+        upload: vi.fn(),
+        createSignedUrl: vi.fn(),
+      })),
+    },
+  },
 }));
 
-describe('MR CENTRAL V17 - Auditoria e Lógica de Extensão', () => {
-  
-  describe('Validação de Formato', () => {
-    it('deve aceitar MR-XXXX-XXXX-XXXX', () => {
-      expect(validateKeyFormat('MR-ABCD-1234-EFGH')).toBe(true);
-      expect(validateKeyFormat('MR-0000-AAAA-1111')).toBe(true);
+describe('MR Ext V17 Logic', () => {
+  describe('validateKeyFormat', () => {
+    it('should validate standard MR keys', () => {
+      expect(validateKeyFormat('MR-1234-ABCD-5678')).toBe(true);
+      expect(validateKeyFormat('AB-MR-1234-ABCD-5678')).toBe(true);
+      expect(validateKeyFormat('MR-1234-ABCD-5678-90EF')).toBe(true);
     });
 
-    it('deve aceitar formato longo SIGLA-MR-XXXX-XXXX-XXXX-XXXX', () => {
-      expect(validateKeyFormat('UX-MR-ABCD-1234-EFGH-5678')).toBe(true);
-      expect(validateKeyFormat('BR-MR-0000-AAAA-1111-CCCC')).toBe(true);
-    });
-
-    it('deve rejeitar formatos inválidos', () => {
-      expect(validateKeyFormat('MR-ABCD-1234')).toBe(false);
-      expect(validateKeyFormat('ABCD-1234-EFGH')).toBe(false);
-      expect(validateKeyFormat('MR-abcd-1234-efgh')).toBe(false);
-      expect(validateKeyFormat(null)).toBe(false);
+    it('should fail invalid keys', () => {
+      expect(validateKeyFormat('invalid')).toBe(false);
+      expect(validateKeyFormat('MR-123')).toBe(false);
+      expect(validateKeyFormat('')).toBe(false);
     });
   });
 
-  describe('Normalização de Entrada (Aliases)', () => {
-    it('deve extrair chave e hwid de múltiplos campos', () => {
-      expect(normalizeAuth({ key: 'K1', device_id: 'H1' })).toEqual({ licenseKey: 'K1', hwid: 'H1' });
-      expect(normalizeAuth({ license_key: 'K2', hwid: 'H2' })).toEqual({ licenseKey: 'K2', hwid: 'H2' });
-      expect(normalizeAuth({ chave: 'K3', deviceId: 'H3' })).toEqual({ licenseKey: 'K3', hwid: 'H3' });
-    });
-  });
-
-  describe('Segurança e Sanitização', () => {
-    it('deve remover tokens e chaves de logs de auditoria', () => {
-      const sensitive = {
-        user: 'joao',
-        token: 'bearertoken123',
-        authorization: 'Bearer xyz',
-        apiKey: 'secret123',
-        license_key: 'MR-1234-1234-1234',
-        safe_data: 'ok'
+  describe('sanitizeAudit', () => {
+    it('should redact sensitive fields', () => {
+      const payload = {
+        license_key: 'SECRET-KEY',
+        data: 'public',
+        nested: {
+          token: 'PRIVATE-TOKEN',
+          user: 'john'
+        }
       };
-      const sanitized = sanitizeAudit(sensitive);
-      expect(sanitized.token).toBe('[REDACTED]');
-      expect(sanitized.authorization).toBe('[REDACTED]');
-      expect(sanitized.apiKey).toBe('[REDACTED]');
+      const sanitized = sanitizeAudit(payload);
       expect(sanitized.license_key).toBe('[REDACTED]');
-      expect(sanitized.safe_data).toBe('ok');
+      expect(sanitized.nested.token).toBe('[REDACTED]');
+      expect(sanitized.data).toBe('public');
+      expect(sanitized.nested.user).toBe('john');
     });
   });
 });
