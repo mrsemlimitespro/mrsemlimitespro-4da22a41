@@ -16,6 +16,11 @@ import {
   Pencil,
   RefreshCw,
   Send,
+  Plus,
+  Trash2,
+  Clock,
+  Calendar,
+  CheckCircle2,
 } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -32,6 +37,10 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { createLicenses, adjustLicenseTime, deleteLicenses } from "@/lib/licencas.functions";
+import { useServerFn } from "@tanstack/react-start";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const Route = createFileRoute("/admin/licencas")({
   head: () => ({ meta: [{ title: "Licenças — Admin" }, { name: "robots", content: "noindex" }] }),
@@ -83,7 +92,13 @@ function LicencasAdmin() {
   const [busca, setBusca] = useState("");
   const [resetTarget, setResetTarget] = useState<Licenca | null>(null);
   const [renovTarget, setRenovTarget] = useState<Licenca | null>(null);
+  const [createOpen, setCreateOpen] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const qc = useQueryClient();
+
+  const createFn = useServerFn(createLicenses);
+  const adjustTimeFn = useServerFn(adjustLicenseTime);
+  const deleteFn = useServerFn(deleteLicenses);
 
   const { data: licencas = [], isLoading, refetch } = useQuery({
     queryKey: ["admin-licencas"],
@@ -94,7 +109,7 @@ function LicencasAdmin() {
           "id,chave,status,tipo,email,cliente_id,revendedor_id,produto_id,device_id,ultimo_acesso,ativada_em,expira_em,created_at,reset_hwid_motivo,reset_hwid_solicitado_em,observacoes_admin,duracao_dias,metadata",
         )
         .order("created_at", { ascending: false })
-        .limit(500);
+        .limit(1000);
       if (error) throw error;
       return (data ?? []) as Licenca[];
     },
@@ -154,11 +169,30 @@ function LicencasAdmin() {
   }, [licencas, tab, busca]);
 
   // Mutations
+  const createMutation = useMutation({
+    mutationFn: (vars: any) => createFn(vars),
+    onSuccess: () => {
+      toast.success("Licença(s) criada(s) com sucesso.");
+      setCreateOpen(false);
+      qc.invalidateQueries({ queryKey: ["admin-licencas"] });
+    },
+    onError: (e: any) => toast.error(e.message || "Erro ao criar licenças"),
+  });
+
+  const deleteBulkMutation = useMutation({
+    mutationFn: (ids: string[]) => deleteFn({ data: { licenseIds: ids } } as any),
+    onSuccess: () => {
+      toast.success("Licenças excluídas.");
+      setSelectedIds([]);
+      qc.invalidateQueries({ queryKey: ["admin-licencas"] });
+    },
+    onError: (e: any) => toast.error(e.message || "Erro ao excluir"),
+  });
+
   const resetDevice = useMutation({
     mutationFn: async ({ id, motivo }: { id: string; motivo: string }) => {
       const { error } = await (supabase as any).rpc("resetar_device_licenca", { _licenca_id: id });
       if (error) throw error;
-      // grava motivo em observacoes_admin como registro simples (não altera schema base)
       await supabase
         .from("licencas")
         .update({
@@ -168,7 +202,7 @@ function LicencasAdmin() {
         .eq("id", id);
     },
     onSuccess: () => {
-      toast.success("Dispositivo restaurado. Cliente pode ativar em outro aparelho.");
+      toast.success("Dispositivo restaurado.");
       setResetTarget(null);
       qc.invalidateQueries({ queryKey: ["admin-licencas"] });
     },
@@ -177,8 +211,7 @@ function LicencasAdmin() {
 
   const renovar = useMutation({
     mutationFn: async ({ id, dias }: { id: string; dias: number }) => {
-      const { error } = await (supabase as any).rpc("renovar_licenca", { _licenca_id: id, _dias: dias });
-      if (error) throw error;
+      return adjustTimeFn({ data: { licenseId: id, days: dias } } as any);
     },
     onSuccess: () => {
       toast.success("Licença renovada.");
@@ -224,6 +257,20 @@ function LicencasAdmin() {
     onError: (e: Error) => toast.error(e.message || "Falha ao reenviar"),
   });
 
+  const handleSelectAll = () => {
+    if (selectedIds.length === filtradas.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(filtradas.map(l => l.id));
+    }
+  };
+
+  const toggleSelect = (id: string) => {
+    setSelectedIds(prev => 
+      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+    );
+  };
+
   return (
     <div className="mx-auto max-w-7xl space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-3">
@@ -237,12 +284,29 @@ function LicencasAdmin() {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          {selectedIds.length > 0 && (
+            <Button 
+              variant="destructive" 
+              size="sm" 
+              onClick={() => {
+                if(confirm(`Excluir ${selectedIds.length} licenças?`)) {
+                  deleteBulkMutation.mutate(selectedIds);
+                }
+              }}
+              disabled={deleteBulkMutation.isPending}
+            >
+              <Trash2 className="mr-1 size-4" /> Excluir ({selectedIds.length})
+            </Button>
+          )}
           <Button variant="ghost" size="sm" onClick={() => refetch()}>
             <RefreshCw className="mr-1 size-4" /> Atualizar
           </Button>
-          <Button size="sm" asChild className="gradient-primary">
+          <Button size="sm" onClick={() => setCreateOpen(true)} className="gradient-primary">
+            <Plus className="mr-1 size-4" /> Criar Chaves
+          </Button>
+          <Button size="sm" variant="outline" asChild className="hidden md:flex">
             <Link to="/admin/$resource" params={{ resource: "licencas" }}>
-              <Pencil className="mr-1 size-4" /> Editor detalhado
+              <Pencil className="mr-1 size-4" /> Editor
             </Link>
           </Button>
         </div>
@@ -305,13 +369,19 @@ function LicencasAdmin() {
             <table className="w-full min-w-[900px] text-sm">
               <thead className="text-left text-[11px] uppercase tracking-wider text-muted-foreground">
                 <tr className="border-b border-white/5">
+                  <th className="px-4 py-3 font-medium w-10">
+                    <Checkbox 
+                      checked={selectedIds.length === filtradas.length && filtradas.length > 0} 
+                      onCheckedChange={handleSelectAll}
+                    />
+                  </th>
                   <th className="px-4 py-3 font-medium">Chave</th>
                   <th className="px-4 py-3 font-medium">Nível</th>
                   <th className="px-4 py-3 font-medium">Tipo</th>
                   <th className="px-4 py-3 font-medium">Status</th>
                   <th className="px-4 py-3 font-medium">E-mail</th>
                   <th className="px-4 py-3 font-medium">Device</th>
-                  <th className="px-4 py-3 font-medium">Expira</th>
+                  <th className="px-4 py-3 font-medium text-center">Expira</th>
                   <th className="px-4 py-3 font-medium text-right">Ações</th>
                 </tr>
               </thead>
@@ -320,11 +390,18 @@ function LicencasAdmin() {
                   <LicencaRow
                     key={l.id}
                     l={l}
+                    isSelected={selectedIds.includes(l.id)}
+                    onToggleSelect={() => toggleSelect(l.id)}
                     onReset={() => setResetTarget(l)}
                     onRenovar={() => setRenovTarget(l)}
                     onCancelar={() => cancelar.mutate(l.id)}
                     onReativar={() => reativar.mutate(l.id)}
                     onReenviar={() => reenviar.mutate(l.id)}
+                    onDelete={() => {
+                      if(confirm("Excluir esta licença?")) {
+                        deleteBulkMutation.mutate([l.id]);
+                      }
+                    }}
                   />
                 ))}
               </tbody>
@@ -334,6 +411,12 @@ function LicencasAdmin() {
       </div>
 
       {/* Modais */}
+      <CreateLicenseDialog
+        open={createOpen}
+        onClose={() => setCreateOpen(false)}
+        onConfirm={(data) => createMutation.mutate(data)}
+        busy={createMutation.isPending}
+      />
       <ResetDeviceDialog
         licenca={resetTarget}
         onClose={() => setResetTarget(null)}
@@ -358,24 +441,36 @@ function LicencasAdmin() {
 
 function LicencaRow({
   l,
+  isSelected,
+  onToggleSelect,
   onReset,
   onRenovar,
   onCancelar,
   onReativar,
   onReenviar,
+  onDelete,
 }: {
   l: Licenca;
+  isSelected: boolean;
+  onToggleSelect: () => void;
   onReset: () => void;
   onRenovar: () => void;
   onCancelar: () => void;
   onReativar: () => void;
   onReenviar: () => void;
+  onDelete: () => void;
 }) {
   const nivel = derivarNivel(l);
   const encerrada = l.status === "expirada" || l.status === "cancelada" || l.status === "bloqueada" || l.status === "revogada";
 
   return (
-    <tr className="border-b border-white/5 last:border-b-0 hover:bg-white/[0.02]">
+    <tr className={cn(
+      "border-b border-white/5 last:border-b-0 hover:bg-white/[0.02] transition-colors",
+      isSelected && "bg-blue-500/5 border-blue-500/20"
+    )}>
+      <td className="px-4 py-3">
+        <Checkbox checked={isSelected} onCheckedChange={onToggleSelect} />
+      </td>
       <td className="px-4 py-3 font-mono text-xs">
         <div className="flex items-center gap-2">
           <span>{l.chave}</span>
@@ -424,11 +519,9 @@ function LicencaRow({
               <RotateCcw className="size-4" />
             </Button>
           )}
-          {!encerrada && (
-            <Button size="sm" variant="ghost" onClick={onRenovar} title="Renovar">
-              <RefreshCw className="size-4" />
-            </Button>
-          )}
+          <Button size="sm" variant="ghost" onClick={onRenovar} title="Ajustar Tempo">
+            <Clock className="size-4" />
+          </Button>
           {!encerrada ? (
             <Button size="sm" variant="ghost" onClick={onCancelar} title="Cancelar">
               <Ban className="size-4 text-rose-400" />
@@ -438,6 +531,9 @@ function LicencaRow({
               <ShieldCheck className="size-4 text-emerald-400" />
             </Button>
           )}
+          <Button size="sm" variant="ghost" onClick={onDelete} title="Excluir Permanentemente">
+            <Trash2 className="size-4 text-rose-600" />
+          </Button>
         </div>
       </td>
     </tr>
@@ -579,9 +675,9 @@ function RenovarDialog({
     >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Renovar licença</DialogTitle>
+          <DialogTitle>Ajustar Validade / Renovar</DialogTitle>
           <DialogDescription>
-            Estende a validade da licença. Se já estiver expirada, ela volta a ficar ativa.
+            Adicione ou remova tempo da licença. Se a licença estiver expirada, adicionar tempo irá reativá-la automaticamente.
           </DialogDescription>
         </DialogHeader>
         {licenca && (
@@ -607,16 +703,16 @@ function RenovarDialog({
                 onChange={(e) => setDias(Math.max(1, Number(e.target.value) || 0))}
               />
               <div className="mt-2 flex flex-wrap gap-1.5">
-                {[7, 30, 90, 180, 365].map((d) => (
+                {[-30, -7, 1, 3, 7, 30, 60, 110, 365].map((d) => (
                   <Button
                     key={d}
                     type="button"
                     size="sm"
-                    variant="ghost"
+                    variant={d > 0 ? "outline" : "destructive"}
                     onClick={() => setDias(d)}
-                    className="rounded-full border border-white/5"
+                    className="rounded-lg h-8 px-2 text-[11px]"
                   >
-                    +{d}d
+                    {d > 0 ? `+${d}d` : `${d}d`}
                   </Button>
                 ))}
               </div>
@@ -629,6 +725,141 @@ function RenovarDialog({
           </Button>
           <Button className="gradient-primary" disabled={busy || dias < 1} onClick={() => onConfirm(dias)}>
             {busy ? <Loader2 className="size-4 animate-spin" /> : `Adicionar +${dias}d`}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function CreateLicenseDialog({
+  open,
+  onClose,
+  onConfirm,
+  busy,
+}: {
+  open: boolean;
+  onClose: () => void;
+  onConfirm: (data: any) => void;
+  busy: boolean;
+}) {
+  const [formData, setFormData] = useState({
+    tipo: "premium",
+    duracao: "30d",
+    email: "",
+    user_name: "",
+    max_devices: 1,
+    quantidade: 1,
+    notes: ""
+  });
+
+  const duracoes = [
+    { value: "1h", label: "Chave Teste (1 hora)" },
+    { value: "1d", label: "Chave Normal (1 dia)" },
+    { value: "3d", label: "Chave Normal (3 dias)" },
+    { value: "30d", label: "Chave Normal (30 dias)" },
+    { value: "60d", label: "Chave Normal (60 dias)" },
+    { value: "110d", label: "Chave Normal (110 dias)" },
+    { value: "1y", label: "Chave Normal (1 ano)" },
+  ];
+
+  return (
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>Gerar Novas Chaves</DialogTitle>
+          <DialogDescription>
+            Crie chaves de acesso para a extensão com durações pré-definidas.
+          </DialogDescription>
+        </DialogHeader>
+        
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Tipo de Licença</Label>
+              <Select 
+                value={formData.tipo} 
+                onValueChange={(v) => setFormData(prev => ({ ...prev, tipo: v }))}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione o tipo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="teste">Teste / Trial</SelectItem>
+                  <SelectItem value="premium">Premium / Paga</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Duração</Label>
+              <Select 
+                value={formData.duracao} 
+                onValueChange={(v) => setFormData(prev => ({ ...prev, duracao: v }))}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione a duração" />
+                </SelectTrigger>
+                <SelectContent>
+                  {duracoes.map(d => (
+                    <SelectItem key={d.value} value={d.value}>{d.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Quantidade</Label>
+              <Input 
+                type="number" 
+                min={1} 
+                max={50} 
+                value={formData.quantidade}
+                onChange={(e) => setFormData(prev => ({ ...prev, quantidade: Number(e.target.value) }))}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Limite Devices</Label>
+              <Input 
+                type="number" 
+                min={1} 
+                value={formData.max_devices}
+                onChange={(e) => setFormData(prev => ({ ...prev, max_devices: Number(e.target.value) }))}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Nome do Cliente (Opcional)</Label>
+            <Input 
+              value={formData.user_name}
+              onChange={(e) => setFormData(prev => ({ ...prev, user_name: e.target.value }))}
+              placeholder="Ex: Rogerio CFTV"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Email do Cliente (Opcional)</Label>
+            <Input 
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+              placeholder="exemplo@email.com"
+            />
+          </div>
+        </div>
+
+        <DialogFooter>
+          <Button variant="ghost" onClick={onClose} disabled={busy}>Cancelar</Button>
+          <Button 
+            className="gradient-primary" 
+            onClick={() => onConfirm(formData)}
+            disabled={busy}
+          >
+            {busy ? <Loader2 className="mr-2 size-4 animate-spin" /> : <Plus className="mr-2 size-4" />}
+            Gerar Chave(s)
           </Button>
         </DialogFooter>
       </DialogContent>

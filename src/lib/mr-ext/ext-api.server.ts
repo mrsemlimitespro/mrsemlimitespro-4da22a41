@@ -149,3 +149,25 @@ export async function auditRequest(
     console.error('[auditRequest] Failed:', e);
   }
 }
+
+/**
+ * Retorna os headers de CORS padronizados para as rotas públicas da extensão
+ */
+export function getCorsHeaders(request: Request) {
+  const origin = request.headers.get('Origin');
+  const allowedOrigin = process.env.MR_EXTENSION_ORIGIN || 'http://localhost:8080';
+  
+  // Em desenvolvimento aceita o próprio localhost do preview, 
+  // em produção restringe à origem configurada da extensão.
+  const isAllowed = 
+    !process.env.NODE_ENV || 
+    process.env.NODE_ENV === 'development' || 
+    origin === allowedOrigin;
+  
+  return {
+    'Access-Control-Allow-Origin': isAllowed ? (origin || '*') : allowedOrigin,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Vary': 'Origin'
+  };
+}

@@ -1,32 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { normalizeAuth, validateKeyFormat, validateLicense, auditRequest } from '@/lib/mr-ext/ext-api.server';
-
-const getCorsHeaders = (request: Request) => {
-  const origin = request.headers.get('Origin');
-  const allowedOrigin = process.env.MR_EXTENSION_ORIGIN || 'http://localhost:8080';
-  
-  // Em produção, restringir ao ID da extensão oficial se configurado
-  const isAllowed = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' || origin === allowedOrigin;
-  
-  return {
-    'Access-Control-Allow-Origin': isAllowed ? (origin || '*') : allowedOrigin,
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Content-Type': 'application/json',
-  };
-};
+import { normalizeAuth, validateKeyFormat, validateLicense, auditRequest, getCorsHeaders } from '@/lib/mr-ext/ext-api.server';
 
 export const Route = createFileRoute('/api/public/ext/validate-license')({
   server: {
     handlers: {
-      OPTIONS: async ({ request }) => new Response(null, { status: 240, headers: getCorsHeaders(request) }),
+      OPTIONS: async ({ request }) => new Response(null, { status: 204, headers: getCorsHeaders(request) }),
       POST: async ({ request }) => {
         const cors = getCorsHeaders(request);
         let body: any;
         try {
           body = await request.json();
         } catch (e) {
-          return new Response(JSON.stringify({ ok: false, error: 'invalid_json' }), { status: 400, headers: cors });
+          return new Response(JSON.stringify({ ok: false, error: 'invalid_json' }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } });
         }
 
         const { licenseKey, hwid } = normalizeAuth(body);
