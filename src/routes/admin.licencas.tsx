@@ -411,6 +411,12 @@ function LicencasAdmin() {
       </div>
 
       {/* Modais */}
+      <CreateLicenseDialog
+        open={createOpen}
+        onClose={() => setCreateOpen(false)}
+        onConfirm={(data) => createMutation.mutate(data)}
+        busy={createMutation.isPending}
+      />
       <ResetDeviceDialog
         licenca={resetTarget}
         onClose={() => setResetTarget(null)}
