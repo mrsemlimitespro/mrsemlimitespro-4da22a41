@@ -1,34 +1,31 @@
 import { describe, it, expect, vi } from 'vitest';
-import { validateLicense } from './ext-api.server';
 
+// Criamos o objeto mock ANTES do vi.mock, mas sem usar variáveis que o vitest não veja
+// O segredo é que o vi.mock factory pode definir seu próprio comportamento
 vi.mock('@/integrations/supabase/client.server', () => {
-  const chain: any = {
-    from: vi.fn(),
-    select: vi.fn(),
-    eq: vi.fn(),
-    maybeSingle: vi.fn(),
-    insert: vi.fn(),
-    update: vi.fn(),
-    single: vi.fn(),
-    storage: {
-      from: vi.fn(),
-      upload: vi.fn(),
-      createSignedUrl: vi.fn()
-    }
+  const chain: any = {};
+  
+  const mockFunc = () => chain;
+  
+  chain.from = vi.fn().mockImplementation(mockFunc);
+  chain.select = vi.fn().mockImplementation(mockFunc);
+  chain.eq = vi.fn().mockImplementation(mockFunc);
+  chain.insert = vi.fn().mockImplementation(mockFunc);
+  chain.update = vi.fn().mockImplementation(mockFunc);
+  chain.maybeSingle = vi.fn().mockImplementation(mockFunc);
+  chain.single = vi.fn().mockImplementation(mockFunc);
+  
+  chain.storage = {
+    from: vi.fn().mockReturnThis(),
+    upload: vi.fn(),
+    createSignedUrl: vi.fn()
   };
-
-  // Funções que retornam a chain
-  const returnsChain = () => chain;
-  chain.from.mockImplementation(returnsChain);
-  chain.select.mockImplementation(returnsChain);
-  chain.eq.mockImplementation(returnsChain);
-  chain.insert.mockImplementation(returnsChain);
-  chain.update.mockImplementation(returnsChain);
-  chain.maybeSingle.mockImplementation(returnsChain);
-  chain.storage.from.mockImplementation(() => chain.storage);
 
   return { supabaseAdmin: chain };
 });
+
+// Importação da lógica DEPOIS do mock
+import { validateLicense } from './ext-api.server';
 
 describe('MR CENTRAL V17 - Integration Tests', () => {
   describe('validateLicense', () => {
@@ -51,20 +48,24 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
       admin.single.mockReset();
       admin.eq.mockClear();
       admin.insert.mockClear();
+      
+      // Re-setup das implementações que retornam a chain (pois o mockReset pode limpá-las se não for cuidadoso)
+      const mockFunc = () => admin;
+      admin.from.mockImplementation(mockFunc);
+      admin.select.mockImplementation(mockFunc);
+      admin.eq.mockImplementation(mockFunc);
+      admin.maybeSingle.mockImplementation(mockFunc);
+      admin.insert.mockImplementation(mockFunc);
+      admin.single.mockImplementation(mockFunc);
 
-      // Mocks para o fluxo de validateLicense:
       // 1. Busca licença
       admin.maybeSingle.mockResolvedValueOnce({ data: mockLic, error: null });
       // 2. Busca sessão existente
       admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
       
-      // 3. Count de sessões (select count)
-      // O eq final do count precisa retornar o objeto count
-      admin.eq.mockImplementation((key: string, val: any) => {
-        // Se for a chamada de count (license_id no final)
-        if (key === 'license_id') {
-           return Promise.resolve({ count: 0, error: null });
-        }
+      // 3. Count de sessões
+      admin.eq.mockImplementationOnce((key: string) => {
+        if (key === 'license_id') return Promise.resolve({ count: 0, error: null });
         return admin;
       });
 
