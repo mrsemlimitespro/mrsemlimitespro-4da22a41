@@ -1,23 +1,18 @@
 import { describe, it, expect, vi } from 'vitest';
 import { normalizeAuth, validateKeyFormat, validateLicense, auditRequest } from './ext-api.server';
 
-// Mock do supabaseAdmin com casting para evitar erros de tipo no Vitest
+// Mock do supabaseAdmin com encadeamento completo para suportar a lógica do servidor
 vi.mock('@/integrations/supabase/client.server', () => {
-  const mockClient = {
-    from: vi.fn().mockReturnThis(),
-    select: vi.fn().mockReturnThis(),
-    eq: vi.fn().mockReturnThis(),
-    maybeSingle: vi.fn(),
-    insert: vi.fn().mockReturnThis(),
-    update: vi.fn().mockReturnThis(),
-    single: vi.fn(),
-    storage: {
-      from: vi.fn().mockReturnThis(),
-      upload: vi.fn(),
-      createSignedUrl: vi.fn()
-    }
-  };
-  return { supabaseAdmin: mockClient };
+  const mockChain = {} as any;
+  mockChain.from = vi.fn().mockReturnThis();
+  mockChain.select = vi.fn().mockReturnThis();
+  mockChain.eq = vi.fn().mockReturnThis();
+  mockChain.maybeSingle = vi.fn();
+  mockChain.insert = vi.fn().mockReturnThis();
+  mockChain.update = vi.fn().mockReturnThis();
+  mockChain.single = vi.fn();
+  
+  return { supabaseAdmin: mockChain };
 });
 
 describe('MR CENTRAL V17 - Integration Tests', () => {
@@ -46,28 +41,29 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
       expect(result.error).toBe('license_revoked');
     });
 
-    it('deve validar com sucesso licença ativa', async () => {
+    it('deve validar com sucesso licença ativa e criar sessão', async () => {
       const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
       const admin = supabaseAdmin as any;
       const mockLic = { id: 'lic-1', status: 'active', license_key: 'MR-1111-2222-3333', max_devices: 1 };
       
-      // 1. Mock da busca de licença
+      // 1. Mock da busca de licença (primeiro maybeSingle)
       admin.maybeSingle.mockResolvedValueOnce({ data: mockLic, error: null });
-      // 2. Mock da busca de sessão existente (não encontra)
+      // 2. Mock da busca de sessão existente (segundo maybeSingle - retorna null para forçar criação)
       admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
       // 3. Mock do count de sessões
       admin.select.mockReturnValueOnce({ 
         eq: vi.fn().mockResolvedValueOnce({ count: 0, error: null }) 
       });
-      // 4. Mock da criação de sessão
+      // 4. Mock da criação de sessão (single)
       admin.single.mockResolvedValueOnce({ 
-        data: { session_id: 'sess-1' }, 
+        data: { session_id: 'sess-1', last_seen: new Date().toISOString() }, 
         error: null 
       });
 
       const result = await validateLicense('MR-1111-2222-3333', 'hwid-1');
       expect(result.valid).toBe(true);
       expect(result.license?.id).toBe('lic-1');
+      expect(result.session?.session_id).toBe('sess-1');
     });
   });
 
@@ -75,11 +71,13 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
     it('deve chamar insert com dados sanitizados', async () => {
       const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
       const admin = supabaseAdmin as any;
-      const insertSpy = vi.spyOn(admin, 'insert');
+      
+      // Reset mocks para evitar interferência
+      admin.insert.mockClear();
       
       await auditRequest('lic-1', '/api/test', 'POST', 200, { key: 'secret' });
       
-      expect(insertSpy).toHaveBeenCalledWith(expect.objectContaining({
+      expect(admin.insert).toHaveBeenCalledWith(expect.objectContaining({
         payload_sanitized: { key: '[REDACTED]' }
       }));
     });
