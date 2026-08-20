@@ -233,13 +233,13 @@ function HeroCtas({
       <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
         <a
           href="/api/public/download-v17"
-          download="mr-ext-v17-final-backend.zip"
+          download="mr-central-v17-complete-final.zip"
           target="_blank"
           rel="noopener noreferrer"
           className={cn(warmCls, "border-2 border-brand-red-neon shadow-[0_0_20px_rgba(255,0,0,0.3)]")}
           style={warmStyle}
         >
-          <Package className="size-4" /> Link Alternativo ZIP
+          <Package className="size-4" /> Link Alternativo V17
         </a>
         <Link to="/admin" className={outlineCls}>
           <LayoutDashboard className="size-4" /> Painel Administrador
