@@ -703,16 +703,16 @@ function RenovarDialog({
                 onChange={(e) => setDias(Math.max(1, Number(e.target.value) || 0))}
               />
               <div className="mt-2 flex flex-wrap gap-1.5">
-                {[7, 30, 90, 180, 365].map((d) => (
+                {[-30, -7, 1, 3, 7, 30, 60, 110, 365].map((d) => (
                   <Button
                     key={d}
                     type="button"
                     size="sm"
-                    variant="ghost"
+                    variant={d > 0 ? "outline" : "destructive"}
                     onClick={() => setDias(d)}
-                    className="rounded-full border border-white/5"
+                    className="rounded-lg h-8 px-2 text-[11px]"
                   >
-                    +{d}d
+                    {d > 0 ? `+${d}d` : `${d}d`}
                   </Button>
                 ))}
               </div>
