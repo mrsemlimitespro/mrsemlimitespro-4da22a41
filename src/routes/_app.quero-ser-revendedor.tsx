@@ -49,12 +49,9 @@ function QueroSerRevendedorPage() {
   const { data: cfg } = useQuery({
     queryKey: ["revendedor-checkout-url"],
     queryFn: async () => {
-      const { data } = await (supabase as any)
-        .from("admin_settings")
-        .select("kiwify_checkout_url_revendedor,painel_revendedor_valor")
-        .limit(1)
-        .maybeSingle();
-      return data as { kiwify_checkout_url_revendedor: string | null; painel_revendedor_valor: number | null } | null;
+      const { data } = await (supabase as any).rpc("get_admin_branding");
+      const row = Array.isArray(data) ? data[0] : data;
+      return (row ?? null) as { kiwify_checkout_url_revendedor: string | null; painel_revendedor_valor: number | null } | null;
     },
     staleTime: 60_000,
   });
