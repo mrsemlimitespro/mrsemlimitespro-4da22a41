@@ -3,24 +3,26 @@ import { normalizeAuth, validateKeyFormat, validateLicense, auditRequest } from 
 
 // Mock do supabaseAdmin com encadeamento manual robusto para Vitest
 vi.mock('@/integrations/supabase/client.server', () => {
-  const mockMethods = {
-    from: vi.fn().mockReturnThis(),
-    select: vi.fn().mockReturnThis(),
-    eq: vi.fn().mockReturnThis(),
-    maybeSingle: vi.fn(),
-    insert: vi.fn().mockReturnThis(),
-    update: vi.fn().mockReturnThis(),
-    single: vi.fn(),
+  const createMockChain = () => {
+    const chain = {
+      from: vi.fn().mockReturnThis(),
+      select: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
+      maybeSingle: vi.fn(),
+      insert: vi.fn().mockReturnThis(),
+      update: vi.fn().mockReturnThis(),
+      single: vi.fn(),
+    };
+    // Redireciona chamadas encadeadas para si mesmo
+    chain.from.mockReturnValue(chain);
+    chain.select.mockReturnValue(chain);
+    chain.eq.mockReturnValue(chain);
+    chain.insert.mockReturnValue(chain);
+    chain.update.mockReturnValue(chain);
+    return chain;
   };
   
-  // Garantir que todos os métodos encadeáveis retornem o próprio mock
-  mockMethods.from.mockReturnValue(mockMethods);
-  mockMethods.select.mockReturnValue(mockMethods);
-  mockMethods.eq.mockReturnValue(mockMethods);
-  mockMethods.insert.mockReturnValue(mockMethods);
-  mockMethods.update.mockReturnValue(mockMethods);
-  
-  return { supabaseAdmin: mockMethods };
+  return { supabaseAdmin: createMockChain() };
 });
 
 describe('MR CENTRAL V17 - Integration Tests', () => {
@@ -53,11 +55,20 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
       const admin = supabaseAdmin as any;
       const mockLic = { id: 'lic-1', status: 'active', license_key: 'MR-1111-2222-3333', max_devices: 1 };
       
+      // Reset mocks para evitar estados de testes anteriores
+      admin.maybeSingle.mockReset();
+      admin.select.mockClear();
+      admin.single.mockReset();
+
       // 1. Mock da busca de licença
       admin.maybeSingle.mockResolvedValueOnce({ data: mockLic, error: null });
       // 2. Mock da busca de sessão existente (não encontra)
       admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
-      // 3. Mock do count de sessões
+      // 3. Mock do count de sessões (o select encadeia o count)
+      admin.eq.mockReturnValueOnce({ 
+        mockResolvedValueOnce: vi.fn().mockResolvedValue({ count: 0, error: null })
+      });
+      // Fallback para count: exact via select
       admin.select.mockReturnValueOnce({ 
         eq: vi.fn().mockResolvedValueOnce({ count: 0, error: null }) 
       });
@@ -77,11 +88,11 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
     it('deve chamar insert com dados sanitizados', async () => {
       const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
       const admin = supabaseAdmin as any;
-      const insertSpy = vi.spyOn(admin, 'insert');
+      admin.insert.mockClear();
       
       await auditRequest('lic-1', '/api/test', 'POST', 200, { key: 'secret' });
       
-      expect(insertSpy).toHaveBeenCalledWith(expect.objectContaining({
+      expect(admin.insert).toHaveBeenCalledWith(expect.objectContaining({
         payload_sanitized: { key: '[REDACTED]' }
       }));
     });
