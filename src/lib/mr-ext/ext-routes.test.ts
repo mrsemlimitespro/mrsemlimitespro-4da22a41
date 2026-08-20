@@ -1,27 +1,100 @@
 import { describe, it, expect, vi } from 'vitest';
+import { normalizeAuth, validateKeyFormat, validateLicense, auditRequest } from './ext-api.server';
 
-/**
- * Nota: Testes de rota TanStack Start exigem o motor de execução do framework.
- * Este teste valida a lógica de contrato das rotas API V17.
- */
-describe('MR Ext V17 API Contracts', () => {
-  it('should return CORS headers for authorized origins', async () => {
-    // Mock simples de lógica de headers para demonstração de conformidade
-    const origin = 'chrome-extension://abc';
-    const allowed = 'chrome-extension://abc';
-    const isAllowed = origin === allowed;
-    
-    const headers = {
-      'Access-Control-Allow-Origin': isAllowed ? origin : allowed,
+// Mock do supabaseAdmin com encadeamento manual robusto para Vitest
+vi.mock('@/integrations/supabase/client.server', () => {
+  const createMockChain = () => {
+    const chain = {
+      from: vi.fn().mockReturnThis(),
+      select: vi.fn().mockReturnThis(),
+      eq: vi.fn().mockReturnThis(),
+      maybeSingle: vi.fn(),
+      insert: vi.fn().mockReturnThis(),
+      update: vi.fn().mockReturnThis(),
+      single: vi.fn(),
     };
-    
-    expect(headers['Access-Control-Allow-Origin']).toBe(origin);
+    // Redireciona chamadas encadeadas para si mesmo
+    chain.from.mockReturnValue(chain);
+    chain.select.mockReturnValue(chain);
+    chain.eq.mockReturnValue(chain);
+    chain.insert.mockReturnValue(chain);
+    chain.update.mockReturnValue(chain);
+    return chain;
+  };
+  
+  return { supabaseAdmin: createMockChain() };
+});
+
+describe('MR CENTRAL V17 - Integration Tests', () => {
+  describe('validateLicense', () => {
+    it('deve retornar erro se licença não for encontrada', async () => {
+      const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
+      const admin = supabaseAdmin as any;
+      admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
+
+      const result = await validateLicense('MR-1111-2222-3333', 'hwid-1');
+      expect(result.valid).toBe(false);
+      expect(result.error).toBe('license_not_found');
+    });
+
+    it('deve retornar erro se licença estiver revogada', async () => {
+      const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
+      const admin = supabaseAdmin as any;
+      admin.maybeSingle.mockResolvedValueOnce({ 
+        data: { status: 'revoked' }, 
+        error: null 
+      });
+
+      const result = await validateLicense('MR-1111-2222-3333', 'hwid-1');
+      expect(result.valid).toBe(false);
+      expect(result.error).toBe('license_revoked');
+    });
+
+    it('deve validar com sucesso licença ativa', async () => {
+      const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
+      const admin = supabaseAdmin as any;
+      const mockLic = { id: 'lic-1', status: 'active', license_key: 'MR-1111-2222-3333', max_devices: 1 };
+      
+      // Reset mocks para evitar estados de testes anteriores
+      admin.maybeSingle.mockReset();
+      admin.select.mockClear();
+      admin.single.mockReset();
+
+      // 1. Mock da busca de licença
+      admin.maybeSingle.mockResolvedValueOnce({ data: mockLic, error: null });
+      // 2. Mock da busca de sessão existente (não encontra)
+      admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
+      // 3. Mock do count de sessões (o select encadeia o count)
+      admin.eq.mockReturnValueOnce({ 
+        mockResolvedValueOnce: vi.fn().mockResolvedValue({ count: 0, error: null })
+      });
+      // Fallback para count: exact via select
+      admin.select.mockReturnValueOnce({ 
+        eq: vi.fn().mockResolvedValueOnce({ count: 0, error: null }) 
+      });
+      // 4. Mock da criação de sessão
+      admin.single.mockResolvedValueOnce({ 
+        data: { session_id: 'sess-1', last_seen: new Date().toISOString() }, 
+        error: null 
+      });
+
+      const result = await validateLicense('MR-1111-2222-3333', 'hwid-1');
+      expect(result.valid).toBe(true);
+      expect(result.license?.id).toBe('lic-1');
+    });
   });
 
-  it('should sanitize payloads before auditing', () => {
-    const sensitiveData = { key: '12345', name: 'test' };
-    const sanitize = (data: any) => data.key ? { ...data, key: '[REDACTED]' } : data;
-    
-    expect(sanitize(sensitiveData).key).toBe('[REDACTED]');
+  describe('auditRequest', () => {
+    it('deve chamar insert com dados sanitizados', async () => {
+      const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
+      const admin = supabaseAdmin as any;
+      admin.insert.mockClear();
+      
+      await auditRequest('lic-1', '/api/test', 'POST', 200, { key: 'secret' });
+      
+      expect(admin.insert).toHaveBeenCalledWith(expect.objectContaining({
+        payload_sanitized: { key: '[REDACTED]' }
+      }));
+    });
   });
 });

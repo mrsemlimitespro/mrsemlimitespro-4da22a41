@@ -1,14 +1,15 @@
 /**
- * MR CENTRAL — ECOSSISTEMA DIGITAL DE ALTA PERFORMANCE
+ * # Auditoria da exportação GitHub e do deploy público do MR Central
  * 
- * PACOTE V17 FINAL — DOWNLOAD DISPONÍVEL
- * O backend definitivo foi validado com migrations robustas, RLS seguro e proxy SSE real.
- * Link de Download: /api/public/download-v17
+ * ATENÇÃO: As cinco rotas públicas necessárias não estão publicadas no domínio informado.
+ * Todas retornaram HTTP 404 em https://mrsemlimites.lovable.app.
  * 
- * Instruções:
- * 1. Baixe o arquivo mr-ext-v17-final-backend.zip.
- * 2. Encaminhe ao desenvolvedor para integração na extensão.
- * 3. O sistema agora conta com isolamento de storage e auditoria sanitizada.
+ * Verificação Pendente:
+ * 1. O deploy deve incluir o arquivo src/routeTree.gen.ts atualizado.
+ * 2. As rotas API em src/routes/api/ext/* devem ser compiladas como server endpoints.
+ * 3. Somente após essas respostas mínimas deixarem de ser 404 será seguro adaptar a extensão.
+ * 
+ * O Pacote GitHub V17 Completo já contém todas as rotas e helpers necessários.
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import React, { useEffect, useState } from "react";
