@@ -1,16 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { normalizeAuth, validateLicense, auditRequest } from '@/lib/mr-ext/ext-api.server';
-
-const getCorsHeaders = (request: Request) => {
-  const origin = request.headers.get('Origin');
-  const allowedOrigin = process.env.MR_EXTENSION_ORIGIN || 'http://localhost:8080';
-  const isAllowed = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' || origin === allowedOrigin;
-  return {
-    'Access-Control-Allow-Origin': isAllowed ? (origin || '*') : allowedOrigin,
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-  };
-};
+import { normalizeAuth, validateLicense, auditRequest, getCorsHeaders } from '@/lib/mr-ext/ext-api.server';
 
 export const Route = createFileRoute('/api/public/ext/send-command')({
   server: {

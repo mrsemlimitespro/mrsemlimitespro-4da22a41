@@ -1,17 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { normalizeAuth, validateLicense, auditRequest } from '@/lib/mr-ext/ext-api.server';
-
-const getCorsHeaders = (request: Request) => {
-  const origin = request.headers.get('Origin');
-  const allowedOrigin = process.env.MR_EXTENSION_ORIGIN || 'http://localhost:8080';
-  const isAllowed = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' || origin === allowedOrigin;
-  return {
-    'Access-Control-Allow-Origin': isAllowed ? (origin || '*') : allowedOrigin,
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Content-Type': 'application/json',
-  };
-};
+import { normalizeAuth, validateLicense, auditRequest, getCorsHeaders } from '@/lib/mr-ext/ext-api.server';
 
 export const Route = createFileRoute('/api/public/ext/heartbeat')({
   server: {
@@ -23,13 +11,13 @@ export const Route = createFileRoute('/api/public/ext/heartbeat')({
         try {
           body = await request.json();
         } catch (e) {
-          return new Response(JSON.stringify({ ok: false, error: 'invalid_json' }), { status: 400, headers: cors });
+          return new Response(JSON.stringify({ ok: false, error: 'invalid_json' }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } });
         }
 
         const { licenseKey, hwid } = normalizeAuth(body);
         
         if (!licenseKey || !hwid) {
-          return new Response(JSON.stringify({ ok: false, error: 'missing_fields' }), { status: 400, headers: cors });
+          return new Response(JSON.stringify({ ok: false, error: 'missing_fields' }), { status: 400, headers: { ...cors, 'Content-Type': 'application/json' } });
         }
 
         const result = await validateLicense(licenseKey, hwid);
