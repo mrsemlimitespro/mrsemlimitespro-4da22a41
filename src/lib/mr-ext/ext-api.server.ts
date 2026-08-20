@@ -35,7 +35,7 @@ export function normalizeAuth(body: any) {
  */
 export function validateKeyFormat(key: string | null): boolean {
   if (!key) return false;
-  return /^MR-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(key);
+  return /^([A-Z0-9]{2}-)?MR-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}(-[A-Z0-9]{4})?$/.test(key);
 }
 
 /**
