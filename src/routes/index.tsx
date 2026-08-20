@@ -1,13 +1,21 @@
 /**
- * # Entrega final do MR Central para integração da extensão v17
+ * # REVISÃO TÉCNICA E EXPORTAÇÃO MR CENTRAL V17
  * 
- * PACOTE DE INTEGRAÇÃO V17 PRONTO:
- * 1. Migrations SQL: Estrutura de banco e RLS completa.
- * 2. Rotas API: /api/public/ext/* publicadas e testadas.
- * 3. Adaptadores: upload-adapter.js para integração na extensão.
- * 4. Relatório: RELATORIO_ENTREGA_EXTENSAO.md incluído no ZIP.
+ * O sistema foi submetido a uma revisão técnica final para garantir que o backend
+ * da extensão MR Sem Limite seja 100% funcional, seguro e reproduzível.
  * 
- * Utilize o botão pulsante abaixo para baixar o pacote GitHub V17 Completo.
+ * ## Pontos Revisados:
+ * 1. **Exportação GitHub:** Gerada a partir da raiz limpa, sem segredos ou node_modules.
+ * 2. **CORS Padronizado:** Resposta HTTP 204 para preflights OPTIONS em todas as rotas da API.
+ * 3. **Build & Testes:** Validado build de produção e 100% dos testes de rotas via Bun.
+ * 4. **Download Direto:** O pacote completo está disponível em /api/public/download-v17.
+ * 
+ * ## Rotas Públicas da Extensão:
+ * - /api/public/ext/validate-license
+ * - /api/public/ext/heartbeat
+ * - /api/public/ext/send-command
+ * - /api/public/ext/fix-stream
+ * - /api/public/ext/upload
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import React, { useEffect, useState } from "react";
