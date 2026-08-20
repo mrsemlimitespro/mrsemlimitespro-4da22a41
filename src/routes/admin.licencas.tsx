@@ -435,18 +435,24 @@ function LicencasAdmin() {
 
 function LicencaRow({
   l,
+  isSelected,
+  onToggleSelect,
   onReset,
   onRenovar,
   onCancelar,
   onReativar,
   onReenviar,
+  onDelete,
 }: {
   l: Licenca;
+  isSelected: boolean;
+  onToggleSelect: () => void;
   onReset: () => void;
   onRenovar: () => void;
   onCancelar: () => void;
   onReativar: () => void;
   onReenviar: () => void;
+  onDelete: () => void;
 }) {
   const nivel = derivarNivel(l);
   const encerrada = l.status === "expirada" || l.status === "cancelada" || l.status === "bloqueada" || l.status === "revogada";
