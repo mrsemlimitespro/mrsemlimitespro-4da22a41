@@ -174,7 +174,7 @@ function PackAuthorizationEditor({ packId }: { packId: string }) {
     onError: (e: unknown) => toast.error(e instanceof Error ? e.message : "Falha ao revogar"),
   });
 
-  const rows = (data?.rows ?? []) as Array<{
+  const rows = (data?.rows ?? []) as unknown as Array<{
     id: string;
     status: string;
     expires_at: string | null;
