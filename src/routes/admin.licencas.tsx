@@ -211,7 +211,7 @@ function LicencasAdmin() {
 
   const renovar = useMutation({
     mutationFn: async ({ id, dias }: { id: string; dias: number }) => {
-      return adjustTimeFn({ licenseId: id, days: dias });
+      return adjustTimeFn({ data: { licenseId: id, days: dias } } as any);
     },
     onSuccess: () => {
       toast.success("Licença renovada.");
