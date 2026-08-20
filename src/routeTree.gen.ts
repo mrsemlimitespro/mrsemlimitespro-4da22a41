@@ -51,6 +51,7 @@ import { Route as AdminLojaProdutosRouteImport } from './routes/admin.loja-produ
 import { Route as AdminModulosRouteImport } from './routes/admin.modulos'
 import { Route as AdminPackAutorizacoesRouteImport } from './routes/admin.pack-autorizacoes'
 import { Route as AdminPagamentosRouteImport } from './routes/admin.pagamentos'
+import { Route as AdminPerfilRouteImport } from './routes/admin.perfil'
 import { Route as AdminPersonalizacaoRouteImport } from './routes/admin.personalizacao'
 import { Route as AdminRevendedoresGestaoRouteImport } from './routes/admin.revendedores-gestao'
 import { Route as AdminSegurancaRouteImport } from './routes/admin.seguranca'
@@ -294,6 +295,11 @@ const AdminPagamentosRoute = AdminPagamentosRouteImport.update({
   path: '/pagamentos',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminPerfilRoute = AdminPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminPersonalizacaoRoute = AdminPersonalizacaoRouteImport.update({
   id: '/personalizacao',
   path: '/personalizacao',
@@ -509,6 +515,7 @@ export interface FileRoutesByFullPath {
   '/admin/modulos': typeof AdminModulosRoute
   '/admin/pack-autorizacoes': typeof AdminPackAutorizacoesRoute
   '/admin/pagamentos': typeof AdminPagamentosRoute
+  '/admin/perfil': typeof AdminPerfilRoute
   '/admin/personalizacao': typeof AdminPersonalizacaoRoute
   '/admin/revendedores-gestao': typeof AdminRevendedoresGestaoRoute
   '/admin/seguranca': typeof AdminSegurancaRoute
@@ -584,6 +591,7 @@ export interface FileRoutesByTo {
   '/admin/modulos': typeof AdminModulosRoute
   '/admin/pack-autorizacoes': typeof AdminPackAutorizacoesRoute
   '/admin/pagamentos': typeof AdminPagamentosRoute
+  '/admin/perfil': typeof AdminPerfilRoute
   '/admin/personalizacao': typeof AdminPersonalizacaoRoute
   '/admin/revendedores-gestao': typeof AdminRevendedoresGestaoRoute
   '/admin/seguranca': typeof AdminSegurancaRoute
@@ -662,6 +670,7 @@ export interface FileRoutesById {
   '/admin/modulos': typeof AdminModulosRoute
   '/admin/pack-autorizacoes': typeof AdminPackAutorizacoesRoute
   '/admin/pagamentos': typeof AdminPagamentosRoute
+  '/admin/perfil': typeof AdminPerfilRoute
   '/admin/personalizacao': typeof AdminPersonalizacaoRoute
   '/admin/revendedores-gestao': typeof AdminRevendedoresGestaoRoute
   '/admin/seguranca': typeof AdminSegurancaRoute
@@ -740,6 +749,7 @@ export interface FileRouteTypes {
     | '/admin/modulos'
     | '/admin/pack-autorizacoes'
     | '/admin/pagamentos'
+    | '/admin/perfil'
     | '/admin/personalizacao'
     | '/admin/revendedores-gestao'
     | '/admin/seguranca'
@@ -815,6 +825,7 @@ export interface FileRouteTypes {
     | '/admin/modulos'
     | '/admin/pack-autorizacoes'
     | '/admin/pagamentos'
+    | '/admin/perfil'
     | '/admin/personalizacao'
     | '/admin/revendedores-gestao'
     | '/admin/seguranca'
@@ -892,6 +903,7 @@ export interface FileRouteTypes {
     | '/admin/modulos'
     | '/admin/pack-autorizacoes'
     | '/admin/pagamentos'
+    | '/admin/perfil'
     | '/admin/personalizacao'
     | '/admin/revendedores-gestao'
     | '/admin/seguranca'
@@ -1260,6 +1272,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPagamentosRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/perfil': {
+      id: '/admin/perfil'
+      path: '/perfil'
+      fullPath: '/admin/perfil'
+      preLoaderRoute: typeof AdminPerfilRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/personalizacao': {
       id: '/admin/personalizacao'
       path: '/personalizacao'
@@ -1577,6 +1596,7 @@ interface AdminRouteChildren {
   AdminModulosRoute: typeof AdminModulosRoute
   AdminPackAutorizacoesRoute: typeof AdminPackAutorizacoesRoute
   AdminPagamentosRoute: typeof AdminPagamentosRoute
+  AdminPerfilRoute: typeof AdminPerfilRoute
   AdminPersonalizacaoRoute: typeof AdminPersonalizacaoRoute
   AdminRevendedoresGestaoRoute: typeof AdminRevendedoresGestaoRoute
   AdminSegurancaRoute: typeof AdminSegurancaRoute
@@ -1603,6 +1623,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminModulosRoute: AdminModulosRoute,
   AdminPackAutorizacoesRoute: AdminPackAutorizacoesRoute,
   AdminPagamentosRoute: AdminPagamentosRoute,
+  AdminPerfilRoute: AdminPerfilRoute,
   AdminPersonalizacaoRoute: AdminPersonalizacaoRoute,
   AdminRevendedoresGestaoRoute: AdminRevendedoresGestaoRoute,
   AdminSegurancaRoute: AdminSegurancaRoute,
