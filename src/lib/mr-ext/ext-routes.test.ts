@@ -1,44 +1,33 @@
 import { describe, it, expect, vi } from 'vitest';
 
-// Criar o mock com um Proxy para capturar qualquer chamada encadeada
-const createMockChain = () => {
-  const chain: any = vi.fn(() => Promise.resolve({ data: null, error: null }));
-  
-  // Handlers para o Proxy
-  const handlers = {
-    get: (target: any, prop: string) => {
-      // Se for then, se comporta como Promise
-      if (prop === 'then') return target.then.bind(target);
-      if (prop === 'catch') return target.catch.bind(target);
-      if (prop === 'finally') return target.finally.bind(target);
-      
-      // Funções de mock específicas
-      if (['from', 'select', 'eq', 'insert', 'update', 'maybeSingle', 'single', 'storage'].includes(prop)) {
-        if (!target[prop]) {
-          target[prop] = vi.fn().mockReturnValue(new Proxy(vi.fn().mockReturnValue(chain), handlers));
+vi.mock('@/integrations/supabase/client.server', () => {
+  // O segredo é criar a chain dentro do factory para evitar hoisting errors
+  const createMockChain = () => {
+    const chain: any = vi.fn(() => Promise.resolve({ data: null, error: null }));
+    const handlers = {
+      get: (target: any, prop: string) => {
+        if (['then', 'catch', 'finally'].includes(prop)) return target[prop].bind(target);
+        if (['from', 'select', 'eq', 'insert', 'update', 'maybeSingle', 'single', 'storage'].includes(prop)) {
+          if (!target[prop]) {
+            target[prop] = vi.fn().mockReturnValue(new Proxy(vi.fn().mockReturnValue(chain), handlers));
+          }
+          if (prop === 'storage') return new Proxy({}, handlers);
+          return target[prop];
         }
-        // Para storage, retorna o próprio proxy
-        if (prop === 'storage') return new Proxy({}, handlers);
-        
         return target[prop];
       }
-      
-      return target[prop];
-    }
+    };
+    return new Proxy(chain, handlers);
   };
-
-  return new Proxy(chain, handlers);
-};
-
-const adminMock = createMockChain();
-
-vi.mock('@/integrations/supabase/client.server', () => ({
-  supabaseAdmin: adminMock
-}));
+  return { supabaseAdmin: createMockChain() };
+});
 
 import { validateLicense } from './ext-api.server';
+import { supabaseAdmin } from '@/integrations/supabase/client.server';
 
 describe('MR CENTRAL V17 - Integration Tests', () => {
+  const adminMock = supabaseAdmin as any;
+
   describe('validateLicense', () => {
     it('deve retornar erro se licença não for encontrada', async () => {
       adminMock.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
@@ -56,17 +45,9 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
       adminMock.single.mockReset();
       adminMock.eq.mockClear();
 
-      // Setup sequencial para validateLicense
-      // 1. Busca licença
       adminMock.maybeSingle.mockResolvedValueOnce({ data: mockLic, error: null });
-      // 2. Busca sessão existente
       adminMock.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
-      
-      // 3. Count de sessões
-      // No código: .select('*', {count: 'exact'}).eq('license_id', lic.id)
       adminMock.eq.mockImplementationOnce(() => Promise.resolve({ count: 0, error: null }));
-
-      // 4. Criação de sessão
       adminMock.single.mockResolvedValueOnce({ 
         data: { id: 'sess-1', session_id: 'sess-uuid', last_seen: new Date().toISOString() }, 
         error: null 
