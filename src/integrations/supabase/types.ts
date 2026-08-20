@@ -4046,54 +4046,6 @@ export type Database = {
       }
     }
     Views: {
-      admin_branding: {
-        Row: {
-          accent_color: string | null
-          favicon_url: string | null
-          footer_text: string | null
-          id: string | null
-          kiwify_checkout_url_revendedor: string | null
-          link_comunidade: string | null
-          logo_url: string | null
-          notification_active: boolean | null
-          notification_message: string | null
-          painel_revendedor_valor: number | null
-          primary_color: string | null
-          site_name: string | null
-          welcome_text: string | null
-        }
-        Insert: {
-          accent_color?: string | null
-          favicon_url?: string | null
-          footer_text?: string | null
-          id?: string | null
-          kiwify_checkout_url_revendedor?: string | null
-          link_comunidade?: string | null
-          logo_url?: string | null
-          notification_active?: boolean | null
-          notification_message?: string | null
-          painel_revendedor_valor?: number | null
-          primary_color?: string | null
-          site_name?: string | null
-          welcome_text?: string | null
-        }
-        Update: {
-          accent_color?: string | null
-          favicon_url?: string | null
-          footer_text?: string | null
-          id?: string | null
-          kiwify_checkout_url_revendedor?: string | null
-          link_comunidade?: string | null
-          logo_url?: string | null
-          notification_active?: boolean | null
-          notification_message?: string | null
-          painel_revendedor_valor?: number | null
-          primary_color?: string | null
-          site_name?: string | null
-          welcome_text?: string | null
-        }
-        Relationships: []
-      }
       v_dashboard_metricas: {
         Row: {
           clientes: number | null
@@ -4524,6 +4476,23 @@ export type Database = {
           isOneToOne: false
           isSetofReturn: true
         }
+      }
+      get_admin_branding: {
+        Args: never
+        Returns: {
+          accent_color: string
+          favicon_url: string
+          footer_text: string
+          kiwify_checkout_url_revendedor: string
+          link_comunidade: string
+          logo_url: string
+          notification_active: boolean
+          notification_message: string
+          painel_revendedor_valor: number
+          primary_color: string
+          site_name: string
+          welcome_text: string
+        }[]
       }
       get_user_workspaces: {
         Args: { user_uuid: string }
