@@ -731,3 +731,138 @@ function RenovarDialog({
     </Dialog>
   );
 }
+
+function CreateLicenseDialog({
+  open,
+  onClose,
+  onConfirm,
+  busy,
+}: {
+  open: boolean;
+  onClose: () => void;
+  onConfirm: (data: any) => void;
+  busy: boolean;
+}) {
+  const [formData, setFormData] = useState({
+    tipo: "premium",
+    duracao: "30d",
+    email: "",
+    user_name: "",
+    max_devices: 1,
+    quantidade: 1,
+    notes: ""
+  });
+
+  const duracoes = [
+    { value: "1h", label: "Chave Teste (1 hora)" },
+    { value: "1d", label: "Chave Normal (1 dia)" },
+    { value: "3d", label: "Chave Normal (3 dias)" },
+    { value: "30d", label: "Chave Normal (30 dias)" },
+    { value: "60d", label: "Chave Normal (60 dias)" },
+    { value: "110d", label: "Chave Normal (110 dias)" },
+    { value: "1y", label: "Chave Normal (1 ano)" },
+  ];
+
+  return (
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>Gerar Novas Chaves</DialogTitle>
+          <DialogDescription>
+            Crie chaves de acesso para a extensão com durações pré-definidas.
+          </DialogDescription>
+        </DialogHeader>
+        
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Tipo de Licença</Label>
+              <Select 
+                value={formData.tipo} 
+                onValueChange={(v) => setFormData(prev => ({ ...prev, tipo: v }))}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione o tipo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="teste">Teste / Trial</SelectItem>
+                  <SelectItem value="premium">Premium / Paga</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Duração</Label>
+              <Select 
+                value={formData.duracao} 
+                onValueChange={(v) => setFormData(prev => ({ ...prev, duracao: v }))}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecione a duração" />
+                </SelectTrigger>
+                <SelectContent>
+                  {duracoes.map(d => (
+                    <SelectItem key={d.value} value={d.value}>{d.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Quantidade</Label>
+              <Input 
+                type="number" 
+                min={1} 
+                max={50} 
+                value={formData.quantidade}
+                onChange={(e) => setFormData(prev => ({ ...prev, quantidade: Number(e.target.value) }))}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Limite Devices</Label>
+              <Input 
+                type="number" 
+                min={1} 
+                value={formData.max_devices}
+                onChange={(e) => setFormData(prev => ({ ...prev, max_devices: Number(e.target.value) }))}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Nome do Cliente (Opcional)</Label>
+            <Input 
+              value={formData.user_name}
+              onChange={(e) => setFormData(prev => ({ ...prev, user_name: e.target.value }))}
+              placeholder="Ex: Rogerio CFTV"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Email do Cliente (Opcional)</Label>
+            <Input 
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+              placeholder="exemplo@email.com"
+            />
+          </div>
+        </div>
+
+        <DialogFooter>
+          <Button variant="ghost" onClick={onClose} disabled={busy}>Cancelar</Button>
+          <Button 
+            className="gradient-primary" 
+            onClick={() => onConfirm(formData)}
+            disabled={busy}
+          >
+            {busy ? <Loader2 className="mr-2 size-4 animate-spin" /> : <Plus className="mr-2 size-4" />}
+            Gerar Chave(s)
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
