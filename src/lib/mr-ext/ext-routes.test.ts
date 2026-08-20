@@ -1,34 +1,23 @@
 import { describe, it, expect, vi } from 'vitest';
 
 vi.mock('@/integrations/supabase/client.server', () => {
+  const mockResult = { data: null, error: null, count: 0 };
   const chain: any = {
-    from: vi.fn(),
-    select: vi.fn(),
-    eq: vi.fn(),
-    maybeSingle: vi.fn(),
-    insert: vi.fn(),
-    update: vi.fn(),
-    single: vi.fn(),
+    from: vi.fn().mockReturnThis(),
+    select: vi.fn().mockReturnThis(),
+    eq: vi.fn().mockReturnThis(),
+    maybeSingle: vi.fn().mockResolvedValue(mockResult),
+    single: vi.fn().mockResolvedValue(mockResult),
+    insert: vi.fn().mockReturnThis(),
+    update: vi.fn().mockReturnThis(),
     storage: {
-      from: vi.fn(),
-      upload: vi.fn(),
-      createSignedUrl: vi.fn()
-    }
+      from: vi.fn().mockReturnThis(),
+      upload: vi.fn().mockResolvedValue(mockResult),
+      createSignedUrl: vi.fn().mockResolvedValue({ data: { signedUrl: '' }, error: null })
+    },
+    // Mocking the promise behavior (thenable)
+    then: (resolve: any) => Promise.resolve(mockResult).then(resolve)
   };
-
-  const returnsChain = () => chain;
-  chain.from.mockImplementation(returnsChain);
-  chain.select.mockImplementation(returnsChain);
-  chain.eq.mockImplementation(returnsChain);
-  chain.insert.mockImplementation(returnsChain);
-  chain.update.mockImplementation(returnsChain);
-  chain.maybeSingle.mockImplementation(returnsChain);
-  chain.single.mockImplementation(returnsChain);
-  chain.storage.from.mockImplementation(() => chain.storage);
-
-  // Garantir que a chain em si é um "thenable" para não quebrar se for aguardada
-  chain.then = (onFullfilled: any) => Promise.resolve({ data: null, error: null }).then(onFullfilled);
-
   return { supabaseAdmin: chain };
 });
 
@@ -50,28 +39,27 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
     it('deve validar com sucesso licença ativa', async () => {
       const mockLic = { id: 'lic-1', status: 'active', license_key: 'MR-1111-2222-3333', max_devices: 1 };
       
-      // Reiniciar mocks para estado limpo
       admin.maybeSingle.mockReset();
-      admin.select.mockClear();
-      admin.single.mockReset();
       admin.eq.mockClear();
-      
-      // Re-setup implementations que retornam a chain
-      const returnsChain = () => admin;
-      admin.from.mockImplementation(returnsChain);
-      admin.select.mockImplementation(returnsChain);
-      admin.eq.mockImplementation(returnsChain);
-      admin.maybeSingle.mockImplementation(returnsChain);
-      admin.single.mockImplementation(returnsChain);
+      admin.single.mockReset();
+
+      // Implementação fluida simples
+      admin.from.mockReturnThis();
+      admin.select.mockReturnThis();
+      admin.eq.mockReturnThis();
 
       // 1. Busca licença
       admin.maybeSingle.mockResolvedValueOnce({ data: mockLic, error: null });
       // 2. Busca sessão existente
       admin.maybeSingle.mockResolvedValueOnce({ data: null, error: null });
       
-      // 3. Count de sessões
-      admin.eq.mockImplementationOnce((key: string) => {
-        if (key === 'license_id') return Promise.resolve({ count: 0, error: null });
+      // 3. Count de sessões (o .eq retorna o próprio admin se não for o ponto final)
+      // O validateLicense faz: await admin.from().select('*', {count: 'exact'}).eq('license_id', lic.id)
+      // Precisamos que o ÚLTIMO .eq retorne o resultado se for usado como promise
+      admin.eq.mockImplementation((key: string) => {
+        if (key === 'license_id') {
+          return Promise.resolve({ count: 0, error: null });
+        }
         return admin;
       });
 
