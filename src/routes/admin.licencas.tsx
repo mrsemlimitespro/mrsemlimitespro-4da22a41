@@ -92,7 +92,13 @@ function LicencasAdmin() {
   const [busca, setBusca] = useState("");
   const [resetTarget, setResetTarget] = useState<Licenca | null>(null);
   const [renovTarget, setRenovTarget] = useState<Licenca | null>(null);
+  const [createOpen, setCreateOpen] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const qc = useQueryClient();
+
+  const createFn = useServerFn(createLicenses);
+  const adjustTimeFn = useServerFn(adjustLicenseTime);
+  const deleteFn = useServerFn(deleteLicenses);
 
   const { data: licencas = [], isLoading, refetch } = useQuery({
     queryKey: ["admin-licencas"],
@@ -103,7 +109,7 @@ function LicencasAdmin() {
           "id,chave,status,tipo,email,cliente_id,revendedor_id,produto_id,device_id,ultimo_acesso,ativada_em,expira_em,created_at,reset_hwid_motivo,reset_hwid_solicitado_em,observacoes_admin,duracao_dias,metadata",
         )
         .order("created_at", { ascending: false })
-        .limit(500);
+        .limit(1000);
       if (error) throw error;
       return (data ?? []) as Licenca[];
     },
