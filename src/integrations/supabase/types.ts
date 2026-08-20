@@ -4046,6 +4046,54 @@ export type Database = {
       }
     }
     Views: {
+      admin_branding: {
+        Row: {
+          accent_color: string | null
+          favicon_url: string | null
+          footer_text: string | null
+          id: string | null
+          kiwify_checkout_url_revendedor: string | null
+          link_comunidade: string | null
+          logo_url: string | null
+          notification_active: boolean | null
+          notification_message: string | null
+          painel_revendedor_valor: number | null
+          primary_color: string | null
+          site_name: string | null
+          welcome_text: string | null
+        }
+        Insert: {
+          accent_color?: string | null
+          favicon_url?: string | null
+          footer_text?: string | null
+          id?: string | null
+          kiwify_checkout_url_revendedor?: string | null
+          link_comunidade?: string | null
+          logo_url?: string | null
+          notification_active?: boolean | null
+          notification_message?: string | null
+          painel_revendedor_valor?: number | null
+          primary_color?: string | null
+          site_name?: string | null
+          welcome_text?: string | null
+        }
+        Update: {
+          accent_color?: string | null
+          favicon_url?: string | null
+          footer_text?: string | null
+          id?: string | null
+          kiwify_checkout_url_revendedor?: string | null
+          link_comunidade?: string | null
+          logo_url?: string | null
+          notification_active?: boolean | null
+          notification_message?: string | null
+          painel_revendedor_valor?: number | null
+          primary_color?: string | null
+          site_name?: string | null
+          welcome_text?: string | null
+        }
+        Relationships: []
+      }
       v_dashboard_metricas: {
         Row: {
           clientes: number | null
