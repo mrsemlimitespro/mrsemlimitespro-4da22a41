@@ -513,11 +513,9 @@ function LicencaRow({
               <RotateCcw className="size-4" />
             </Button>
           )}
-          {!encerrada && (
-            <Button size="sm" variant="ghost" onClick={onRenovar} title="Renovar">
-              <RefreshCw className="size-4" />
-            </Button>
-          )}
+          <Button size="sm" variant="ghost" onClick={onRenovar} title="Ajustar Tempo">
+            <Clock className="size-4" />
+          </Button>
           {!encerrada ? (
             <Button size="sm" variant="ghost" onClick={onCancelar} title="Cancelar">
               <Ban className="size-4 text-rose-400" />
@@ -527,6 +525,9 @@ function LicencaRow({
               <ShieldCheck className="size-4 text-emerald-400" />
             </Button>
           )}
+          <Button size="sm" variant="ghost" onClick={onDelete} title="Excluir Permanentemente">
+            <Trash2 className="size-4 text-rose-600" />
+          </Button>
         </div>
       </td>
     </tr>
