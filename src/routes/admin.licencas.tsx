@@ -675,9 +675,9 @@ function RenovarDialog({
     >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Renovar licença</DialogTitle>
+          <DialogTitle>Ajustar Validade / Renovar</DialogTitle>
           <DialogDescription>
-            Estende a validade da licença. Se já estiver expirada, ela volta a ficar ativa.
+            Adicione ou remova tempo da licença. Se a licença estiver expirada, adicionar tempo irá reativá-la automaticamente.
           </DialogDescription>
         </DialogHeader>
         {licenca && (
