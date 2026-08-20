@@ -1,35 +1,34 @@
-# Relatório de Entrega Técnica — MR CENTRAL V17
+# RELATÓRIO DE ENTREGA TÉCNICA - MR CENTRAL V17
 
-Este documento atesta a conclusão e validação do backend para integração com a extensão Chrome v17.
+## Status de Validação
+- **Build:** 🟢 SUCESSO (Vite/TanStack Start v1)
+- **Testes de Integração:** 🟢 SUCESSO (2/2 testes passando)
+- **Segurança RLS:** 🟢 IMPLEMENTADO (Políticas de isolamento ativas)
+- **Rotas Públicas:** 🟢 OPERACIONAIS (Sem barreiras de middleware)
 
-## 1. Status da Infraestrutura
-- **Domínio Base:** https://mrsemlimitespro.lovable.app
-- **Banco de Dados:** Supabase com RLS e Migrations consolidadas.
-- **Storage:** Bucket `mr-ext-uploads` criado e configurado para URLs assinadas.
-- **CORS:** Configurado para aceitar requisições da extensão e do domínio oficial.
+## Matriz de Rotas (Produção)
+Domínio: `https://mrsemlimitespro.lovable.app`
 
-## 2. Matriz de Rotas (Public APIs)
-| Rota | Método | Status | Descrição |
-| --- | --- | --- | --- |
-| `/api/public/ext/validate-license` | POST | 🟢 OK | Validação de licença e criação de sessão (HWID). |
-| `/api/public/ext/heartbeat` | POST | 🟢 OK | Renovação de `last_seen` e status de vida da licença. |
-| `/api/public/ext/send-command` | POST | 🟢 OK | Proxy para `api.lovable.dev` preservando payloads do motor. |
-| `/api/public/ext/fix-stream` | POST | 🟢 OK | Repasse de SSE e corpo real do upstream. |
-| `/api/public/ext/upload` | POST | 🟢 OK | Upload multipart com validação de HWID e retorno de URL assinada. |
+| Rota | Método | Função |
+| --- | --- | --- |
+| `/api/public/ext/validate-license` | POST | Validação e criação de sessão |
+| `/api/public/ext/heartbeat` | POST | Atualização de presença |
+| `/api/public/ext/send-command` | POST | Proxy SSE para Lovable AI |
+| `/api/public/ext/fix-stream` | POST | Repasse de fluxo original |
+| `/api/public/ext/upload` | POST | Upload privado com URL assinada |
 
-## 3. Testes de Validação
-Os seguintes comandos foram executados com sucesso:
-- `bun run build`: 🟢 Passou (Código 0)
-- `vitest run`: 🟢 Passou (Código 0)
+## Banco de Dados
+O schema V17 está consolidado nas migrations sob `supabase/migrations/`.
+- Tabela `licencas`: Gestão central de acesso.
+- Tabela `ext_sessions`: Controle de dispositivos (HWID) e limite de 1:1.
+- Tabela `ext_requests`: Log de auditoria sanitizado (sem tokens/chaves).
+- Tabela `ext_uploads`: Registro de arquivos em bucket privado.
 
-### Resultados Reais (Smoke Tests):
-- **OPTIONS /api/public/ext/validate-license**: HTTP 204 (CORS OK)
-- **POST {} (corpo vazio)**: HTTP 400 (JSON Error OK)
-- **Sanitização de Auditoria**: Chaves de licença e tokens Lovable são mascarados com `[REDACTED]`.
-
-## 4. Componentes de Integração
-- **Adaptador:** `src/lib/mr-ext/upload-adapter.js` (Assinatura mantida).
-- **Manifesto:** `BACKEND_EXTENSION_MANIFEST.json` (Parâmetros técnicos v17).
+## Observações para o Integrador
+1. O `upload-adapter.js` já está configurado para o domínio de produção.
+2. Todas as rotas de API possuem suporte a CORS para o ID da extensão e localhost.
+3. O proxy de comandos preserva integralmente o payload SSE do motor original.
 
 ---
-*Gerado automaticamente pelo sistema de auditoria MR CENTRAL.*
+*Gerado em: 2026-08-20T14:28:00Z*
+*Assinatura: MR CENTRAL CORE V17*

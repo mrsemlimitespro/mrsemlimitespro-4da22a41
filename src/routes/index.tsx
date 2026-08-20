@@ -1,5 +1,5 @@
 /**
- * # MR CENTRAL V17 — ENTREGA TÉCNICA FINAL CONSOLIDADA (AUDITADA)
+ * # Entrega final do MR Central para integração da extensão v17
  * 
  * PACOTE DE INTEGRAÇÃO V17 PRONTO:
  * 1. Migrations SQL: Estrutura de banco e RLS completa.
