@@ -12,6 +12,6 @@
   "upload_bucket": "mr-ext-uploads",
   "max_upload_bytes": 52428800,
   "cors_origin_configured": true,
-  "published_at": "2026-08-20T08:50:00Z",
-  "git_commit": "v17-final-delivery"
+  "published_at": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+  "git_commit": "v17-final-release"
 }

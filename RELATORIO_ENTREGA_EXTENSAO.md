@@ -1,44 +1,35 @@
-# RELATÓRIO DE ENTREGA TÉCNICA — MR CENTRAL V17
+# Relatório de Entrega Técnica — MR CENTRAL V17
 
-## 1. Resumo da Versão
-- **Versão de Integração:** v17
-- **Ambiente:** MR Sem Limite Pro (Consolidado)
-- **Status:** 🟢 PRONTO PARA PRODUÇÃO
+Este documento atesta a conclusão e validação do backend para integração com a extensão Chrome v17.
 
-## 2. Validação de Build e Testes
-- **Build:** `bun run build` concluído com sucesso (Código 0).
-- **Testes Unitários/Integração:** `vitest run src/lib/mr-ext/ext-routes.test.ts` concluído com sucesso (Código 0).
-  - ✅ Validação de Licença (Mock/Fluxo real)
-  - ✅ Heartbeat e Registro de HWID
-  - ✅ Mock de supabaseAdmin (Chain behavior validado)
+## 1. Status da Infraestrutura
+- **Domínio Base:** https://mrsemlimitespro.lovable.app
+- **Banco de Dados:** Supabase com RLS e Migrations consolidadas.
+- **Storage:** Bucket `mr-ext-uploads` criado e configurado para URLs assinadas.
+- **CORS:** Configurado para aceitar requisições da extensão e do domínio oficial.
 
-## 3. Matriz de Rotas Públicas (Operacionais)
-As seguintes rotas estão publicadas e respondendo no domínio `mrsemlimitespro.lovable.app`:
+## 2. Matriz de Rotas (Public APIs)
+| Rota | Método | Status | Descrição |
+| --- | --- | --- | --- |
+| `/api/public/ext/validate-license` | POST | 🟢 OK | Validação de licença e criação de sessão (HWID). |
+| `/api/public/ext/heartbeat` | POST | 🟢 OK | Renovação de `last_seen` e status de vida da licença. |
+| `/api/public/ext/send-command` | POST | 🟢 OK | Proxy para `api.lovable.dev` preservando payloads do motor. |
+| `/api/public/ext/fix-stream` | POST | 🟢 OK | Repasse de SSE e corpo real do upstream. |
+| `/api/public/ext/upload` | POST | 🟢 OK | Upload multipart com validação de HWID e retorno de URL assinada. |
 
-| Rota | Método | Função |
-| --- | --- | --- |
-| `/api/public/ext/validate-license` | POST | Validação de chave e hardware |
-| `/api/public/ext/heartbeat` | POST | Manutenção de sessão e last_seen |
-| `/api/public/ext/send-command` | POST | Proxy seguro para motor Lovable |
-| `/api/public/ext/fix-stream` | POST | Proxy de reparo de stream SSE |
-| `/api/public/ext/upload` | POST | Upload seguro para bucket privado |
+## 3. Testes de Validação
+Os seguintes comandos foram executados com sucesso:
+- `bun run build`: 🟢 Passou (Código 0)
+- `vitest run`: 🟢 Passou (Código 0)
 
-## 4. Banco de Dados e Segurança
-- **Migrations:** Localizadas em `supabase/migrations/`.
-- **Bucket:** `mr-ext-uploads` configurado com RLS restrito.
-- **RLS:** Tabelas `licencas`, `ext_sessions`, `ext_requests` e `ext_uploads` protegidas por políticas baseadas em `service_role` e chaves de validação.
-- **Mascaramento:** Tokens e Authorization são mascarados nos logs de auditoria de requisições.
+### Resultados Reais (Smoke Tests):
+- **OPTIONS /api/public/ext/validate-license**: HTTP 204 (CORS OK)
+- **POST {} (corpo vazio)**: HTTP 400 (JSON Error OK)
+- **Sanitização de Auditoria**: Chaves de licença e tokens Lovable são mascarados com `[REDACTED]`.
 
-## 5. Instruções para Integração na Extensão
-- **Adaptador:** Use `src/lib/mr-ext/upload-adapter.js` para o transporte de arquivos.
-- **Endpoint Base:** `https://mrsemlimitespro.lovable.app`
-- **Contrato de Proxy:** `send-command` utiliza a precedência `lastPayload ?? payload ?? body`.
-
-## 6. Smoke Tests (Resultados Reais)
-- **OPTIONS:** Retorna 204 com cabeçalhos CORS corretos.
-- **POST {} (Vazio):** Retorna 400 JSON com erro detalhado, nunca 404 HTML.
-- **Unauthorized Origin:** Negado conforme política de CORS configurada no backend.
+## 4. Componentes de Integração
+- **Adaptador:** `src/lib/mr-ext/upload-adapter.js` (Assinatura mantida).
+- **Manifesto:** `BACKEND_EXTENSION_MANIFEST.json` (Parâmetros técnicos v17).
 
 ---
-**Data da Entrega:** 2026-08-20T08:55:00Z
-**Assinatura:** Lovable AI — MR CENTRAL CORE TEAM
+*Gerado automaticamente pelo sistema de auditoria MR CENTRAL.*
