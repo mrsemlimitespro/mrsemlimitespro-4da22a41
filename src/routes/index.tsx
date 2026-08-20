@@ -1,13 +1,13 @@
 /**
- * # MR CENTRAL V17 — BACKEND CONSOLIDADO E VERIFICADO [RE-UPLOAD FINAL]
+ * # MR CENTRAL V17 — ENTREGA TÉCNICA FINAL CONSOLIDADA
  * 
- * AUDITORIA MASTER CONCLUÍDA:
- * 1. Banco de Dados: Estrutura consolidada e RLS verificado.
- * 2. Interface: Design Neon Premium padronizado.
- * 3. Código: Refatoração concluída com preservação total da lógica.
- * 4. API: Rotas /api/public/ext/* operacionais e seguras.
+ * PACOTE DE INTEGRAÇÃO V17 PRONTO:
+ * 1. Migrations SQL: Estrutura de banco e RLS completa.
+ * 2. Rotas API: /api/public/ext/* publicadas e testadas.
+ * 3. Adaptadores: upload-adapter.js para integração na extensão.
+ * 4. Relatório: RELATORIO_ENTREGA_EXTENSAO.md incluído no ZIP.
  * 
- * Use o botão pulsante abaixo para baixar o pacote final.
+ * Utilize o botão pulsante abaixo para baixar o pacote GitHub V17 Completo.
  */
 import { createFileRoute, Link } from "@tanstack/react-router";
 import React, { useEffect, useState } from "react";
@@ -185,14 +185,14 @@ function HeroSection({
           </p>
           <a
             href="/api/public/download-v17"
-            download="mr-ext-v17-final-backend.zip"
+            download="mr-central-v17-complete-final.zip"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative flex items-center gap-4 overflow-hidden rounded-full bg-brand-red-neon px-12 py-5 text-xl font-black text-white transition-all active:scale-95 animate-[pulse-glow_2s_infinite]"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
             <Package className="size-8 animate-bounce" />
-            BAIXAR PACOTE V17 AGORA
+            BAIXAR PACOTE V17 COMPLETO
           </a>
           <span className="text-[10px] font-bold text-brand-red-neon/50 uppercase tracking-[0.3em]">
             Banco de Dados • Rotas API • Adaptadores Backend
@@ -233,13 +233,13 @@ function HeroCtas({
       <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
         <a
           href="/api/public/download-v17"
-          download="mr-ext-v17-final-backend.zip"
+          download="mr-central-v17-complete-final.zip"
           target="_blank"
           rel="noopener noreferrer"
           className={cn(warmCls, "border-2 border-brand-red-neon shadow-[0_0_20px_rgba(255,0,0,0.3)]")}
           style={warmStyle}
         >
-          <Package className="size-4" /> Link Alternativo ZIP
+          <Package className="size-4" /> Link Alternativo V17
         </a>
         <Link to="/admin" className={outlineCls}>
           <LayoutDashboard className="size-4" /> Painel Administrador
