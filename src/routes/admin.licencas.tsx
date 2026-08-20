@@ -284,12 +284,29 @@ function LicencasAdmin() {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          {selectedIds.length > 0 && (
+            <Button 
+              variant="destructive" 
+              size="sm" 
+              onClick={() => {
+                if(confirm(`Excluir ${selectedIds.length} licenças?`)) {
+                  deleteBulkMutation.mutate(selectedIds);
+                }
+              }}
+              disabled={deleteBulkMutation.isPending}
+            >
+              <Trash2 className="mr-1 size-4" /> Excluir ({selectedIds.length})
+            </Button>
+          )}
           <Button variant="ghost" size="sm" onClick={() => refetch()}>
             <RefreshCw className="mr-1 size-4" /> Atualizar
           </Button>
-          <Button size="sm" asChild className="gradient-primary">
+          <Button size="sm" onClick={() => setCreateOpen(true)} className="gradient-primary">
+            <Plus className="mr-1 size-4" /> Criar Chaves
+          </Button>
+          <Button size="sm" variant="outline" asChild className="hidden md:flex">
             <Link to="/admin/$resource" params={{ resource: "licencas" }}>
-              <Pencil className="mr-1 size-4" /> Editor detalhado
+              <Pencil className="mr-1 size-4" /> Editor
             </Link>
           </Button>
         </div>
