@@ -12,7 +12,10 @@ vi.mock('@/integrations/supabase/client.server', () => {
   return {
     supabaseAdmin: {
       from(table: string) {
-        if (table === 'licencas') return { select: () => ({ eq: () => ({ maybeSingle: async () => ({ data: license, error: null }) }) }) };
+        if (table === 'licencas') return {
+          select: () => ({ eq: () => ({ maybeSingle: async () => ({ data: license, error: null }) }) }),
+          update: () => ({ eq: async () => ({ error: null }) }),
+        };
         if (table === 'ext_sessions') return {
           select: () => ({ eq: () => ({ eq: () => ({ maybeSingle: async () => ({ data: session, error: null }) }) }) }),
           update: () => ({ eq: async () => ({ error: null }) }),

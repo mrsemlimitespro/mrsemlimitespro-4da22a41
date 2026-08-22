@@ -7,6 +7,7 @@ export interface ExtLicenseData {
   email: string | null;
   status: 'active' | 'revoked' | 'trial';
   expires_at: string | null;
+  ativada_em?: string | null;
   max_devices: number;
 }
 
@@ -46,12 +47,34 @@ export function validateKeyFormat(key: string | null): boolean {
 }
 
 /**
+ * Atualiza a visão administrativa com o último dispositivo e acesso reais da
+ * extensão. Esta atualização complementar nunca invalida uma sessão válida.
+ */
+async function syncLicenseUsageSummary(license: ExtLicenseData, hwid: string) {
+  const now = new Date().toISOString();
+  try {
+    const { error } = await supabaseAdmin
+      .from('licencas')
+      .update({
+        device_id: hwid,
+        ativada_em: license.ativada_em || now,
+        ultimo_acesso: now,
+        updated_at: now,
+      })
+      .eq('id', license.id);
+    if (error) console.error('[validateLicense] Failed to sync license usage summary:', error);
+  } catch (error) {
+    console.error('[validateLicense] Failed to sync license usage summary:', error);
+  }
+}
+
+/**
  * Valida licença, status, expiração e HWID
  */
 export async function validateLicense(licenseKey: string, hwid: string) {
   const { data: lic, error } = await supabaseAdmin
     .from('licencas')
-    .select('id, license_key, user_name, email, status, expires_at, max_devices')
+    .select('id, license_key, user_name, email, status, expires_at, ativada_em, max_devices')
     .eq('license_key', licenseKey)
     .maybeSingle();
 
@@ -77,6 +100,8 @@ export async function validateLicense(licenseKey: string, hwid: string) {
       .from('ext_sessions')
       .update({ last_seen: new Date().toISOString() })
       .eq('id', existingSession.id);
+
+    await syncLicenseUsageSummary(lic, hwid);
       
     return { valid: true, license: lic, session: existingSession };
   }
@@ -105,6 +130,8 @@ export async function validateLicense(licenseKey: string, hwid: string) {
     .single();
 
   if (sessionErr) return { valid: false, error: 'session_creation_failed' };
+
+  await syncLicenseUsageSummary(lic, hwid);
 
   return { valid: true, license: lic, session: newSession };
 }

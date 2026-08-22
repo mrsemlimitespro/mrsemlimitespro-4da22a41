@@ -38,12 +38,13 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
     });
 
     it('deve validar com sucesso licença ativa', async () => {
-      const mockLic = { id: 'lic-1', status: 'active', license_key: 'MR-1111-2222-3333', max_devices: 1 };
+      const mockLic = { id: 'lic-1', status: 'active', license_key: 'MR-1111-2222-3333', ativada_em: null, max_devices: 1 };
       
       // Reset generic mocks
       admin.maybeSingle.mockReset();
       admin.eq.mockReset();
       admin.single.mockReset();
+      admin.update.mockClear();
 
       // Configure mock chain behavior
       admin.from.mockReturnThis();
@@ -77,6 +78,11 @@ describe('MR CENTRAL V17 - Integration Tests', () => {
       const result = await validateLicense('MR-1111-2222-3333', 'hwid-1');
       expect(result.valid).toBe(true);
       expect(result.license?.id).toBe('lic-1');
+      expect(admin.update).toHaveBeenCalledWith(expect.objectContaining({
+        device_id: 'hwid-1',
+        ativada_em: expect.any(String),
+        ultimo_acesso: expect.any(String),
+      }));
     });
   });
 });

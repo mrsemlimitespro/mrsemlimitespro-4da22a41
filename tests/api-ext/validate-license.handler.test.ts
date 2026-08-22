@@ -8,6 +8,7 @@ vi.mock('@/integrations/supabase/client.server', () => {
     email: null,
     status: 'active',
     expires_at: null,
+    ativada_em: null,
     max_devices: 1,
   };
 
@@ -28,6 +29,9 @@ vi.mock('@/integrations/supabase/client.server', () => {
               eq: () => ({
                 maybeSingle: async () => ({ data: license, error: null }),
               }),
+            }),
+            update: () => ({
+              eq: async () => ({ error: null }),
             }),
           };
         }
