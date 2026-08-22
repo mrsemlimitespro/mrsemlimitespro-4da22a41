@@ -5,8 +5,15 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 const createLicenseSchema = z.object({
   tipo: z.enum(["teste", "premium"]),
   duracao: z.enum(["1h", "1d", "3d", "30d", "60d", "110d", "1y"]),
-  email: z.string().email().optional(),
-  user_name: z.string().optional(),
+  email: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    z.string().email().optional(),
+  ),
+  user_name: z.preprocess(
+    (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
+    z.string().optional(),
+  ),
+
   max_devices: z.number().default(1),
   quantidade: z.number().min(1).max(50).default(1),
   notes: z.string().optional(),
