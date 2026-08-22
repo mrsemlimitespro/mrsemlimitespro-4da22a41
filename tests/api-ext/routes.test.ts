@@ -4,7 +4,7 @@ vi.mock('@/integrations/supabase/client.server', () => ({
   supabaseAdmin: {},
 }));
 
-const { buildExtensionLicenseResponse, getCorsHeaders } = await import('@/lib/mr-ext/ext-api.server');
+const { buildExtensionLicenseResponse, DEFAULT_MR_EXTENSION_ORIGIN, getCorsHeaders } = await import('@/lib/mr-ext/ext-api.server');
 
 const extensionOrigin = 'chrome-extension://fixed-test-extension-id';
 const previousOrigin = process.env.MR_EXTENSION_ORIGIN;
@@ -33,6 +33,15 @@ describe('MR CENTRAL V17 integration contracts', () => {
     expect(allowed['Access-Control-Allow-Methods']).toBe('POST, OPTIONS');
     expect(allowed['Access-Control-Allow-Headers']).toBe('Content-Type, Authorization');
     expect(rejected['Access-Control-Allow-Origin']).toBeUndefined();
+  });
+
+  it('usa a origem estável da distribuição quando a variável não foi configurada', () => {
+    delete process.env.MR_EXTENSION_ORIGIN;
+    const headers = getCorsHeaders(new Request('https://mr.example/api', {
+      headers: { Origin: DEFAULT_MR_EXTENSION_ORIGIN },
+    }));
+
+    expect(headers['Access-Control-Allow-Origin']).toBe(DEFAULT_MR_EXTENSION_ORIGIN);
   });
 
   it('mantém localhost somente no desenvolvimento', () => {
