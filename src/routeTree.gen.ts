@@ -66,9 +66,17 @@ import { Route as ApiPublicHomologCheckoutRouteImport } from './routes/api/publi
 import { Route as ApiPublicSetupCheckoutRouteImport } from './routes/api/public/setup-checkout'
 import { Route as ApiPublicValidarLicencaRouteImport } from './routes/api/public/validar-licenca'
 import { Route as ApiPublicExtFixStreamRouteImport } from './routes/api/public/ext/fix-stream'
+import { Route as ApiPublicExtGetLicenseUserRouteImport } from './routes/api/public/ext/get-license-user'
+import { Route as ApiPublicExtGetNotificationsRouteImport } from './routes/api/public/ext/get-notifications'
+import { Route as ApiPublicExtGetSkillsRouteImport } from './routes/api/public/ext/get-skills'
+import { Route as ApiPublicExtGetUserRoleRouteImport } from './routes/api/public/ext/get-user-role'
+import { Route as ApiPublicExtGetVersionsRouteImport } from './routes/api/public/ext/get-versions'
 import { Route as ApiPublicExtHeartbeatRouteImport } from './routes/api/public/ext/heartbeat'
+import { Route as ApiPublicExtOptimizePromptRouteImport } from './routes/api/public/ext/optimize-prompt'
+import { Route as ApiPublicExtResetLicenseHwidRouteImport } from './routes/api/public/ext/reset-license-hwid'
 import { Route as ApiPublicExtSendCommandRouteImport } from './routes/api/public/ext/send-command'
 import { Route as ApiPublicExtUploadRouteImport } from './routes/api/public/ext/upload'
+import { Route as ApiPublicExtValidateChildLicenseRouteImport } from './routes/api/public/ext/validate-child-license'
 import { Route as ApiPublicExtValidateLicenseRouteImport } from './routes/api/public/ext/validate-license'
 import { Route as ApiPublicHooksEmailWorkerRouteImport } from './routes/api/public/hooks/email-worker'
 import { Route as ApiPublicLicencaConfigRouteImport } from './routes/api/public/licenca/config'
@@ -368,11 +376,50 @@ const ApiPublicExtFixStreamRoute = ApiPublicExtFixStreamRouteImport.update({
   path: '/api/public/ext/fix-stream',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicExtGetLicenseUserRoute =
+  ApiPublicExtGetLicenseUserRouteImport.update({
+    id: '/api/public/ext/get-license-user',
+    path: '/api/public/ext/get-license-user',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicExtGetNotificationsRoute =
+  ApiPublicExtGetNotificationsRouteImport.update({
+    id: '/api/public/ext/get-notifications',
+    path: '/api/public/ext/get-notifications',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicExtGetSkillsRoute = ApiPublicExtGetSkillsRouteImport.update({
+  id: '/api/public/ext/get-skills',
+  path: '/api/public/ext/get-skills',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicExtGetUserRoleRoute = ApiPublicExtGetUserRoleRouteImport.update({
+  id: '/api/public/ext/get-user-role',
+  path: '/api/public/ext/get-user-role',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicExtGetVersionsRoute = ApiPublicExtGetVersionsRouteImport.update({
+  id: '/api/public/ext/get-versions',
+  path: '/api/public/ext/get-versions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicExtHeartbeatRoute = ApiPublicExtHeartbeatRouteImport.update({
   id: '/api/public/ext/heartbeat',
   path: '/api/public/ext/heartbeat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicExtOptimizePromptRoute =
+  ApiPublicExtOptimizePromptRouteImport.update({
+    id: '/api/public/ext/optimize-prompt',
+    path: '/api/public/ext/optimize-prompt',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicExtResetLicenseHwidRoute =
+  ApiPublicExtResetLicenseHwidRouteImport.update({
+    id: '/api/public/ext/reset-license-hwid',
+    path: '/api/public/ext/reset-license-hwid',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicExtSendCommandRoute = ApiPublicExtSendCommandRouteImport.update({
   id: '/api/public/ext/send-command',
   path: '/api/public/ext/send-command',
@@ -383,6 +430,12 @@ const ApiPublicExtUploadRoute = ApiPublicExtUploadRouteImport.update({
   path: '/api/public/ext/upload',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicExtValidateChildLicenseRoute =
+  ApiPublicExtValidateChildLicenseRouteImport.update({
+    id: '/api/public/ext/validate-child-license',
+    path: '/api/public/ext/validate-child-license',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicExtValidateLicenseRoute =
   ApiPublicExtValidateLicenseRouteImport.update({
     id: '/api/public/ext/validate-license',
@@ -508,9 +561,17 @@ export interface FileRoutesByFullPath {
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
   '/api/public/ext/fix-stream': typeof ApiPublicExtFixStreamRoute
+  '/api/public/ext/get-license-user': typeof ApiPublicExtGetLicenseUserRoute
+  '/api/public/ext/get-notifications': typeof ApiPublicExtGetNotificationsRoute
+  '/api/public/ext/get-skills': typeof ApiPublicExtGetSkillsRoute
+  '/api/public/ext/get-user-role': typeof ApiPublicExtGetUserRoleRoute
+  '/api/public/ext/get-versions': typeof ApiPublicExtGetVersionsRoute
   '/api/public/ext/heartbeat': typeof ApiPublicExtHeartbeatRoute
+  '/api/public/ext/optimize-prompt': typeof ApiPublicExtOptimizePromptRoute
+  '/api/public/ext/reset-license-hwid': typeof ApiPublicExtResetLicenseHwidRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/upload': typeof ApiPublicExtUploadRoute
+  '/api/public/ext/validate-child-license': typeof ApiPublicExtValidateChildLicenseRoute
   '/api/public/ext/validate-license': typeof ApiPublicExtValidateLicenseRoute
   '/api/public/hooks/email-worker': typeof ApiPublicHooksEmailWorkerRoute
   '/api/public/licenca/config': typeof ApiPublicLicencaConfigRoute
@@ -580,9 +641,17 @@ export interface FileRoutesByTo {
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
   '/api/public/ext/fix-stream': typeof ApiPublicExtFixStreamRoute
+  '/api/public/ext/get-license-user': typeof ApiPublicExtGetLicenseUserRoute
+  '/api/public/ext/get-notifications': typeof ApiPublicExtGetNotificationsRoute
+  '/api/public/ext/get-skills': typeof ApiPublicExtGetSkillsRoute
+  '/api/public/ext/get-user-role': typeof ApiPublicExtGetUserRoleRoute
+  '/api/public/ext/get-versions': typeof ApiPublicExtGetVersionsRoute
   '/api/public/ext/heartbeat': typeof ApiPublicExtHeartbeatRoute
+  '/api/public/ext/optimize-prompt': typeof ApiPublicExtOptimizePromptRoute
+  '/api/public/ext/reset-license-hwid': typeof ApiPublicExtResetLicenseHwidRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/upload': typeof ApiPublicExtUploadRoute
+  '/api/public/ext/validate-child-license': typeof ApiPublicExtValidateChildLicenseRoute
   '/api/public/ext/validate-license': typeof ApiPublicExtValidateLicenseRoute
   '/api/public/hooks/email-worker': typeof ApiPublicHooksEmailWorkerRoute
   '/api/public/licenca/config': typeof ApiPublicLicencaConfigRoute
@@ -655,9 +724,17 @@ export interface FileRoutesById {
   '/api/public/setup-checkout': typeof ApiPublicSetupCheckoutRoute
   '/api/public/validar-licenca': typeof ApiPublicValidarLicencaRoute
   '/api/public/ext/fix-stream': typeof ApiPublicExtFixStreamRoute
+  '/api/public/ext/get-license-user': typeof ApiPublicExtGetLicenseUserRoute
+  '/api/public/ext/get-notifications': typeof ApiPublicExtGetNotificationsRoute
+  '/api/public/ext/get-skills': typeof ApiPublicExtGetSkillsRoute
+  '/api/public/ext/get-user-role': typeof ApiPublicExtGetUserRoleRoute
+  '/api/public/ext/get-versions': typeof ApiPublicExtGetVersionsRoute
   '/api/public/ext/heartbeat': typeof ApiPublicExtHeartbeatRoute
+  '/api/public/ext/optimize-prompt': typeof ApiPublicExtOptimizePromptRoute
+  '/api/public/ext/reset-license-hwid': typeof ApiPublicExtResetLicenseHwidRoute
   '/api/public/ext/send-command': typeof ApiPublicExtSendCommandRoute
   '/api/public/ext/upload': typeof ApiPublicExtUploadRoute
+  '/api/public/ext/validate-child-license': typeof ApiPublicExtValidateChildLicenseRoute
   '/api/public/ext/validate-license': typeof ApiPublicExtValidateLicenseRoute
   '/api/public/hooks/email-worker': typeof ApiPublicHooksEmailWorkerRoute
   '/api/public/licenca/config': typeof ApiPublicLicencaConfigRoute
@@ -730,9 +807,17 @@ export interface FileRouteTypes {
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
     | '/api/public/ext/fix-stream'
+    | '/api/public/ext/get-license-user'
+    | '/api/public/ext/get-notifications'
+    | '/api/public/ext/get-skills'
+    | '/api/public/ext/get-user-role'
+    | '/api/public/ext/get-versions'
     | '/api/public/ext/heartbeat'
+    | '/api/public/ext/optimize-prompt'
+    | '/api/public/ext/reset-license-hwid'
     | '/api/public/ext/send-command'
     | '/api/public/ext/upload'
+    | '/api/public/ext/validate-child-license'
     | '/api/public/ext/validate-license'
     | '/api/public/hooks/email-worker'
     | '/api/public/licenca/config'
@@ -802,9 +887,17 @@ export interface FileRouteTypes {
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
     | '/api/public/ext/fix-stream'
+    | '/api/public/ext/get-license-user'
+    | '/api/public/ext/get-notifications'
+    | '/api/public/ext/get-skills'
+    | '/api/public/ext/get-user-role'
+    | '/api/public/ext/get-versions'
     | '/api/public/ext/heartbeat'
+    | '/api/public/ext/optimize-prompt'
+    | '/api/public/ext/reset-license-hwid'
     | '/api/public/ext/send-command'
     | '/api/public/ext/upload'
+    | '/api/public/ext/validate-child-license'
     | '/api/public/ext/validate-license'
     | '/api/public/hooks/email-worker'
     | '/api/public/licenca/config'
@@ -876,9 +969,17 @@ export interface FileRouteTypes {
     | '/api/public/setup-checkout'
     | '/api/public/validar-licenca'
     | '/api/public/ext/fix-stream'
+    | '/api/public/ext/get-license-user'
+    | '/api/public/ext/get-notifications'
+    | '/api/public/ext/get-skills'
+    | '/api/public/ext/get-user-role'
+    | '/api/public/ext/get-versions'
     | '/api/public/ext/heartbeat'
+    | '/api/public/ext/optimize-prompt'
+    | '/api/public/ext/reset-license-hwid'
     | '/api/public/ext/send-command'
     | '/api/public/ext/upload'
+    | '/api/public/ext/validate-child-license'
     | '/api/public/ext/validate-license'
     | '/api/public/hooks/email-worker'
     | '/api/public/licenca/config'
@@ -908,9 +1009,17 @@ export interface RootRouteChildren {
   ApiPublicSetupCheckoutRoute: typeof ApiPublicSetupCheckoutRoute
   ApiPublicValidarLicencaRoute: typeof ApiPublicValidarLicencaRoute
   ApiPublicExtFixStreamRoute: typeof ApiPublicExtFixStreamRoute
+  ApiPublicExtGetLicenseUserRoute: typeof ApiPublicExtGetLicenseUserRoute
+  ApiPublicExtGetNotificationsRoute: typeof ApiPublicExtGetNotificationsRoute
+  ApiPublicExtGetSkillsRoute: typeof ApiPublicExtGetSkillsRoute
+  ApiPublicExtGetUserRoleRoute: typeof ApiPublicExtGetUserRoleRoute
+  ApiPublicExtGetVersionsRoute: typeof ApiPublicExtGetVersionsRoute
   ApiPublicExtHeartbeatRoute: typeof ApiPublicExtHeartbeatRoute
+  ApiPublicExtOptimizePromptRoute: typeof ApiPublicExtOptimizePromptRoute
+  ApiPublicExtResetLicenseHwidRoute: typeof ApiPublicExtResetLicenseHwidRoute
   ApiPublicExtSendCommandRoute: typeof ApiPublicExtSendCommandRoute
   ApiPublicExtUploadRoute: typeof ApiPublicExtUploadRoute
+  ApiPublicExtValidateChildLicenseRoute: typeof ApiPublicExtValidateChildLicenseRoute
   ApiPublicExtValidateLicenseRoute: typeof ApiPublicExtValidateLicenseRoute
   ApiPublicHooksEmailWorkerRoute: typeof ApiPublicHooksEmailWorkerRoute
   ApiPublicLicencaConfigRoute: typeof ApiPublicLicencaConfigRoute
@@ -1326,11 +1435,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicExtFixStreamRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/ext/get-license-user': {
+      id: '/api/public/ext/get-license-user'
+      path: '/api/public/ext/get-license-user'
+      fullPath: '/api/public/ext/get-license-user'
+      preLoaderRoute: typeof ApiPublicExtGetLicenseUserRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/ext/get-notifications': {
+      id: '/api/public/ext/get-notifications'
+      path: '/api/public/ext/get-notifications'
+      fullPath: '/api/public/ext/get-notifications'
+      preLoaderRoute: typeof ApiPublicExtGetNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/ext/get-skills': {
+      id: '/api/public/ext/get-skills'
+      path: '/api/public/ext/get-skills'
+      fullPath: '/api/public/ext/get-skills'
+      preLoaderRoute: typeof ApiPublicExtGetSkillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/ext/get-user-role': {
+      id: '/api/public/ext/get-user-role'
+      path: '/api/public/ext/get-user-role'
+      fullPath: '/api/public/ext/get-user-role'
+      preLoaderRoute: typeof ApiPublicExtGetUserRoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/ext/get-versions': {
+      id: '/api/public/ext/get-versions'
+      path: '/api/public/ext/get-versions'
+      fullPath: '/api/public/ext/get-versions'
+      preLoaderRoute: typeof ApiPublicExtGetVersionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/ext/heartbeat': {
       id: '/api/public/ext/heartbeat'
       path: '/api/public/ext/heartbeat'
       fullPath: '/api/public/ext/heartbeat'
       preLoaderRoute: typeof ApiPublicExtHeartbeatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/ext/optimize-prompt': {
+      id: '/api/public/ext/optimize-prompt'
+      path: '/api/public/ext/optimize-prompt'
+      fullPath: '/api/public/ext/optimize-prompt'
+      preLoaderRoute: typeof ApiPublicExtOptimizePromptRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/ext/reset-license-hwid': {
+      id: '/api/public/ext/reset-license-hwid'
+      path: '/api/public/ext/reset-license-hwid'
+      fullPath: '/api/public/ext/reset-license-hwid'
+      preLoaderRoute: typeof ApiPublicExtResetLicenseHwidRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/ext/send-command': {
@@ -1345,6 +1503,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/ext/upload'
       fullPath: '/api/public/ext/upload'
       preLoaderRoute: typeof ApiPublicExtUploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/ext/validate-child-license': {
+      id: '/api/public/ext/validate-child-license'
+      path: '/api/public/ext/validate-child-license'
+      fullPath: '/api/public/ext/validate-child-license'
+      preLoaderRoute: typeof ApiPublicExtValidateChildLicenseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/ext/validate-license': {
@@ -1571,9 +1736,17 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicSetupCheckoutRoute: ApiPublicSetupCheckoutRoute,
   ApiPublicValidarLicencaRoute: ApiPublicValidarLicencaRoute,
   ApiPublicExtFixStreamRoute: ApiPublicExtFixStreamRoute,
+  ApiPublicExtGetLicenseUserRoute: ApiPublicExtGetLicenseUserRoute,
+  ApiPublicExtGetNotificationsRoute: ApiPublicExtGetNotificationsRoute,
+  ApiPublicExtGetSkillsRoute: ApiPublicExtGetSkillsRoute,
+  ApiPublicExtGetUserRoleRoute: ApiPublicExtGetUserRoleRoute,
+  ApiPublicExtGetVersionsRoute: ApiPublicExtGetVersionsRoute,
   ApiPublicExtHeartbeatRoute: ApiPublicExtHeartbeatRoute,
+  ApiPublicExtOptimizePromptRoute: ApiPublicExtOptimizePromptRoute,
+  ApiPublicExtResetLicenseHwidRoute: ApiPublicExtResetLicenseHwidRoute,
   ApiPublicExtSendCommandRoute: ApiPublicExtSendCommandRoute,
   ApiPublicExtUploadRoute: ApiPublicExtUploadRoute,
+  ApiPublicExtValidateChildLicenseRoute: ApiPublicExtValidateChildLicenseRoute,
   ApiPublicExtValidateLicenseRoute: ApiPublicExtValidateLicenseRoute,
   ApiPublicHooksEmailWorkerRoute: ApiPublicHooksEmailWorkerRoute,
   ApiPublicLicencaConfigRoute: ApiPublicLicencaConfigRoute,
