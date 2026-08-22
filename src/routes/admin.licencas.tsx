@@ -54,9 +54,11 @@ export const Route = createFileRoute("/admin/licencas")({
 type Licenca = {
   id: string;
   chave: string;
+  license_key: string | null;
   status: string;
   tipo: string;
   email: string | null;
+  user_name: string | null;
   cliente_id: string | null;
   revendedor_id: string | null;
   produto_id: string | null;
@@ -64,6 +66,7 @@ type Licenca = {
   ultimo_acesso: string | null;
   ativada_em: string | null;
   expira_em: string | null;
+  expires_at: string | null;
   created_at: string;
   reset_hwid_motivo: string | null;
   reset_hwid_solicitado_em: string | null;
@@ -106,7 +109,7 @@ function LicencasAdmin() {
       const { data, error } = await supabase
         .from("licencas")
         .select(
-          "id,chave,status,tipo,email,cliente_id,revendedor_id,produto_id,device_id,ultimo_acesso,ativada_em,expira_em,created_at,reset_hwid_motivo,reset_hwid_solicitado_em,observacoes_admin,duracao_dias,metadata",
+          "id,chave,license_key,status,tipo,email,user_name,cliente_id,revendedor_id,produto_id,device_id,ultimo_acesso,ativada_em,expira_em,expires_at,created_at,reset_hwid_motivo,reset_hwid_solicitado_em,observacoes_admin,duracao_dias,metadata",
         )
         .order("created_at", { ascending: false })
         .limit(1000);
@@ -381,6 +384,7 @@ function LicencasAdmin() {
                   <th className="px-4 py-3 font-medium">Status</th>
                   <th className="px-4 py-3 font-medium">E-mail</th>
                   <th className="px-4 py-3 font-medium">Device</th>
+                  <th className="px-4 py-3 font-medium text-center">Ativada</th>
                   <th className="px-4 py-3 font-medium text-center">Expira</th>
                   <th className="px-4 py-3 font-medium text-right">Ações</th>
                 </tr>
@@ -462,6 +466,8 @@ function LicencaRow({
 }) {
   const nivel = derivarNivel(l);
   const encerrada = l.status === "expirada" || l.status === "cancelada" || l.status === "bloqueada" || l.status === "revogada";
+  const chaveExibida = l.license_key ?? l.chave;
+  const expiraEm = l.expires_at ?? l.expira_em;
 
   return (
     <tr className={cn(
@@ -473,10 +479,10 @@ function LicencaRow({
       </td>
       <td className="px-4 py-3 font-mono text-xs">
         <div className="flex items-center gap-2">
-          <span>{l.chave}</span>
+          <span>{chaveExibida}</span>
           <button
             onClick={() => {
-              navigator.clipboard.writeText(l.chave);
+              navigator.clipboard.writeText(chaveExibida);
               toast.success("Chave copiada");
             }}
             className="text-muted-foreground hover:text-foreground"
@@ -506,8 +512,11 @@ function LicencaRow({
       <td className="px-4 py-3 font-mono text-[10px] text-muted-foreground">
         {l.device_id ? l.device_id.slice(0, 12) + "…" : "—"}
       </td>
+      <td className="px-4 py-3 text-center text-xs text-muted-foreground">
+        {l.ativada_em ? new Date(l.ativada_em).toLocaleDateString("pt-BR") : "—"}
+      </td>
       <td className="px-4 py-3 text-xs text-muted-foreground">
-        {l.expira_em ? new Date(l.expira_em).toLocaleDateString("pt-BR") : "sem prazo"}
+        {expiraEm ? new Date(expiraEm).toLocaleDateString("pt-BR") : "sem prazo"}
       </td>
       <td className="px-4 py-3">
         <div className="flex justify-end gap-1">
