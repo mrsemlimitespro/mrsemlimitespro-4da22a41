@@ -19,6 +19,13 @@ export interface ExtSession {
 }
 
 /**
+ * ID derivado da chave pública incluída no manifesto da distribuição MR Sem
+ * Limites. Não é segredo; a variável de ambiente pode sobrescrevê-lo em uma
+ * distribuição futura assinada com outra chave.
+ */
+export const DEFAULT_MR_EXTENSION_ORIGIN = 'chrome-extension://pmnjaeibfnakhpcbmfgnondcobbhhjap';
+
+/**
  * Normaliza e extrai chave e HWID dos possíveis aliases
  */
 export function normalizeAuth(body: any) {
@@ -184,7 +191,7 @@ export async function auditRequest(
  */
 export function getCorsHeaders(request: Request) {
   const origin = request.headers.get('Origin')?.trim();
-  const configuredOrigin = process.env.MR_EXTENSION_ORIGIN?.trim();
+  const configuredOrigin = process.env.MR_EXTENSION_ORIGIN?.trim() || DEFAULT_MR_EXTENSION_ORIGIN;
   const isDevelopment = process.env.NODE_ENV === 'development';
   const allowedOrigins = [
     configuredOrigin,
