@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { normalizeAuth, validateLicense, auditRequest, getCorsHeaders } from '@/lib/mr-ext/ext-api.server';
+import { supabaseAdmin } from '@/integrations/supabase/client.server';
 
 const MAX_BASE64_FILE_SIZE = 50 * 1024 * 1024;
 
@@ -89,10 +90,7 @@ export const Route = createFileRoute('/api/public/ext/send-command')({
         }
 
         const { licenseKey, hwid } = normalizeAuth(body);
-        const userToken = normalizeBearer(body.token_lovable || body.token || request.headers.get('Authorization'));
-        const projectId = body.projectId || body.project_id || body.projeto_id;
-
-        if (!licenseKey || !hwid || !userToken || !projectId) {
+        if (!licenseKey || !hwid) {
           return new Response(JSON.stringify({ ok: false, error: 'missing_fields' }), {
             status: 400,
             headers: { ...cors, 'Content-Type': 'application/json' },
@@ -100,11 +98,44 @@ export const Route = createFileRoute('/api/public/ext/send-command')({
         }
 
         const result = await validateLicense(licenseKey, hwid);
-        await auditRequest(result.license?.id || null, '/api/ext/send-command', 'POST', result.valid ? 200 : 403, body);
 
         if (!result.valid) {
+          await auditRequest(result.license?.id || null, '/api/ext/send-command', 'POST', 403, body);
           return new Response(JSON.stringify({ ok: false, error: result.error }), {
             status: 403,
+            headers: { ...cors, 'Content-Type': 'application/json' },
+          });
+        }
+
+        if (body.action === 'get_stats') {
+          await auditRequest(result.license!.id, '/api/ext/get-stats', 'POST', 200, body);
+          const { count, error } = await supabaseAdmin
+            .from('ext_requests')
+            .select('*', { count: 'exact', head: true })
+            .eq('license_id', result.license!.id)
+            .eq('route', '/api/ext/command-completed')
+            .eq('method', 'POST')
+            .eq('status_code', 200);
+
+          if (error) {
+            console.error('[send-command] Command statistics unavailable:', error);
+            return new Response(JSON.stringify({ ok: false, error: 'stats_unavailable' }), {
+              status: 503,
+              headers: { ...cors, 'Content-Type': 'application/json' },
+            });
+          }
+
+          return new Response(JSON.stringify({ ok: true, cmd_count: count || 0 }), {
+            status: 200,
+            headers: { ...cors, 'Content-Type': 'application/json' },
+          });
+        }
+
+        const userToken = normalizeBearer(body.token_lovable || body.token || request.headers.get('Authorization'));
+        const projectId = body.projectId || body.project_id || body.projeto_id;
+        if (!userToken || !projectId) {
+          return new Response(JSON.stringify({ ok: false, error: 'missing_fields' }), {
+            status: 400,
             headers: { ...cors, 'Content-Type': 'application/json' },
           });
         }
@@ -112,12 +143,14 @@ export const Route = createFileRoute('/api/public/ext/send-command')({
         if (body.action === 'upload') {
           try {
             const upload = await relayLovableUpload(body, userToken);
+            await auditRequest(result.license!.id, '/api/ext/upload-proxy', 'POST', upload.status, body);
             return new Response(JSON.stringify(upload.response), {
               status: upload.status,
               headers: { ...cors, 'Content-Type': 'application/json' },
             });
           } catch (error) {
             console.error('[send-command] Lovable attachment relay failed:', error);
+            await auditRequest(result.license!.id, '/api/ext/upload-proxy', 'POST', 502, body);
             return new Response(JSON.stringify({ ok: false, error: 'upstream_failed' }), {
               status: 502,
               headers: { ...cors, 'Content-Type': 'application/json' },
@@ -147,6 +180,14 @@ export const Route = createFileRoute('/api/public/ext/send-command')({
             body: JSON.stringify(upstreamPayload),
           });
 
+          await auditRequest(
+            result.license!.id,
+            upstreamResponse.ok ? '/api/ext/command-completed' : '/api/ext/command-failed',
+            'POST',
+            upstreamResponse.ok ? 200 : upstreamResponse.status,
+            body,
+          );
+
           const responseHeaders = new Headers(cors);
           const contentType = upstreamResponse.headers.get('Content-Type');
           if (contentType) responseHeaders.set('Content-Type', contentType);
@@ -157,6 +198,7 @@ export const Route = createFileRoute('/api/public/ext/send-command')({
           return new Response(await upstreamResponse.text(), { status: upstreamResponse.status, headers: responseHeaders });
         } catch (error) {
           console.error('[send-command] Upstream error:', error);
+          await auditRequest(result.license!.id, '/api/ext/command-failed', 'POST', 502, body);
           return new Response(JSON.stringify({ ok: false, error: 'upstream_failed' }), {
             status: 502,
             headers: { ...cors, 'Content-Type': 'application/json' },
