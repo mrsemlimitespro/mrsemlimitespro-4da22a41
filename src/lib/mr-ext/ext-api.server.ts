@@ -199,8 +199,8 @@ export function getCorsHeaders(request: Request) {
   ].filter((value): value is string => Boolean(value));
 
   const headers: Record<string, string> = {
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, apikey',
     'Vary': 'Origin'
   };
 

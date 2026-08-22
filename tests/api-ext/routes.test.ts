@@ -30,8 +30,8 @@ describe('MR CENTRAL V17 integration contracts', () => {
     }));
 
     expect(allowed['Access-Control-Allow-Origin']).toBe(extensionOrigin);
-    expect(allowed['Access-Control-Allow-Methods']).toBe('POST, OPTIONS');
-    expect(allowed['Access-Control-Allow-Headers']).toBe('Content-Type, Authorization');
+    expect(allowed['Access-Control-Allow-Methods']).toBe('GET, POST, OPTIONS');
+    expect(allowed['Access-Control-Allow-Headers']).toBe('Content-Type, Authorization, apikey');
     expect(rejected['Access-Control-Allow-Origin']).toBeUndefined();
   });
 

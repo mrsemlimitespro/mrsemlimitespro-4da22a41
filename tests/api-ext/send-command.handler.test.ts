@@ -50,10 +50,10 @@ describe('send-command handler', () => {
     const response = await handler({
       request: new Request('https://mr.example/api/public/ext/send-command', {
         method: 'POST',
-        headers: { Origin: extensionOrigin, Authorization: 'Bearer user-token', 'Content-Type': 'application/json' },
+        headers: { Origin: extensionOrigin, Authorization: 'Bearer legacy-proxy-token', 'Content-Type': 'application/json' },
         body: JSON.stringify({
           license_key: 'MR-1234-5678-9012', hwid: 'hwid-1', projectId: 'project-123',
-          payload: { ignored: true }, lastPayload,
+          token_lovable: 'fresh-lovable-token', payload: { ignored: true }, lastPayload,
         }),
       }),
     });
@@ -63,7 +63,58 @@ describe('send-command handler', () => {
     expect(upstreamFetch).toHaveBeenCalledTimes(1);
     expect(upstreamFetch).toHaveBeenCalledWith(
       'https://api.lovable.dev/projects/project-123/chat',
-      expect.objectContaining({ body: JSON.stringify(lastPayload) })
+      expect.objectContaining({
+        body: JSON.stringify(lastPayload),
+        headers: expect.objectContaining({ Authorization: 'Bearer fresh-lovable-token' }),
+      })
+    );
+  });
+
+  it('produz o contrato de anexo nativo quando o fallback v17.5 solicita upload', async () => {
+    const upstreamFetch = vi.fn()
+      .mockResolvedValueOnce(new Response(JSON.stringify({
+        url: 'https://storage.example/upload',
+        file_id: 'projects/project-123/files/file-175',
+        headers: { 'x-goog-meta-source': 'extension' },
+      }), { status: 200, headers: { 'Content-Type': 'application/json' } }))
+      .mockResolvedValueOnce(new Response(null, { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ url: 'https://storage.example/download' }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }));
+    vi.stubGlobal('fetch', upstreamFetch);
+
+    const handler = Route.options.server?.handlers?.POST as (args: { request: Request }) => Promise<Response>;
+    const response = await handler({
+      request: new Request('https://mr.example/api/public/ext/send-command', {
+        method: 'POST',
+        headers: { Origin: extensionOrigin, Authorization: 'Bearer legacy-proxy-token', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'upload',
+          license_key: 'MR-1234-5678-9012',
+          hwid: 'hwid-1',
+          projeto_id: 'project-123',
+          token_lovable: 'fresh-lovable-token',
+          file_name: 'anexo.txt',
+          content_type: 'text/plain',
+          file_data: btoa('arquivo de teste'),
+        }),
+      }),
+    });
+
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toEqual({
+      ok: true,
+      file_id: 'projects/project-123/files/file-175',
+      file_name: 'anexo.txt',
+      download_url: 'https://storage.example/download',
+      mime_type: 'text/plain',
+    });
+    expect(upstreamFetch).toHaveBeenCalledTimes(3);
+    expect(upstreamFetch).toHaveBeenNthCalledWith(
+      1,
+      'https://api.lovable.dev/projects/project-123/files/generate-upload-url',
+      expect.objectContaining({ headers: expect.objectContaining({ Authorization: 'Bearer fresh-lovable-token' }) })
     );
   });
 });
