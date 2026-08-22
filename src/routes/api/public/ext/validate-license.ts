@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { normalizeAuth, validateKeyFormat, validateLicense, auditRequest, getCorsHeaders } from '@/lib/mr-ext/ext-api.server';
+import { normalizeAuth, validateKeyFormat, validateLicense, auditRequest, buildExtensionLicenseResponse, getCorsHeaders } from '@/lib/mr-ext/ext-api.server';
 
 export const Route = createFileRoute('/api/public/ext/validate-license')({
   server: {
@@ -41,18 +41,10 @@ export const Route = createFileRoute('/api/public/ext/validate-license')({
         const lic = result.license!;
         const sess = result.session!;
 
-        return new Response(JSON.stringify({
-          ok: true,
-          valid: true,
-          licenca_id: lic.id,
-          license_key: lic.license_key,
-          user_name: lic.user_name,
-          status: lic.status,
-          expires_at: lic.expires_at,
-          hwid: hwid,
-          session_id: sess.session_id,
-          max_devices: lic.max_devices
-        }), { status: 200, headers: cors });
+        return new Response(
+          JSON.stringify(buildExtensionLicenseResponse(lic, sess, hwid)),
+          { status: 200, headers: cors }
+        );
       }
     }
   }

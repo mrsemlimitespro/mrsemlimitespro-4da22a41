@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { normalizeAuth, validateLicense, auditRequest, getCorsHeaders } from '@/lib/mr-ext/ext-api.server';
+import { normalizeAuth, validateLicense, auditRequest, buildExtensionLicenseResponse, getCorsHeaders } from '@/lib/mr-ext/ext-api.server';
 
 export const Route = createFileRoute('/api/public/ext/heartbeat')({
   server: {
@@ -37,13 +37,10 @@ export const Route = createFileRoute('/api/public/ext/heartbeat')({
         const lic = result.license!;
         const sess = result.session!;
 
-        return new Response(JSON.stringify({
-          ok: true,
-          status: lic.status,
-          expires_at: lic.expires_at,
-          session_id: sess.session_id,
-          last_seen: sess.last_seen
-        }), { status: 200, headers: cors });
+        return new Response(
+          JSON.stringify(buildExtensionLicenseResponse(lic, sess, hwid)),
+          { status: 200, headers: cors }
+        );
       }
     }
   }

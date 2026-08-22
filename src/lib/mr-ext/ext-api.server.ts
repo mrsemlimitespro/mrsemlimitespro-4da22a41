@@ -103,6 +103,35 @@ export async function validateLicense(licenseKey: string, hwid: string) {
 }
 
 /**
+ * Mantém o contrato atual e adiciona aliases lidos pelo cliente legado.
+ * A sessão usa `status === "valid"`; o estado comercial permanece em
+ * `license_status` e `type`.
+ */
+export function buildExtensionLicenseResponse(
+  license: ExtLicenseData,
+  session: Pick<ExtSession, 'session_id' | 'last_seen'>,
+  hwid: string
+) {
+  return {
+    ok: true,
+    valid: true,
+    status: 'valid',
+    license_status: license.status,
+    licenca_id: license.id,
+    license_key: license.license_key,
+    user_name: license.user_name,
+    customer_name: license.user_name,
+    expires_at: license.expires_at,
+    hwid,
+    session_id: session.session_id,
+    session_token: session.session_id,
+    last_seen: session.last_seen,
+    max_devices: license.max_devices,
+    type: license.status,
+  };
+}
+
+/**
  * Sanitiza auditoria removendo tokens e segredos recursivamente
  */
 export function sanitizeAudit(payload: any): any {
@@ -154,20 +183,23 @@ export async function auditRequest(
  * Retorna os headers de CORS padronizados para as rotas públicas da extensão
  */
 export function getCorsHeaders(request: Request) {
-  const origin = request.headers.get('Origin');
-  const allowedOrigin = process.env.MR_EXTENSION_ORIGIN || 'http://localhost:8080';
-  
-  // Em desenvolvimento aceita o próprio localhost do preview, 
-  // em produção restringe à origem configurada da extensão.
-  const isAllowed = 
-    !process.env.NODE_ENV || 
-    process.env.NODE_ENV === 'development' || 
-    origin === allowedOrigin;
-  
-  return {
-    'Access-Control-Allow-Origin': isAllowed ? (origin || '*') : allowedOrigin,
+  const origin = request.headers.get('Origin')?.trim();
+  const configuredOrigin = process.env.MR_EXTENSION_ORIGIN?.trim();
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  const allowedOrigins = [
+    configuredOrigin,
+    ...(isDevelopment ? ['http://localhost:8080'] : []),
+  ].filter((value): value is string => Boolean(value));
+
+  const headers: Record<string, string> = {
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Vary': 'Origin'
   };
+
+  if (origin && allowedOrigins.includes(origin)) {
+    headers['Access-Control-Allow-Origin'] = origin;
+  }
+
+  return headers;
 }
