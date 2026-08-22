@@ -9,6 +9,7 @@
  * 2. **CORS Padronizado:** Resposta HTTP 204 para preflights OPTIONS em todas as rotas da API.
  * 3. **Build & Testes:** Validado build de produção e 100% dos testes de rotas via Bun.
  * 4. **Download Direto:** O pacote completo está disponível em /api/public/download-v17.
+ * 5. **Persistência de Licenças:** Garantido que chaves não sejam apagadas automaticamente.
  * 
  * ## Rotas Públicas da Extensão:
  * - /api/public/ext/validate-license
